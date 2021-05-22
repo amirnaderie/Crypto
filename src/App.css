@@ -286,8 +286,11 @@ button.close {
   }
 
 }
-
-
+@media(max-height:560px) {
+.footer{
+  display:none;
+}
+}
 /* @media(max-width:320px) {
   h1 {
       font-size: 1.8em;

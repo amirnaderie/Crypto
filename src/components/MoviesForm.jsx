@@ -70,7 +70,7 @@ class MoviesForm extends Component {
   };
 
   handleSearch = query => {
-    this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
+    this.setState({ searchQuery: query, currentPage: 1 });
   };
 
   handleSort = sortColumn => {
@@ -90,13 +90,14 @@ class MoviesForm extends Component {
     const {selectedGenre:selectedGenre1} = this.props;
 
     let filtered = allMovies;
-    if (searchQuery)
-      filtered = allMovies.filter(m =>
-        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
-      );
-    else if (selectedGenre1 && selectedGenre1._id)
-      filtered = allMovies.filter(m => m.genre._id === selectedGenre1._id);
-
+    
+    if (selectedGenre1 && selectedGenre1._id)
+       filtered = allMovies.filter(m => m.genre._id === selectedGenre1._id);
+    
+    if (searchQuery) 
+    filtered = filtered.filter(m =>
+      m.title.toLowerCase().startsWith(searchQuery.toLowerCase()));
+    
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const movies = paginate(sorted, currentPage, pageSize);

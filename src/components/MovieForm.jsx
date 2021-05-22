@@ -91,7 +91,7 @@ class MovieForm extends Form {
   doSubmit = async () => {
    try {
     await saveMovie(this.state.data); 
-    await toast.error('ثبت با موفقیت انجام پذیرفت', {position: toast.POSITION.TOP_LEFT});
+    await toast.success('ثبت با موفقیت انجام پذیرفت', {position: toast.POSITION.TOP_LEFT});
   
     this.props.history.push("/movies"); 
   } catch (error) {
