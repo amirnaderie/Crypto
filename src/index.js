@@ -9,7 +9,7 @@ import "font-awesome/css/font-awesome.css";
 import { Provider } from 'react-redux';
 import store from './redux/store/index';
 
-
+console.log('AMIR', process.env.REACT_APP_ENV);
 ReactDOM.render(
   <React.StrictMode>
   <Provider store={store}>
