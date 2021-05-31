@@ -3,6 +3,7 @@ const urlsToCache = ["/", "/static/js/bundle.js", "/static/media/2.c1102a94.jpg"
 , "/static/media/fontawesome-webfont.af7ae505.woff2"
 ,"/favicon.ico"
 ,"/index.html"
+,"/login"
 ];
 
 const self = this;
