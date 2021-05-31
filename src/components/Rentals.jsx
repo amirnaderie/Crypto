@@ -32,9 +32,7 @@ class Rentals extends Component {
   };
  
   render() {
-    const handleChange=(datetxt)=>{
    
-    }
     return (
       <div>
         <h1>Rental Components</h1>

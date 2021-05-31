@@ -82,8 +82,8 @@ const Menu = ({ open, menus, setOpen, user }) => {
   <div className="dropdown-content">
   <a>{user !== null && `نام کاربر: ${user.name}`}</a>
   <li ></li>
-  <a href="#">Link 2</a>
-  <a href="#">Link 3</a>
+  <a >Link 2</a>
+  <a >Link 3</a>
   
 </div>
       </div>

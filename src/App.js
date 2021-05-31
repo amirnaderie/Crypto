@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+//import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // import Movies from "./components/movies";
 // import MovieForm from "./components/movieForm";
@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 // import Logout from "./components/logout";
 // import ProtectedRoute from "./components/common/protectedRoute";
 // import MusicForm from "./components/Music/musicForm"
-import auth from "./services/authService";
+//import auth from "./services/authService";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
