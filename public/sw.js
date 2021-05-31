@@ -5,6 +5,9 @@ const urlsToCache = ["/", "/static/js/bundle.js", "/static/media/2.c1102a94.jpg"
 ,"/index.html"
 ,"/login"
 ,"/rental"
+,"/images/flowers32.png"
+,"/images/flowers64.png"
+,"/images/flowers512.png"
 ];
 
 const self = this;
@@ -13,27 +16,39 @@ const self = this;
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.warn("caching assets");
+      // console.warn("caching assets");
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-// Listen for any request browser made to fetch assets from server
-//and might pick cashed asstes insead of fetching them from server
-self.addEventListener("fetch", (event) => {
- // if (!navigator.online) {
-    event.respondWith(
-      caches.match(event.request).then((resp) => {
-        if(resp)
-        {
-          return resp;
-        }
-        // return fetch(event.request).catch(() => caches.match("offline.html"));
-      })
-    );
- // }
+addEventListener('fetch', event => {
+  // Prevent the default, and handle the request ourselves.
+  event.respondWith(async function() {
+    // Try to get the response from a cache.
+    const cachedResponse = await caches.match(event.request);
+    // Return it if we found one.
+    if (cachedResponse) return cachedResponse;
+    // If we didn't find a match in the cache, use the network.
+    return fetch(event.request);
+  }());
 });
+
+// // Listen for any request browser made to fetch assets from server
+// //and might pick cashed asstes insead of fetching them from server
+// self.addEventListener("fetch", (event) => {
+//  // if (!navigator.online) {
+//     event.respondWith(
+//       caches.match(event.request).then((resp) => {
+//         if(resp)
+//         {
+//           return resp;
+//         }
+//         // return fetch(event.request).catch(() => caches.match("offline.html"));
+//       })
+//     );
+//  // }
+// });
 // Activate the SW
 self.addEventListener('activate', (event) => {
   const cacheWhitelist = [];
