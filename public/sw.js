@@ -1,6 +1,8 @@
 const CACHE_NAME = "version-1";
-const urlsToCache = ["/", "/static/js/bundle.js", "/static/media/2.c1102a94.jpg"
+const urlsToCache = ["/static/js/bundle.js"
+, "/static/media/2.c1102a94.jpg"
 , "/static/media/fontawesome-webfont.af7ae505.woff2"
+, "/static/media/Yekan.05727d32.woff"
 ,"/favicon.ico"
 ,"/index.html"
 ,"/login"
@@ -9,6 +11,8 @@ const urlsToCache = ["/", "/static/js/bundle.js", "/static/media/2.c1102a94.jpg"
 ,"/images/flowers64.png"
 ,"/images/flowers512.png"
 ];
+
+
 
 const self = this;
 
@@ -21,6 +25,7 @@ self.addEventListener("install", (event) => {
     })
   );
 });
+
 
 addEventListener('fetch', event => {
   // Prevent the default, and handle the request ourselves.

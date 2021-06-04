@@ -43,9 +43,9 @@ class RegisterForm extends Form {
       <div className="col-md-5 container justify-content-center">
         <h1>Register</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderInput("name", "Name")}
+          {this.renderInput("username", "نام کاربری(ایمیل)")}
+          {this.renderInput("password", "رمز ورود", "password")}
+          {this.renderInput("name", "نــام")}
           {this.renderButton("Register")}
         </form>
       </div>
