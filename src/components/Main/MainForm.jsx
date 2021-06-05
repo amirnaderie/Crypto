@@ -69,7 +69,7 @@ const MainForm = () => {
   return (
     <div className="wrapper ">
       <div className="content float-right ">
-        <div className="container pt-2">
+        <div className="container pt-2 h-100">
           {menus !== undefined && menus.length!==0 && (
             <div className="pb-1 mt-1 mb-3 border-bottom text-center">
               <Link to="/not-found"><i className="fa fa-quora fa-3x text-dark" aria-hidden="true"></i>
