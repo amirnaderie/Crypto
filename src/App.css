@@ -280,6 +280,9 @@ button.close {
 .footer{
   display:none;
 }
+body{
+  min-height: 560px;
+}
 }
 /* @media(max-width:320px) {
   h1 {
