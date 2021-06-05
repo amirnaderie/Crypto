@@ -21,40 +21,44 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       // console.warn("caching assets");
-      return cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
+      
     })
   );
 });
 
 
-self.addEventListener('fetch', (event) => {
- // check if request is made by chrome extensions or web page
-  // if request is made for web page url must contains http.
-  if (!(event.request.url.indexOf('http') === 0)) return; // skip the request. if request is not made with http protocol
-  if (event.request.method==="POST") return;
-  event.respondWith(
-    caches.match(event.request).then((resp) => {
-      return resp || fetch(event.request).then((response) => {
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, response.clone());
-          return response;
-        });
-      });
-    })
-  );
-});
-
-// addEventListener('fetch', event => {
-//   // Prevent the default, and handle the request ourselves.
-//   event.respondWith(async function() {
-//     // Try to get the response from a cache.
-//     const cachedResponse = await caches.match(event.request);
-//     // Return it if we found one.
-//     if (cachedResponse) return cachedResponse;
-//     // If we didn't find a match in the cache, use the network.
-//     return fetch(event.request);
-//   }());
+// self.addEventListener('fetch', (event) => {
+//  // check if request is made by chrome extensions or web page
+//   // if request is made for web page url must contains http.
+//   if (!(event.request.url.indexOf('http') === 0)) return; // skip the request. if request is not made with http protocol
+//   if (event.request.method==="POST") return;
+//   if ((event.request.url.indexOf('api') === 0)) return; // skip the request. if request is api call
+//   if ((event.request.url.indexOf('sockjs-node') === 0)) return; // skip the request. if request is api call
+  
+//   event.respondWith(
+//     caches.match(event.request).then((resp) => {
+//       return resp || fetch(event.request).then((response) => {
+//         return caches.open(CACHE_NAME).then((cache) => {
+//           cache.put(event.request, response.clone());
+//           return response;
+//         });
+//       });
+//     })
+//   );
 // });
+
+addEventListener('fetch', event => {
+  // Prevent the default, and handle the request ourselves.
+  event.respondWith(async function() {
+    // Try to get the response from a cache.
+    const cachedResponse = await caches.match(event.request);
+    // Return it if we found one.
+    if (cachedResponse) return cachedResponse;
+    // If we didn't find a match in the cache, use the network.
+    return fetch(event.request);
+  }());
+});
 
 // // Listen for any request browser made to fetch assets from server
 // //and might pick cashed asstes insead of fetching them from server
