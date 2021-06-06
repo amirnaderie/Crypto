@@ -82,6 +82,8 @@ const Menu = ({ open, menus, setOpen, user }) => {
   <div className="dropdown-content">
   <a>{user !== null && `نام کاربر: ${user.name}`}</a>
   <li ></li>
+  <a>
+    {(window.screen.orientation || {}).type || window.screen.mozOrientation || window.screen.msOrientation}</a>
   <a >{window.screen.orientation.angle ? 'landscape':'portrait'}</a>
   <a >{!!navigator.maxTouchPoints ? 'mobile' : 'computer'}</a>
  </div>
