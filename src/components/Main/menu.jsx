@@ -84,8 +84,7 @@ const Menu = ({ open, menus, setOpen, user }) => {
   <li ></li>
   <a >{window.screen.orientation.angle ? 'landscape':'portrait'}</a>
   <a >{!!navigator.maxTouchPoints ? 'mobile' : 'computer'}</a>
-  
-</div>
+ </div>
       </div>
       
       <ul className="mx-1">
