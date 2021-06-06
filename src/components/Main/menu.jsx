@@ -34,12 +34,12 @@ const StyledMenu = styled.nav`
   @media (orientation: landscape) {
       height:auto;
       min-height: 100vh;
+      background: yellow; 
   }
   
    @media (max-width: 576px) {
      width: 100%;
-          
-    }
+   }
   
     .active{ color: yellow;}
     
