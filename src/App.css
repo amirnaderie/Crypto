@@ -78,13 +78,13 @@ img {
 /*end reset*/
 
 body {
-  background: url(./assets/img/2.jpg) no-repeat;
+  background: url(./assets/img/2.jpg) no-repeat ;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   -ms-background-size: cover;
-  background-position: center;
+  background-position: center top;
   background-attachment: fixed;
   direction: rtl;
 }
@@ -104,15 +104,14 @@ body {
 /*-- title --*/
 
 h1 {
-  font-size: 3.5em;
+  font-size: 2rem;
   color: #fff;
   letter-spacing: 2px;
-  font-weight: bold;
   text-align: center;
   text-shadow: 2px 1px 4px rgba(19, 19, 19, 0.52);
   font-style: italic;
   margin: 3vw 1vw;
-  font-family: "Tangerine", cursive;
+  /* font-family: "Tangerine", cursive; */
 }
 
 h1 span {
@@ -137,9 +136,9 @@ h1 span {
   /* display: table; */
 }
 
-p.legend {
+/* p.legend {
   color: #fff;
-  font-size: 28px;
+  font-size: 1.5 rem;
   text-align: center;
   letter-spacing: 1px;
   font-style: italic;
@@ -149,7 +148,7 @@ p.legend {
 p.legend span {
   color: #fff;
   margin-left: 10px;
-}
+} */
 
 .input {
   position: relative;
@@ -163,7 +162,7 @@ p.legend span {
   color: #f13f57;
   left: 10px;
   top: 12px;
-  font-size: 18px;
+  font-size: 1 rem;
 }
 
 .input input {
@@ -175,7 +174,7 @@ p.legend span {
   transition: 0.2s ease-out;
   color: #000;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 1rem;
   outline: none;
   letter-spacing: 1px;
 }
@@ -201,7 +200,7 @@ button.close {
 
 .footer h2 {
   direction: ltr;
-  font-size: 15px;
+  font-size: 1rem;
   color: rgb(233, 230, 230);
   letter-spacing: 2px;
   text-align: center;
@@ -223,19 +222,19 @@ button.close {
 
 @media (max-width: 1920px) {
   h1 {
-    font-size: 4vw;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 1024px) {
   h1 {
-    font-size: 4.5vw;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 800px) {
   h1 {
-    font-size: 2.6em;
+    font-size: 1rem;
   }
 
   .sub-main-w3 {
@@ -251,7 +250,7 @@ button.close {
 
 @media (max-width: 480px) {
   h1 {
-    font-size: 2.3em;
+    font-size: 2.3rem;
   }
 
   .sub-main-w3 form {
@@ -281,7 +280,7 @@ button.close {
   display:none;
 }
 body{
-  min-height: 560px;
+  height: 100%; /*  شدن باکس ها در زمان نمایش کیبورد در اندروید Resize  برای جلوگیری از   */
 }
 }
 /* @media(max-width:320px) {

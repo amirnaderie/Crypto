@@ -15,7 +15,7 @@ const StyledMenu = styled.nav`
   background: #333;
   z-index: 3;
   transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
-  height: 100vh;
+  height:100vh;
   text-align: right;
   padding: .2rem;
   position: absolute;
@@ -26,19 +26,20 @@ const StyledMenu = styled.nav`
   ul:not(.collapse){
     list-style-type:none;
     color: #fff;
-    margin-top:10vh;
-   
+    margin-top:15vh;
   }
   .list-unstyled{
     padding: 1rem;
   }
-
-  
+  @media (orientation: landscape) {
+      height:auto;
+      min-height: 100vh;
     
+        }
+  
    @media (max-width: 576px) {
      width: 100%;
-     font:tahoma;
-     font-size: small;
+          
     }
   
     .active{ color: yellow;}

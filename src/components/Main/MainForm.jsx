@@ -23,6 +23,12 @@ const MainForm = () => {
 
   useEffect(() => {
     try {
+      if (window.location.pathname === "/login")
+      {
+        setUser(null);
+        setmenus([]);
+        return;
+      }
       if (user !== null) {
         getMenus()
           .then((result) => {
