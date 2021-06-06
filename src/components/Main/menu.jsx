@@ -34,8 +34,7 @@ const StyledMenu = styled.nav`
   @media (orientation: landscape) {
       height:auto;
       min-height: 100vh;
-    
-        }
+  }
   
    @media (max-width: 576px) {
      width: 100%;
