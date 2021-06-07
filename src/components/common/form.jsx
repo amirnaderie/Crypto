@@ -67,7 +67,7 @@ class Form extends Component {
   renderButton(
     label,
     enabled = true,
-    classname = "btn btn-primary m-3 pull-left"
+    classname = "btn btn-primary m-2 pull-left"
   ) {
     return (
       <button disabled={this.validate() || !enabled} className={classname}>

@@ -49,9 +49,10 @@ class LoginForm extends Form {
     return (
       <div>
         <div className="sub-main-w3">
-          <h1>Login</h1>
+         
          
           <form onSubmit={this.handleSubmit} className="login">
+          <h1>Login</h1>
             <div className="mb-3 input">
               {this.renderInput("username", "نام کاربری", "text", {
                 width: "100%",
@@ -69,7 +70,9 @@ class LoginForm extends Form {
                 placeholder="متن بالا را وارد نمایید"
               />
             </div>
+            <div className="mb-3">
             {this.renderButton("Login", this.state.captchaState)}
+            </div>
           </form>
         </div>
         <div className="footer">
