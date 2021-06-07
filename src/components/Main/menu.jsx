@@ -77,7 +77,7 @@ const Menu = ({ open, menus, setOpen, user }) => {
     <StyledMenu open={open}>
       <div className="dropdown m-3" style={{ position: "fixed", left: 0 }}>
      
-  <button className="dropbtn"><i className="fa fa-user fa-3"></i></button>
+  <button className="dropbtn"><span className="user"><i className="fa fa-user"></i></span> </button>
   <div className="dropdown-content">
   <a>{user !== null && `نام کاربر: ${user.name}`}</a>
   <li ></li>
