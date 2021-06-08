@@ -21,12 +21,13 @@ const StyledMenu = styled.nav`
   position: absolute;
   top: 0;
   right: 0;
-  transition: transform 0.3s ease-in-out;
+ 
   
   ul:not(.collapse){
     list-style-type:none;
     color: #fff;
     margin-top:15vh;
+   
   }
   .list-unstyled{
     padding: 1rem;

@@ -1,6 +1,6 @@
 const CACHE_NAME = "version-1";
 const urlsToCache = ["/static/js/bundle.js"
-, "/static/media/WorldMap.svg"
+, "/static/media/WorldMap.2586dc1b.svg"
 , "/static/media/fontawesome-webfont.af7ae505.woff2"
 , "/static/media/Yekan.05727d32.woff"
 ,"/favicon.ico"

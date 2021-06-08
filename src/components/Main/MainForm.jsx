@@ -13,6 +13,7 @@ import { getMenus } from "../../services/menuService";
 
 import Burger from "./burger";
 import Menu from "./menu";
+import { sortItems } from "../../utils/paginate";
 // import './mainStyle.css'
 
 const MainForm = () => {
@@ -34,9 +35,9 @@ const MainForm = () => {
           .then((result) => {
             if (result) {
               try {
-                seturls(result.data);
-                result.data
-                  .filter((item) => item["component"] !== "")
+                const data=sortItems(result.data, 'id', 'asc');
+                seturls(data);
+                data.filter((item) => item["component"] !== "")
                   .map((plugin) => {
                     import(`../${plugin["path"]}`).then((module) => {
                       setmenus((oldArray) => [

@@ -6,8 +6,8 @@ import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import {  deleteMovie } from "../services/movieService";
 //import { getGenres } from "../services/genreService";
-import { paginate } from "../utils/paginate";
-import _ from "lodash";
+import { paginate, sortItems } from "../utils/paginate";
+//import _ from "lodash";
 import SearchBox from "./searchBox";
 import { connect } from "react-redux";
 import {fetchMovies  } from '../redux/slices/moviesSlice';
@@ -98,7 +98,7 @@ class MoviesForm extends Component {
     filtered = filtered.filter(m =>
       m.title.toLowerCase().startsWith(searchQuery.toLowerCase()));
     
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const sorted = sortItems(filtered, [sortColumn.path], [sortColumn.order]);
 
     const movies = paginate(sorted, currentPage, pageSize);
 

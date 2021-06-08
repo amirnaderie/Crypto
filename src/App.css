@@ -87,6 +87,7 @@ body {
   background-position: center top;
   background-attachment: fixed;
   direction: rtl;
+  transition: height 0ms 400ms, opacity 400ms 0ms;
 }
 
 .wrapper {
