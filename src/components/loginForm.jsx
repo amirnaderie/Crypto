@@ -49,20 +49,22 @@ class LoginForm extends Form {
     return (
       <div>
         <div className="sub-main-w3">
-         
-         
+
+
           <form onSubmit={this.handleSubmit} className="login">
           <h1>Login</h1>
             <div className="mb-3 input">
+           
               {this.renderInput("username", "نام کاربری", "text", {
-                width: "100%",
-                backgroundColor: "withe",
-              })}
+                direction:"ltr"
+              },"true")}
             </div>
             <div className="mb-3 input">
-              {this.renderInput("password", "Password", "password")}
+              {this.renderInput("password", "رمز عبور", "password",{
+                direction:"ltr"
+              })}
             </div>
-            <div className="mb-3">
+            <div className="mb-3 ">
               <Captcha
                 length={1}
                 onRefresh={this.onrefresh}
@@ -77,7 +79,7 @@ class LoginForm extends Form {
         </div>
         <div className="footer">
           <h2>
-            © 2018 My Login Form. All rights reserved | Design by
+         <span className="h1">&copy;</span >  2018 My Login Form. All rights reserved | Design by
             <a href="http://amir.com"> amir </a>
           </h2>
         </div>

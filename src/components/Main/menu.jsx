@@ -21,7 +21,7 @@ const StyledMenu = styled.nav`
   position: absolute;
   top: 0;
   right: 0;
- 
+ transition: all 1s ease;
   
   ul:not(.collapse){
     list-style-type:none;
