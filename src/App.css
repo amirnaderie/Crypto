@@ -87,7 +87,7 @@ body {
   background-position: center top;
   background-attachment: fixed;
   direction: rtl;
-  transition: height 0ms 400ms, opacity 400ms 0ms;
+ 
 }
 
 .wrapper {
@@ -255,9 +255,9 @@ button.close {
     font-size: 2.3rem;
   }
 
-  .sub-main-w3 form {
+  /* .sub-main-w3 form {
     padding: 7.5vw;
-  }
+  } */
 
   .footer h2 {
     letter-spacing: 1px;
