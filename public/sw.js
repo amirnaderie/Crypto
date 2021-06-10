@@ -21,7 +21,11 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       // console.warn("caching assets");
-      return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
+      return cache.addAll(urlsToCache);
+        // urlsToCache.map(url => {
+        //     new Request(url, {credentials: 'same-origin'})}
+        //   )
+        // );
       
     })
   );
@@ -36,17 +40,18 @@ self.addEventListener("install", (event) => {
 //   if ((event.request.url.indexOf('api') === 0)) return; // skip the request. if request is api call
 //   if ((event.request.url.indexOf('sockjs-node') === 0)) return; // skip the request. if request is api call
   
-//   event.respondWith(
-//     caches.match(event.request).then((resp) => {
-//       return resp || fetch(event.request).then((response) => {
-//         return caches.open(CACHE_NAME).then((cache) => {
-//           cache.put(event.request, response.clone());
-//           return response;
-//         });
-//       });
-//     })
-//   );
+  // event.respondWith(
+  //   caches.match(event.request).then((resp) => {
+  //     return resp || fetch(event.request).then((response) => {
+  //       return caches.open(CACHE_NAME).then((cache) => {
+  //         cache.put(event.request, response.clone());
+  //         return response;
+  //       });
+  //     });
+  //   })
+  // );
 // });
+
 
 addEventListener('fetch', event => {
   // Prevent the default, and handle the request ourselves.
@@ -76,21 +81,21 @@ addEventListener('fetch', event => {
 //  // }
 // });
 // Activate the SW
-// self.addEventListener('activate', (event) => {
-//   const cacheWhitelist = [];
-//   cacheWhitelist.push(CACHE_NAME);
+self.addEventListener('activate', (event) => {
+  const cacheWhitelist = [];
+  cacheWhitelist.push(CACHE_NAME);
 
-//   event.waitUntil(
-//       caches.keys().then((cacheNames) => Promise.all(
-//           cacheNames.map((cacheName) => {
-//               if(!cacheWhitelist.includes(cacheName)) {
-//                   return caches.delete(cacheName);
-//               }
-//           })
-//       ))
+  event.waitUntil(
+      caches.keys().then((cacheNames) => Promise.all(
+          cacheNames.map((cacheName) => {
+              if(!cacheWhitelist.includes(cacheName)) {
+                  return caches.delete(cacheName);
+              }
+          })
+      ))
           
-//   )
-// });
+  )
+});
 
 
 
