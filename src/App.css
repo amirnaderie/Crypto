@@ -123,7 +123,7 @@ h1 span {
 
 /*-- content --*/
 .sub-main-w3 {
-  margin: 1vw 5vw;
+  opacity: .8;
 }
 
 .sub-main-w3 form {
@@ -136,6 +136,13 @@ h1 span {
   position: relative;
   color: #ededed;
  display: table; 
+ -khtml-opacity: .90;
+ -moz-opacity: .90;
+ -ms-filter: ”alpha(opacity=90)”;
+ filter: alpha(opacity=90);
+ filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.9);
+ opacity: .90;
+ 
 }
 
 /* p.legend {
@@ -252,7 +259,7 @@ button.close {
 
 @media (max-width: 480px) {
   h1 {
-    font-size: 2.3rem;
+    font-size: 1rem;
   }
 
   /* .sub-main-w3 form {
