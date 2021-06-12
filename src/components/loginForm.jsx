@@ -57,7 +57,7 @@ class LoginForm extends Form {
           
               {this.renderInput("username", "نام کاربری", "text", {
                 direction:"ltr"
-              },"true")}
+              },true)}
             </div>
             <div className="mb-3 input">
               {this.renderInput("password", "رمز عبور", "password",{

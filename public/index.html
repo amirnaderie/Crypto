@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <link rel="icon" type="image/png" href="%PUBLIC_URL%/images/flowers32.png" />
-    <meta name="theme-color" content="#000000">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="%PUBLIC_URL%/images/flowers32.png"
+    />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content="این برنامه تمرین برنامه نویسی است" />
     <!-- ios support -->
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/flowers124.png" />
-    <meta name="apple-mobile-web-app-status-bar" content="#aa7700"/>
+    <meta name="apple-mobile-web-app-status-bar" content="#aa7700" />
     <!---->
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/images/flowers64.png">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/images/flowers64.png" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -26,13 +33,41 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <style>
+     
+      .shell .title{
+        background-color: black;
+        color: cornsilk;
+        text-align: center;
+        font-family: tahoma;
+        height: 2em;
+        font-size: 2em;
+      }
+      .shell .meme {
+        margin: 0.5em 1em;
+        min-height: 250px;
+      }
+    </style>
     <title>پروژه من</title>
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="root">
+      <div class="shell">
+        <div class="title">در حال بارگزاری</div>
+        <div class="meme">&nbsp;</div>
+        <div class="meme">&nbsp;</div>
+        <div class="meme">&nbsp;</div>
+      </div>
+    </div>
+
+    <!-- <script>
+      // const isProduction=('%NODE_ENV%'==='production');
+      // if(isProduction && 'serviceWorker' in navigator){
+      if( 'serviceWorker' in navigator){
+        navigator.serviceWorker.register('sw.js');
+      }
+    </script> -->
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

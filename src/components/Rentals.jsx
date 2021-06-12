@@ -15,7 +15,7 @@ class Rentals extends Component {
     modalShow: false,
     value:momentJalaali(),
       isGregorian: false,
-
+      isAsc:false
   };
 
   getCustomFormat(inputValue, isGregorian) {
@@ -31,6 +31,9 @@ class Rentals extends Component {
     this.setState({ modalShow: !this.state.modalShow });
   };
  
+  togglei = () => {
+    this.setState({ isAsc: !this.state.isAsc });
+  };
   render() {
    
     return (
@@ -45,6 +48,10 @@ class Rentals extends Component {
         onChange={value => { this.setState({ value }) }}
         timePicker={false}
       />
+<div onClick={this.togglei}>
+  <i className={this.state.isAsc?"fa fa-sort-asc fa-3x m-2":"fa fa-sort-asc m-2 fa-3x show"} />
+</div>
+
 
 {this.getCustomFormat(this.state.value, this.state.isGregorian)}
       

@@ -361,3 +361,16 @@ body{
 /* .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 } */
+
+
+i.fa-sort-asc{
+ 
+  transition:transform 1s ease-in ;
+  
+}
+
+i.fa-sort-asc.show{
+ 
+  transform:rotate(180deg);
+ 
+}

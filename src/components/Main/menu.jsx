@@ -21,8 +21,11 @@ const StyledMenu = styled.nav`
   position: absolute;
   top: 0;
   right: 0;
- transition: all 1s ease;
+  transition: transform 1s ease;
   
+
+ 
+
   ul:not(.collapse){
     list-style-type:none;
     color: #fff;
@@ -121,18 +124,12 @@ const Menu = ({ open, menus, setOpen, user }) => {
                   aria-controls={item["label"]}
                 >
                   {item["label"]}
-                  {menus !== undefined &&
+                  { <i className={menus !== undefined &&
                     menu.length !== 0 &&
                     menu[menu.findIndex((obj) => obj.id === item["id"])]
-                      .isshow === "show" && (
-                      <i className="fa fa-sort-asc m-2" />
-                    )}
-                  {menus !== undefined &&
-                    menu.length !== 0 &&
-                    menu[menu.findIndex((obj) => obj.id === item["id"])]
-                      .isshow !== "show" && (
-                      <i className="fa fa-sort-desc m-2" />
-                    )}
+                      .isshow === "show"? "fa fa-sort-asc m-2 ":"fa fa-sort-asc m-2 show" } />
+                    }
+                  
                 </a>
 
                 <ul
