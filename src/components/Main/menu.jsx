@@ -24,8 +24,6 @@ const StyledMenu = styled.nav`
   transition: transform 1s ease;
   
 
- 
-
   ul:not(.collapse){
     list-style-type:none;
     color: #fff;
@@ -134,7 +132,7 @@ const Menu = ({ open, menus, setOpen, user }) => {
 
                 <ul
                   className={
-                    "collapse list-unstyled  " +
+                    "collapse list-unstyled test " +
                     menu[menu.findIndex((obj) => obj.id === item["id"])].isshow
                   }
                   id={item["label"]}

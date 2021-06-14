@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import { Spinner } from "react-bootstrap";
 import DateMask from "./datemask";
 // import DatePicker from "react-datepicker2";
 // import momentJalaali from "moment-jalaali";
-import MdatePicker,{getCustomFormat} from "./mdatepicker";
+import MdatePicker, { getCustomFormat } from "./mdatepicker";
 class Form extends Component {
   state = {
     data: {},
     errors: {},
+    iswaiting:false
   };
 
-   validate = () => {
+  validate = () => {
     const options = { abortEarly: false };
 
     const { error } = Joi.validate(this.state.data, this.schema, options);
@@ -40,15 +42,13 @@ class Form extends Component {
     this.doSubmit();
   };
 
-  handledatechange = (input,name) => {
-   
+  handledatechange = (input, name) => {
     let dateval = getCustomFormat(input, false);
     const data1 = { ...this.state.data };
     data1[name] = dateval;
 
     this.setState((prevState) => {
-      if (prevState.data[name] !== data1[name])
-       this.state.data= data1;
+      if (prevState.data[name] !== data1[name]) this.state.data = data1;
     });
   };
 
@@ -67,12 +67,25 @@ class Form extends Component {
   renderButton(
     label,
     enabled = true,
-    classname = "btn btn-primary m-2 pull-left"
-  ) {
+    classname = "btn btn-primary m-2 pull-left ",
+    ) {
     return (
-      <button disabled={this.validate() || !enabled} className={classname}>
+     <div>
+     <button  disabled={this.validate() || !enabled} className={classname}>
+        
         {label}
       </button>
+      {this.state.iswaiting && (
+        <Spinner
+          as="span"
+          animation="grow"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+
+      )}
+      </div>
     );
   }
 
@@ -90,12 +103,11 @@ class Form extends Component {
           error={errors[name]}
         /> */}
         <MdatePicker
-        label={label}
-        inpval={data[name]}
-        name={name}
-        onChange={(e) => this.handledatechange(e,name)}
+          label={label}
+          inpval={data[name]}
+          name={name}
+          onChange={(e) => this.handledatechange(e, name)}
         />
-        
       </div>
     );
   }
@@ -115,7 +127,7 @@ class Form extends Component {
     );
   }
 
-  renderInput(name, label, type = "text", styles,isautofocus=false) {
+  renderInput(name, label, type = "text", styles, isautofocus = false) {
     const { data, errors } = this.state;
 
     return (

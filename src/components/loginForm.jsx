@@ -13,6 +13,7 @@ class LoginForm extends Form {
     data: { username: "", password: "" },
     errors: {},
     captchaState: false,
+    iswaiting:false,
   };
 
   schema = {
@@ -28,9 +29,9 @@ class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-
+      this.setState({ iswaiting: true });
       await auth.login(data.username, data.password);
-
+     
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/not-found";
     } catch (ex) {
@@ -40,6 +41,7 @@ class LoginForm extends Form {
         toast.error("خطا در برقراری ارتباط", {
           position: toast.POSITION.TOP_LEFT,
         });
+        this.setState({ iswaiting: false });
     }
   };
 
@@ -73,7 +75,7 @@ class LoginForm extends Form {
               />
             </div>
             <div className="mb-3">
-            {this.renderButton("Login", this.state.captchaState)}
+            {this.renderButton("Login", this.state.captchaState,undefined)}
             </div>
           </form>
         </div>

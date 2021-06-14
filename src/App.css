@@ -374,3 +374,12 @@ i.fa-sort-asc.show{
   transform:rotate(180deg);
  
 }
+
+.test{
+  background-color: #f13f57;
+  transition:background-color 2s ease-in ;
+}
+
+.test.show{
+  background-color: chartreuse;
+ }
