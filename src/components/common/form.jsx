@@ -79,7 +79,7 @@ class Form extends Component {
         <Spinner
           as="span"
           animation="grow"
-          size="sm"
+          size="md"
           role="status"
           aria-hidden="true"
         />

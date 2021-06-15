@@ -31,7 +31,7 @@ class LoginForm extends Form {
       const { data } = this.state;
       this.setState({ iswaiting: true });
       await auth.login(data.username, data.password);
-     
+      this.setState({ iswaiting: false });
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/not-found";
     } catch (ex) {
@@ -66,7 +66,7 @@ class LoginForm extends Form {
                 direction:"ltr"
               })}
             </div>
-            <div className="mb-3 ">
+            <div className="mb-3 text-dark">
               <Captcha
                 length={1}
                 onRefresh={this.onrefresh}
