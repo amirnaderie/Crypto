@@ -1,9 +1,11 @@
+import  {getEndpoint}  from "./endPoint";
 import http from "./httpService";
 
-const apiEndpoint = process.env.REACT_APP_URL + "/menus";
+const apiEndpoint = getEndpoint()+ "/menus";
   
 export function  getMenus() {
   try {
+    
     return http.get(apiEndpoint);
   } catch (error) {
      const retval=[];

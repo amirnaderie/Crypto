@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Collapse } from "react-bootstrap";
 import ModalComponenet, {
   ModalHeader,
   ModalBody,
@@ -15,7 +15,8 @@ class Rentals extends Component {
     modalShow: false,
     value:momentJalaali(),
       isGregorian: false,
-      isAsc:false
+      isAsc:false,
+      open:false
   };
 
   getCustomFormat(inputValue, isGregorian) {
@@ -35,7 +36,7 @@ class Rentals extends Component {
     this.setState({ isAsc: !this.state.isAsc });
   };
   render() {
-   
+   const {open}=this.state;
     return (
       <div>
         <h1>Rental Components</h1>
@@ -54,7 +55,24 @@ class Rentals extends Component {
 
 
 {this.getCustomFormat(this.state.value, this.state.isGregorian)}
-      
+
+<Button
+        onClick={() =>this.setState({open:!open})}
+        aria-controls="example-collapse-text"
+        aria-expanded={open}
+        className="m-4" 
+      >
+        click
+      </Button>
+      <Collapse in={open}>
+        <div id="example-collapse-text">
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+          terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
+          labore wes anderson cred nesciunt sapiente ea proident.
+        </div>
+      </Collapse>
+
+
         <ModalComponenet show={this.state.modalShow} onHide={this.toggle}>
           <ModalHeader>Modal heading</ModalHeader>
           <ModalBody>
@@ -67,6 +85,9 @@ class Rentals extends Component {
             </Button>
           </ModalFooter>
         </ModalComponenet>
+
+       
+
       </div>
     );
   }

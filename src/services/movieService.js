@@ -1,7 +1,7 @@
 import http from "./httpService";
+import  {getEndpoint}  from "./endPoint";
 
-
-const apiEndpoint = process.env.REACT_APP_URL + "/movies";
+const apiEndpoint = getEndpoint() + "/movies";
 
 function movieUrl(id) {
   return `${apiEndpoint}/${id}`;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink } from "react-router-dom";
+import { Collapse } from 'react-bootstrap';
 
 //import { fasortasc, fasortdesc } from '@fortawesome/react-fontawesome'
 //import { fasortasc,fasortdesc } from '@fortawesome/free-solid-svg-icons'
@@ -63,11 +64,12 @@ const StyledMenu = styled.nav`
 const Menu = ({ open, menus, setOpen, user }) => {
   const [menu, setMenu] = useState([]);
   //const [menus, setMenus] = useState([]);
+  const [opencol, setOpencol] = useState(false);
 
   useEffect(() => {
     try {
 
-      setMenu(menus.filter(item => item['component'] === '' && item['url'] === '').map(v => ({ ...v, isshow: '' })));
+      setMenu(menus.filter(item => item['component'] === '' && item['url'] === '').map(v => ({ ...v, isshow: false })));
 
     } catch (error) {
 
@@ -107,41 +109,50 @@ const Menu = ({ open, menus, setOpen, user }) => {
             ) : item["parentId"] === 0 ? (
               <li key={item["_id"]}>
                 <a
-                  data-toggle="collapse"
+                 
                   onClick={() => {
                     const MenuT = [...menu];
                     const index = MenuT.findIndex(
                       (obj) => obj.id === item["id"]
                     );
                     MenuT[index] = { ...MenuT[index] };
-                    MenuT[index].isshow =
-                      MenuT[index].isshow === "show" ? "" : "show";
+                    MenuT[index].isshow =!MenuT[index].isshow;
                     setMenu(MenuT);
+                    
                   }}
                   role="button"
-                  aria-controls={item["label"]}
+                  aria-controls={item["id"]}
+                  aria-expanded={menus !== undefined &&
+                    menu.length !== 0 &&
+                    menu[menu.findIndex((obj) => obj.id === item["id"])]
+                      .isshow}
                 >
                   {item["label"]}
                   { <i className={menus !== undefined &&
                     menu.length !== 0 &&
                     menu[menu.findIndex((obj) => obj.id === item["id"])]
-                      .isshow === "show"? "fa fa-sort-asc m-2 ":"fa fa-sort-asc m-2 show" } />
+                      .isshow === true? "fa fa-sort-asc m-2 ":"fa fa-sort-asc m-2 show" } />
                     }
                   
                 </a>
-
-                <ul
-                  className={
-                    "collapse list-unstyled test " +
-                    menu[menu.findIndex((obj) => obj.id === item["id"])].isshow
-                  }
-                  id={item["label"]}
+                <Collapse in={menus !== undefined &&
+                    menu.length !== 0 &&
+                    menu[menu.findIndex((obj) => obj.id === item["id"])]
+                      .isshow}>
+                <div
+                
+                  // className={
+                  //   "collapse list-unstyled " +
+                  //   menu[menu.findIndex((obj) => obj.id === item["id"])].isshow
+                  // }
+                  id={item["id"]}
                 >
-                  {menus
+                 {menus
                     .filter((menu) => menu["parentId"] === item["id"])
                     .map((subitem) => (
-                      <li key={subitem["_id"]}>
+                      <li key={subitem["_id"]} className="submenuMargin">
                         <NavLink
+                          
                           activeClassName="active"
                           onClick={() => setOpen(!open)}
                           to={subitem["url"]}
@@ -150,7 +161,8 @@ const Menu = ({ open, menus, setOpen, user }) => {
                         </NavLink>
                       </li>
                     ))}
-                </ul>
+                 </div>
+                </Collapse>
               </li>
             ) : null;
           })}

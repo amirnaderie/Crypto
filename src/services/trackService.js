@@ -1,6 +1,7 @@
 import http from "./httpService";
+import  {getEndpoint}  from "./endPoint";
 
-const apiEndpoint = process.env.REACT_APP_URL + "/tracks";
+const apiEndpoint = getEndpoint() + "/tracks";
   
 export  function  getTracks() {
   

@@ -1,4 +1,5 @@
 import axios from "axios";
+import  {getEndpoint}  from "./endPoint";
 //import logger from "./logService";
 
 
@@ -37,7 +38,7 @@ axios.interceptors.response.use(response => {
       {
           originalReq._retry = true;
 
-          let res = fetch(`${process.env.REACT_APP_URL}/auth/refresh`, {
+          let res = fetch(`${getEndpoint()}/auth/refresh`, {
               method: 'POST',
               mode: 'cors',
               cache: 'no-cache',

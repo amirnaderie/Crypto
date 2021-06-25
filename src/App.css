@@ -135,7 +135,7 @@ h1 span {
   box-shadow: 0px 1px 13px 2px rgba(251, 251, 251, 0.09);
   position: relative;
   color: #ededed;
- display: table; 
+  display: table; 
  -khtml-opacity: .90;
  -moz-opacity: .90;
  -ms-filter: ”alpha(opacity=90)”;
@@ -365,7 +365,7 @@ body{
 
 i.fa-sort-asc{
  
-  transition:transform 1s ease-in ;
+  transition:transform .3s ease-in ;
   
 }
 
@@ -375,11 +375,8 @@ i.fa-sort-asc.show{
  
 }
 
-.test{
-  background-color: #f13f57;
-  transition:background-color 2s ease-in ;
+.submenuMargin{
+  margin-right: 1rem;
+  border-right: 1px solid red;
+  padding-right: 1rem;
 }
-
-.test.show{
-  background-color: chartreuse;
- }
