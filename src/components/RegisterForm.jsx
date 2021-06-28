@@ -47,6 +47,8 @@ class RegisterForm extends Form {
           {this.renderInput("password", "رمز ورود", "password")}
           {this.renderInput("name", "نــام")}
           {this.renderButton("Register")}
+          <button className="btn btn-success btn-lg"
+         onClick={() => window.print()}>PRINT</button>
         </form>
       </div>
     );

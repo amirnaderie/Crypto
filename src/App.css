@@ -380,3 +380,13 @@ i.fa-sort-asc.show{
   border-right: 1px solid red;
   padding-right: 1rem;
 }
+
+@media print {
+  header, footer, aside , button,div.alert, … {
+    visibility: hidden;
+    }
+ 
+}
+@page {
+  margin: 2cm;
+}
