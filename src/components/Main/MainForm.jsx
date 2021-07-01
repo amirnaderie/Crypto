@@ -78,9 +78,9 @@ const MainForm = () => {
       <div className="content float-right ">
         <div className="container pt-2 h-100">
           {menus !== undefined && menus.length!==0 && (
-            <div className="pb-1 mt-1 mb-3 border-bottom text-center">
-              <Link to="/not-found"><i className="fa fa-quora fa-3x text-dark" aria-hidden="true"></i>
-</Link>
+            <div className="pb-1 mb-2 border-bottom text-center">
+             <a href="tel:+989125758468" ><i aria-hidden="true" className=" fa fa-phone-square text-info fa-2x pull-left m-2"></i></a>
+             <Link to="/not-found"><img src={process.env.PUBLIC_URL + '/images/flowers64.png'} alt="Site Logo"/></Link>
             </div>
           )}
           <div>

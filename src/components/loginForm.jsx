@@ -31,8 +31,8 @@ class LoginForm extends Form {
       const { data } = this.state;
       this.setState({ iswaiting: true });
       await auth.login(data.username, data.password);
-      this.setState({ iswaiting: false });
       const { state } = this.props.location;
+      this.setState({ iswaiting: false });
       window.location = state ? state.from.pathname : "/not-found";
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
