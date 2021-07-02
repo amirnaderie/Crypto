@@ -22,6 +22,7 @@ const StyledMenu = styled.nav`
   position: absolute;
   top: 0;
   right: 0;
+  overflow: auto;
   transition: transform 1s ease;
   
 
