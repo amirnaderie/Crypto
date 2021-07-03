@@ -51,8 +51,6 @@ class LoginForm extends Form {
     return (
       <div>
         <div className="sub-main-w3">
-
-
           <form onSubmit={this.handleSubmit} className="login">
           <h1>Login</h1>
             <div className="mb-3 input">

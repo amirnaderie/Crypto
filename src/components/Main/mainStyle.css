@@ -46,4 +46,19 @@
   } */
 
 
+  .hXWPiX {
+    height: 60px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 11px -6px;
+    z-index: 1001;
+    opacity: 100;
+  }
+  .e-view {
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
   

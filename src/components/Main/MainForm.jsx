@@ -14,18 +14,27 @@ import { getMenus } from "../../services/menuService";
 import Burger from "./burger";
 import Menu from "./menu";
 import { sortItems } from "../../utils/paginate";
-// import './mainStyle.css'
+import "./mainStyle.css";
 
 const MainForm = () => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(auth.getCurrentUser());
   const [menus, setmenus] = useState([]);
   const [urls, seturls] = useState([]);
-
+  const [dimensions, setDimensions] = React.useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
   useEffect(() => {
+    function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }
+    window.addEventListener("resize", handleResize);
     try {
-      if (window.location.pathname === "/login")
-      {
+      if (window.location.pathname === "/login") {
         setUser(null);
         setmenus([]);
         return;
@@ -35,9 +44,10 @@ const MainForm = () => {
           .then((result) => {
             if (result) {
               try {
-                const data=sortItems(result.data, 'id', 'asc');
+                const data = sortItems(result.data, "id", "asc");
                 seturls(data);
-                data.filter((item) => item["component"] !== "")
+                data
+                  .filter((item) => item["component"] !== "")
                   .map((plugin) => {
                     import(`../${plugin["path"]}`).then((module) => {
                       setmenus((oldArray) => [
@@ -76,16 +86,45 @@ const MainForm = () => {
   return (
     <div className="wrapper ">
       <div className="content float-right ">
-        <div className="container pt-2 h-100">
-          {menus !== undefined && menus.length!==0 && (
-            <div className="pb-1 mb-2 border-bottom text-center">
-             <a href="tel:+989125758468" ><i aria-hidden="true" className=" fa fa-phone-square text-info fa-2x pull-left m-2"></i></a>
-             <Link to="/not-found"><img src={process.env.PUBLIC_URL + '/images/flowers64.png'} alt="Site Logo"/></Link>
-            </div>
-          )}
-          <div>
+        
+            {user !== "undefined" && user !== null && menus !== undefined && menus.length !== 0 && (
+           <div><Burger open={open} setOpen={setOpen} />
+          
+              <div className="dropdown-content">
+                <a>{user !== null && `نام کاربر: ${user.name}`}</a>
+                <li></li>
+                <a>
+                  {(window.screen.orientation || {}).type ||
+                    window.screen.mozOrientation ||
+                    window.screen.msOrientation}
+                </a>
+                <a>
+                  {window.screen.orientation.angle ? "landscape" : "portrait"}
+                </a>
+                <a>{!!navigator.maxTouchPoints ? "mobile" : "computer"}</a>
+              </div>
+           
+            
+              <div className="pb-1 mb-1 border-bottom text-center">
+                <a href="tel:+989125758468">
+                  <i
+                    aria-hidden="true"
+                    className=" fa fa-phone-square text-info fa-2x pull-left m-1"
+                  ></i>
+                </a>
+                <Link to="/not-found">
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/flowers32.png"}
+                    alt="Site Logo"
+                  />
+                </Link>
+              </div>
+              </div>
+            )}
+         <div>
             <Switch>
-              {menus !== undefined && menus.length!==0 &&
+              {menus !== undefined &&
+                menus.length !== 0 &&
                 menus
                   .filter((item) => item["component"] !== "")
                   .map(({ id, url, needPassParams, component: Component }) =>
@@ -121,13 +160,10 @@ const MainForm = () => {
               <Redirect to="/not-found" />
             </Switch>
           </div>
-        </div>
+        
       </div>
       <div>
-        {user !== "undefined" && user !== null && (
-          <Burger open={open} setOpen={setOpen} />
-        )}
-        <Menu open={open} menus={urls} setOpen={setOpen} user={user} />
+        <Menu Height={dimensions.height} open={open} menus={urls} setOpen={setOpen} user={user} />
       </div>
     </div>
   );
