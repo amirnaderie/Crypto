@@ -8,7 +8,17 @@ import ModalComponenet, {
 import DatePicker from "react-datepicker2";
 import RegisterForm from "./RegisterForm";
 import momentJalaali from 'moment-jalaali';
+import Select from "react-dropdown-select";
 
+const options = [
+  { value: 'UG', label: 'UG1' },
+  { value: 'UZ', label: 'UZ1' },
+  { value: 'IR', label: 'ایران' },
+  { value: 'AU', label: 'AU1' },
+  { value: 'UA', label: 'UA1' },
+  { value: 'EZ', label: 'Eurozone' },
+  { value: 'LONG', label: 'https://github.com/sanusart/react-dropdown-select/tree/master/docs/src/examples/Rtl.js' }
+];
 
 class Rentals extends Component {
   state = {
@@ -16,7 +26,8 @@ class Rentals extends Component {
     value:momentJalaali(),
       isGregorian: false,
       isAsc:false,
-      open:false
+      open:false,
+      selectedCountry:null,
   };
 
   getCustomFormat(inputValue, isGregorian) {
@@ -36,7 +47,7 @@ class Rentals extends Component {
     this.setState({ isAsc: !this.state.isAsc });
   };
   render() {
-   const {open}=this.state;
+   const {open,selectedCountry}=this.state;
     return (
       <div>
         <h1>Rental Components</h1>
@@ -85,9 +96,10 @@ class Rentals extends Component {
             </Button>
           </ModalFooter>
         </ModalComponenet>
-
-       
-
+      <div>
+        {selectedCountry!==null && selectedCountry[0].label}
+        <Select multi options={options} direction="rtl" placeholder="  انتخاب ..." onChange={(value) => this.setState({selectedCountry:value})} />
+        </div>
       </div>
     );
   }

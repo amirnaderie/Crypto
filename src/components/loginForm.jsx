@@ -79,7 +79,7 @@ class LoginForm extends Form {
         </div>
         <div className="footer">
           <h2>
-         <span className="h1">&copy;</span >  2018 My Login Form. All rights reserved | Design by
+         <span className="h1">&copy;</span >  2021 My Login Form. All rights reserved | Design by
             <a href="http://amir.com"> amir </a>
           </h2>
         </div>
