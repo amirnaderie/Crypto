@@ -106,12 +106,7 @@ const MainForm = () => {
            
             
               <div className="pb-1 mb-1 border-bottom text-center">
-                <a href="tel:+989125758468">
-                  <i
-                    aria-hidden="true"
-                    className=" fa fa-phone-square text-info fa-2x pull-left m-1"
-                  ></i>
-                </a>
+               
                 <Link to="/not-found">
                   <img
                     src={process.env.PUBLIC_URL + "/images/flowers32.png"}

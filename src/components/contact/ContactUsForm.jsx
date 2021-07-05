@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Joi from "joi-browser";
-import Input from "./Input";
-import useValidation from "./hooks/useValidation";
+import Input from "./input";
+import Validation from "./validation";
 
 const initialFormState = {
   name: "",
@@ -15,9 +15,9 @@ const schema = {
   password: Joi.string().required().label("Password"),
 };
 
-const NewRegisterForm = () => {
+const ContactUsForm = () => {
   const [form, setForm] = useState(initialFormState);
-  const { errors } = useValidation(form, schema);
+  const { errors } = Validation(form, schema);
 
   function setInput(inputName) {
     return (e) => {
@@ -28,7 +28,13 @@ const NewRegisterForm = () => {
 
   return (
     <div>
-      <h3>Form Controlled</h3>
+       <h1 className="text-dark">Contact Us</h1>
+      <a href="tel:+989125758468">
+        <i
+          aria-hidden="true"
+          className=" fa fa-phone-square text-info fa-2x pull-left m-1"
+        ></i>
+      </a>
       <form>
         <div className="form-group">
           <Input
@@ -68,4 +74,4 @@ const NewRegisterForm = () => {
   );
 };
 
-export default NewRegisterForm;
+export default ContactUsForm;

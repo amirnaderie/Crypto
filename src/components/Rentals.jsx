@@ -10,15 +10,17 @@ import RegisterForm from "./RegisterForm";
 import momentJalaali from 'moment-jalaali';
 import Select from "react-dropdown-select";
 
-const options = [
-  { value: 'UG', label: 'UG1' },
-  { value: 'UZ', label: 'UZ1' },
-  { value: 'IR', label: 'ایران' },
-  { value: 'AU', label: 'AU1' },
-  { value: 'UA', label: 'UA1' },
-  { value: 'EZ', label: 'Eurozone' },
-  { value: 'LONG', label: 'https://github.com/sanusart/react-dropdown-select/tree/master/docs/src/examples/Rtl.js' }
-];
+import { getGenres } from "../services/genreService";
+
+// const options = [
+//   { value: 'UG', label: 'UG1' },
+//   { value: 'UZ', label: 'UZ1' },
+//   { value: 'IR', label: 'ایران' },
+//   { value: 'AU', label: 'AU1' },
+//   { value: 'UA', label: 'UA1' },
+//   { value: 'EZ', label: 'Eurozone' },
+//   { value: 'LONG', label: 'https://github.com/sanusart/react-dropdown-select/tree/master/docs/src/examples/Rtl.js' }
+// ];
 
 class Rentals extends Component {
   state = {
@@ -28,7 +30,17 @@ class Rentals extends Component {
       isAsc:false,
       open:false,
       selectedCountry:null,
+      options:{},
   };
+
+  async componentDidMount(){
+    const  {data} =await getGenres();
+    const options = data.map(row=> {
+     return { value : row._id, label : row.name }
+   })
+   
+     this.setState({options});
+  }
 
   getCustomFormat(inputValue, isGregorian) {
     if (!inputValue)
@@ -47,7 +59,7 @@ class Rentals extends Component {
     this.setState({ isAsc: !this.state.isAsc });
   };
   render() {
-   const {open,selectedCountry}=this.state;
+   const {open,selectedCountry,options}=this.state;
     return (
       <div>
         <h1>Rental Components</h1>
@@ -97,7 +109,7 @@ class Rentals extends Component {
           </ModalFooter>
         </ModalComponenet>
       <div>
-        {selectedCountry!==null && selectedCountry[0].label}
+        {(selectedCountry!==null && selectedCountry!=="undefined") && selectedCountry[0].label}
         <Select multi options={options} direction="rtl" placeholder="  انتخاب ..." onChange={(value) => this.setState({selectedCountry:value})} />
         </div>
       </div>

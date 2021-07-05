@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import Joi from "joi-browser";
    
-const useValidation = (values, schema)=>{
+const Validation = (values, schema)=>{
    const [errors, setErrors] = useState({})
 
    const validate =  async ()=>{
@@ -23,5 +23,5 @@ const useValidation = (values, schema)=>{
    return {errors}
 }
 
-export default useValidation
+export default Validation
    

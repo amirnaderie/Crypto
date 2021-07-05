@@ -1,4 +1,4 @@
-import React, { useRef, FunctionComponent, InputHTMLAttributes, useEffect, ChangeEvent, ChangeEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 
 const Input= ({ error, label, ...rest }) => {
    const [touched, setTouched] = useState(false)
