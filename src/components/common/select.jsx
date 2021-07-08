@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from 'react';
 
-const Select = ({ name, label, options, error, ...rest }) => {
+const Select = ({ name, label, options,optionlabel,optionvalue,direction="rtl", error, ...rest }) => {
+  const [touched, setTouched] = useState(false)
   return (
     <div className="form-group">
-      <label htmlFor={name} className="pull-right">{label}</label>
-      <select name={name} id={name} {...rest} className="form-control">
+      <label htmlFor={name} className={`${direction}==="rtl"?pull-right:"" m-2`}>{label}</label>
+      <select name={name} id={name} {...rest} className="form-control" onBlur={() => setTouched(true)}>
         <option value="" />
-        {options.map(option => (
-          <option key={option._id} value={option._id}>
-            {option.name}
+        {options  &&  options.map(option => (
+          <option key={option._id} value={option[optionvalue]}>
+            {option[optionlabel]}
           </option>
         ))}
       </select>
-      {error && <div className="alert alert-danger">{error}</div>}
+      {(touched && error)&& <div className="text-danger">{error}</div>}
+      
     </div>
   );
 };

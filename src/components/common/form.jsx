@@ -123,6 +123,8 @@ class Form extends Component {
         options={options}
         onChange={this.handleChange}
         error={errors[name]}
+        optionlabel="name"
+        optionvalue="_id"
       />
     );
   }
