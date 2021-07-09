@@ -11,7 +11,7 @@ import { paginate, sortItems } from "../utils/paginate";
 import SearchBox from "./searchBox";
 import { connect } from "react-redux";
 import {fetchMovies  } from '../redux/slices/moviesSlice';
-import {MoviesContext} from './context/MoviesContext'
+import {MoviesContext} from './context/Context'
 
 
 class MoviesForm extends Component {

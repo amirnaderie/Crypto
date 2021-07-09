@@ -6,7 +6,7 @@ const Select = ({ name, label, options,optionlabel,optionvalue,direction="rtl", 
     <div className="form-group">
       <label htmlFor={name} className={`${direction}==="rtl"?pull-right:"" m-2`}>{label}</label>
       <select name={name} id={name} {...rest} className="form-control" onBlur={() => setTouched(true)}>
-        <option value="" />
+      {rest.placeholder && <option value="" disabled selected>{rest.placeholder}</option>}
         {options  &&  options.map(option => (
           <option key={option._id} value={option[optionvalue]}>
             {option[optionlabel]}

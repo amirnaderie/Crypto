@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext} from "react";
 import Joi from "joi-browser";
 
 import Input from "../common/input";
@@ -8,27 +8,47 @@ import "./ServiceForm.css";
 import { faStepBackward } from "@fortawesome/free-solid-svg-icons";
 import SelectSearch from "../common/selectsearch";
 import Select from "../common/select";
+import {UserContext} from "../context/Context"
 
 const initialFormState = {
   brand: 0,
   model: 0,
   productYear: "",
-  type: "",
+  servicetype: "",
+  address:"",
+  tel:"",
 };
+const pattern = /^[0]{1}[9]{1}[1-9]{9}$/
 
-const schema = {
+const schema =Joi.object().keys ({
   brand: Joi.number().min(1).required().label("Brand"),
   model: Joi.number().min(1).required().label("Model"),
   productYear: Joi.number().min(1980).max(2021).required().label("Date Of Production"),
-  type: Joi.string().required().label("ServiceType"),
-};
+  address: Joi.string().min(5).max(255).required().label("Address"),
+  tel: Joi.string().min(11).max(11).required().regex(pattern).label("Tel").error(errors => {
+    switch(errors[0].type) {
+      case 'string.min':
+        errors[0].message ='Please Enter AtLeast 11 Numbers';
+        break;
+      case 'string.regex.base':
+        errors[0].message ='Please Follow The Pattern 09xxxxxxxx';
+        break;
+      default:
+        // code block
+    }
+   return errors[0];
+  })
+  
+});
 
 const ServiceForm = () => {
-  const [form, setForm] = useState(initialFormState);
+  const {user } = useContext(UserContext);
+  //const [form, setForm] = useState(initialFormState);
+  const [form, setForm] = useState({...initialFormState,...{address:user.address,tel:user.tel}});
   const [brands, setBrands] = useState(null);
   const [models, setModels] = useState(null);
   const { errors } = Validation(form, schema);
-  const [touched, setTouched] = useState(false);
+ 
 
   useEffect(() => {
     async function fetchAPI() {
@@ -86,6 +106,7 @@ const ServiceForm = () => {
         error={errors.model}
         optionlabel="label"
         optionvalue="value"
+        placeholder="Please First Select A Brand ..."
       />
       <Input
             name="productYear"
@@ -99,11 +120,28 @@ const ServiceForm = () => {
           />
         
         <Input
-            name="type"
+            name="servicetype"
             onChange={setInput}
             label="ServiceType"
-            value={form.type}
-            error={errors.type}
+            value={form.servicetype}
+            error={errors.servicetype}
+          />
+          <Input
+            name="address"
+            onChange={setInput}
+            label="Address"
+            value={form.address}
+            error={errors.address}
+          />
+          <Input
+            name="tel"
+            type="number"
+            onChange={setInput}
+            label="Tel"
+            value={form.tel}
+            error={errors.tel}
+            placeholder="09xxxxxxxxx"
+            maxLength="11" 
           />
                
         <div className="form-group">

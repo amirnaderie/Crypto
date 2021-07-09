@@ -1,5 +1,5 @@
 import React,{useContext} from "react";
-import {MoviesContext} from "./context/MoviesContext"
+import {MoviesContext} from "./context/Context"
 const SearchBox = () => {
   const {searchQuery,handleSearch } = useContext(MoviesContext);
   return (

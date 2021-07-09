@@ -14,6 +14,7 @@ import { getMenus } from "../../services/menuService";
 import Burger from "./burger";
 import Menu from "./menu";
 import { sortItems } from "../../utils/paginate";
+import {useContext, UserContext} from '../context/Context'
 import "./mainStyle.css";
 
 const MainForm = () => {
@@ -116,7 +117,8 @@ const MainForm = () => {
               </div>
               </div>
             )}
-         <div>
+         <div >
+         <UserContext.Provider value={{ user }}>
             <Switch>
               {menus !== undefined &&
                 menus.length !== 0 &&
@@ -154,8 +156,9 @@ const MainForm = () => {
               <Redirect from="/" exact to="/login" />
               <Redirect to="/not-found" />
             </Switch>
+            </UserContext.Provider>
           </div>
-        
+         
       </div>
       <div>
         <Menu Height={dimensions.height} open={open} menus={urls} setOpen={setOpen} user={user} />

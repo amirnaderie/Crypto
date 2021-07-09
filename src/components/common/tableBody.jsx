@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import _ from "lodash";
-import {MoviesContext} from "../context/MoviesContext"
+import {MoviesContext} from "../context/Context"
 
 const TableBody =({columns})=> {
   const {movies } = useContext(MoviesContext);
