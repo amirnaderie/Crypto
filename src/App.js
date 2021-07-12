@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 // import ProtectedRoute from "./components/common/protectedRoute";
 // import MusicForm from "./components/Music/musicForm"
 //import auth from "./services/authService";
+import Joi from "joi-browser";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 

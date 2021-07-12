@@ -1,5 +1,7 @@
 import React, { useState, useEffect,useContext} from "react";
 import Joi from "joi-browser";
+import moment  from 'moment-jalaali';
+
 
 import Input from "../common/input";
 import Validation from "../common/validation";
@@ -8,6 +10,7 @@ import "./ServiceForm.css";
 import { faStepBackward } from "@fortawesome/free-solid-svg-icons";
 import SelectSearch from "../common/selectsearch";
 import Select from "../common/select";
+import DatePicker1 from "../common/datepicker";
 import {UserContext} from "../context/Context"
 
 const initialFormState = {
@@ -15,15 +18,20 @@ const initialFormState = {
   model: 0,
   productYear: "",
   servicetype: "",
+  servicedate:new Date().toLocaleDateString("en-ZA"),
   address:"",
   tel:"",
+
 };
 const pattern = /^[0]{1}[9]{1}[1-9]{9}$/
+
 
 const schema =Joi.object().keys ({
   brand: Joi.number().min(1).required().label("Brand"),
   model: Joi.number().min(1).required().label("Model"),
   productYear: Joi.number().min(1980).max(2021).required().label("Date Of Production"),
+  servicetype: Joi.string().min(5).max(60).required().label("ServiceType"),
+  servicedate: Joi.date().raw().required().label("ServiceDate"),
   address: Joi.string().min(5).max(255).required().label("Address"),
   tel: Joi.string().min(11).max(11).required().regex(pattern).label("Tel").error(errors => {
     switch(errors[0].type) {
@@ -48,8 +56,9 @@ const ServiceForm = () => {
   const [brands, setBrands] = useState(null);
   const [models, setModels] = useState(null);
   const { errors } = Validation(form, schema);
- 
-
+  
+  
+    
   useEffect(() => {
     async function fetchAPI() {
       const { data } = await getBrands();
@@ -78,7 +87,9 @@ const ServiceForm = () => {
     const newValue = { [input.name]: input.value };
     return setForm((form) => ({ ...form, ...newValue }));
   };
-
+  const handleDateChange = value => {
+    setForm((form) => ({ ...form, ...{servicedate:value.format("YYYY/MM/DD")} }));
+    };
 
   //  const brandvalue=()=>{
   //   if (brands)
@@ -116,9 +127,9 @@ const ServiceForm = () => {
             value={form.productYear}
             error={errors.productYear}
             maxLength="4" 
-          
+       
           />
-        
+    
         <Input
             name="servicetype"
             onChange={setInput}
@@ -126,6 +137,18 @@ const ServiceForm = () => {
             value={form.servicetype}
             error={errors.servicetype}
           />
+
+     <DatePicker1
+        name="servicedate"
+        label="ServiceDate"
+        value={moment(form.servicedate, "YYYY/MM/DD")}
+        min={moment(new Date().toLocaleDateString("en-ZA"), "YYYY/MM/DD")}
+        isGregorian={true}
+        onChange={handleDateChange} 
+        timePicker={false}
+        error={errors.servicedate}
+      />
+           
           <Input
             name="address"
             onChange={setInput}
