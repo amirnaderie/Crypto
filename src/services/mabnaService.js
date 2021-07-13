@@ -25,3 +25,11 @@ export function  getModels(value) {
   }
 }
 
+export function  getTimes() {
+  try {
+     return http.get(apiEndpoint + "/time");
+  } catch (error) {
+     const retval=[];
+     return  retval;
+  }
+}
