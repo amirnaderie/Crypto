@@ -65,7 +65,7 @@ const StyledMenu = styled.nav`
 const Menu = ({ Height,open, menus, setOpen, user }) => {
   const [menu, setMenu] = useState([]);
   //const [menus, setMenus] = useState([]);
-  const [opencol, setOpencol] = useState(false);
+  //const [opencol, setOpencol] = useState(false);
   
   useEffect(() => {
    

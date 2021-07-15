@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import Joi from "joi-browser";
 import moment from "moment-jalaali";
+import { toast } from "react-toastify";
+import { Spinner } from "react-bootstrap";
 
 import Input from "../common/input";
-import Validation from "../common/validation";
-import { getBrands, getModels,getTimes } from "../../services/mabnaService";
+import { getBrands, getModels, getTimes } from "../../services/mabnaService";
 import "./ServiceForm.css";
 import { faStepBackward } from "@fortawesome/free-solid-svg-icons";
 import SelectSearch from "../common/selectsearch";
@@ -24,7 +25,7 @@ const initialFormState = {
 };
 const pattern = /^[0]{1}[9]{1}[1-9]{9}$/;
 
-const schema = Joi.object().keys({
+const schema = {
   brand: Joi.number().min(1).required().label("Brand"),
   model: Joi.number().min(1).required().label("Model"),
   productYear: Joi.number()
@@ -55,11 +56,10 @@ const schema = Joi.object().keys({
       }
       return errors[0];
     }),
-});
+};
 
 const ServiceForm = () => {
   const { user } = useContext(UserContext);
-  //const [form, setForm] = useState(initialFormState);
   const [form, setForm] = useState({
     ...initialFormState,
     ...{ address: user.address, tel: user.tel },
@@ -67,13 +67,16 @@ const ServiceForm = () => {
   const [brands, setBrands] = useState(null);
   const [models, setModels] = useState(null);
   const [times, setTimes] = useState(null);
-  const { errors } = Validation(form, schema);
+  const [iswaiting, SetWaiting] = useState(false);
+  const [errors, SetErrors] = useState({});
+
+  //const { errors } = Validation(form, schema);
 
   useEffect(() => {
     async function fetchAPI() {
-      const { data:branddata } = await getBrands();
-      const { data:timedate } = await getTimes();
-    
+      const { data: branddata } = await getBrands();
+      const { data: timedate } = await getTimes();
+
       setBrands(branddata);
       setTimes(timedate);
     }
@@ -81,21 +84,25 @@ const ServiceForm = () => {
   }, []);
 
   const setInput = (e) => {
+    validateProperty(e.target);
     const newValue = { [e.target.name]: e.target.value };
     return setForm((form) => ({ ...form, ...newValue }));
   };
-  const setSelect = async (inputName, inputNameValue) => {
+
+  const setSelectSearch = async (inputName, inputNameValue) => {
     if (inputNameValue.length !== 0) {
       const { data } = await getModels(inputNameValue[0].value);
       setModels(data);
-      //setSelectModel({name:"model",value:1});
-      const newValue = { [inputName]: inputNameValue[0].value,model: 1 };
-      return setForm((form) => ({ ...form, ...newValue }));
+      //setSelect({name:"model",value:1});
+      const newValue = { [inputName]: inputNameValue[0].value };
+      setForm((form) => ({ ...form, ...newValue }));
+      setSelect({currentTarget: { name: "model", value: 1 }});
     }
   };
 
-  const setSelectModel = ({ currentTarget: input }) => {
-    const newValue = { [input.name]: input.value };
+  const setSelect = ({ currentTarget: input }) => {
+    validateProperty(input);
+    const newValue = { [input.name]: parseInt(input.value) };
     return setForm((form) => ({ ...form, ...newValue }));
   };
   const handleDateChange = (value) => {
@@ -105,21 +112,64 @@ const ServiceForm = () => {
     }));
   };
 
-  //  const brandvalue=()=>{
-  //   if (brands)
-  //      return;
-  //  }
+  const remove_from_errorlist = (itemname) => {
+    let localerrors = { ...errors };
+    delete localerrors[itemname];
+    SetErrors(localerrors);
+  };
+  const validateProperty = ({ name, value }) => {
+    const obj = { [name]: value };
+    const Schema = { [name]: schema[name] };
+    const { error } = Joi.validate(obj, Schema);
+    if (!errors[name]) return;
+    if (!error) {
+      remove_from_errorlist(name);
+      return;
+    }
+    if (error.details[0].type !== errors[name].type)
+      remove_from_errorlist(name);
+  };
+
+  const validate = () => {
+    const options = { abortEarly: false };
+    const { error } = Joi.validate(form, schema, options);
+    if (!error) return null;
+
+    const errorList = {};
+    for (let item of error.details)
+      errorList[item.path[0]] = { message: item.message, type: item.type };
+    return errorList;
+  };
+
+  const doSubmit = async (e) => {
+    try {
+      e.preventDefault();
+
+      SetErrors(validate() || {});
+      if (errors) return;
+
+      SetWaiting(true);
+
+      // await saveMovie(this.state.data);
+      await toast.success("ثبت با موفقیت انجام پذیرفت", {
+        position: toast.POSITION.TOP_LEFT,
+      });
+    } catch (error) {
+      toast.error("خطا در ثبت اطلاعات", { position: toast.POSITION.TOP_LEFT });
+      SetWaiting(false);
+    }
+  };
 
   return (
-    <div className="col-md-3 container justify-content-center">
+    <div className="col-lg-9 container justify-content-center">
       <h1 className="text-dark">Service</h1>
-      <form className="direction">
+      <form className="direction" onSubmit={doSubmit}>
         <SelectSearch
           options={brands}
           name="brand"
           labelcolor="text-info"
           label="Brand"
-          changehandle={setSelect}
+          changehandle={setSelectSearch}
           value={form.brand}
         ></SelectSearch>
         <Select
@@ -129,7 +179,7 @@ const ServiceForm = () => {
           value={form.model}
           label="Model"
           options={models}
-          onChange={setSelectModel}
+          onChange={setSelect}
           error={errors.model}
           optionlabel="label"
           optionvalue="value"
@@ -167,14 +217,14 @@ const ServiceForm = () => {
           timePicker={false}
           error={errors.servicedate}
         />
-<Select
+        <Select
           name="servicetime"
           id="servicetime"
           labelcolor="text-info"
           value={form.servicetime}
           label="ServiceTime"
           options={times}
-          onChange={setSelectModel}
+          onChange={setSelect}
           error={errors.servicetime}
           optionlabel="label"
           optionvalue="value"
@@ -182,6 +232,7 @@ const ServiceForm = () => {
         />
         <Input
           name="address"
+          type="textare"
           labelcolor="text-info"
           onChange={setInput}
           label="Address"
@@ -201,9 +252,16 @@ const ServiceForm = () => {
         />
 
         <div className="form-group">
-          <button type="button" className="btn btn-primary m-2">
-            Request
-          </button>
+          <button className="btn btn-primary m-2">Request</button>
+          {iswaiting && (
+            <Spinner
+              as="span"
+              animation="grow"
+              size="md"
+              role="status"
+              aria-hidden="true"
+            />
+          )}
         </div>
       </form>
     </div>
