@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 // import ProtectedRoute from "./components/common/protectedRoute";
 // import MusicForm from "./components/Music/musicForm"
 //import auth from "./services/authService";
-import Joi from "joi-browser";
+//import Joi from "joi-browser";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
@@ -35,7 +35,11 @@ class App extends Component {
       <React.Fragment>
     
         <MainForm/>
-        <ToastContainer rtl />
+       {/* for persian 
+        <ToastContainer rtl /> */}
+      
+      <ToastContainer />
+      
         {/* <NavBar user={user} />
         <main className="container">
           <Switch>

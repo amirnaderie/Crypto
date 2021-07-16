@@ -6,17 +6,20 @@ import { Spinner } from "react-bootstrap";
 
 import Input from "../common/input";
 import { getBrands, getModels, getTimes } from "../../services/mabnaService";
-import "./ServiceForm.css";
-import { faStepBackward } from "@fortawesome/free-solid-svg-icons";
 import SelectSearch from "../common/selectsearch";
 import Select from "../common/select";
 import DatePicker1 from "../common/datepicker";
+
+import { saveRequest } from "../../services/requestService";
+
 import { UserContext } from "../context/Context";
+
+import "./ServiceForm.css";
 
 const initialFormState = {
   brand: 0,
   model: 0,
-  productYear: "",
+  productyear: "",
   servicetype: "",
   servicedate: new Date().toLocaleDateString("en-ZA"),
   servicetime: 1,
@@ -28,7 +31,7 @@ const pattern = /^[0]{1}[9]{1}[1-9]{9}$/;
 const schema = {
   brand: Joi.number().min(1).required().label("Brand"),
   model: Joi.number().min(1).required().label("Model"),
-  productYear: Joi.number()
+  productyear: Joi.number()
     .min(1980)
     .max(new Date().getFullYear())
     .required()
@@ -67,8 +70,8 @@ const ServiceForm = () => {
   const [brands, setBrands] = useState(null);
   const [models, setModels] = useState(null);
   const [times, setTimes] = useState(null);
-  const [iswaiting, SetWaiting] = useState(false);
-  const [errors, SetErrors] = useState({});
+  const [iswaiting, setWaiting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   //const { errors } = Validation(form, schema);
 
@@ -102,20 +105,20 @@ const ServiceForm = () => {
 
   const setSelect = ({ currentTarget: input }) => {
     validateProperty(input);
-    const newValue = { [input.name]: parseInt(input.value) };
+    const newValue = { [input.name]: parseInt(input.value,10) };
     return setForm((form) => ({ ...form, ...newValue }));
   };
   const handleDateChange = (value) => {
     setForm((form) => ({
       ...form,
-      ...{ servicedate: value.format("YYYY/MM/DD") },
+      ...{ servicedate: value.format("YYYYMMDD") },
     }));
   };
 
   const remove_from_errorlist = (itemname) => {
     let localerrors = { ...errors };
     delete localerrors[itemname];
-    SetErrors(localerrors);
+    setErrors(localerrors);
   };
   const validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
@@ -133,11 +136,12 @@ const ServiceForm = () => {
   const validate = () => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(form, schema, options);
-    if (!error) return null;
+    if (!error) return {};
 
     const errorList = {};
     for (let item of error.details)
       errorList[item.path[0]] = { message: item.message, type: item.type };
+    
     return errorList;
   };
 
@@ -145,18 +149,28 @@ const ServiceForm = () => {
     try {
       e.preventDefault();
 
-      SetErrors(validate() || {});
-      if (errors) return;
-
-      SetWaiting(true);
-
-      // await saveMovie(this.state.data);
-      await toast.success("ثبت با موفقیت انجام پذیرفت", {
+      const formerrors=await validate();
+      setErrors(formerrors);
+     
+      if (Object.keys(formerrors).length>0) 
+        return;
+      
+      setWaiting(true);
+      await saveRequest(form);
+      await toast.success("Your request has been successfully submitted", {
         position: toast.POSITION.TOP_LEFT,
       });
-    } catch (error) {
-      toast.error("خطا در ثبت اطلاعات", { position: toast.POSITION.TOP_LEFT });
-      SetWaiting(false);
+      setWaiting(false);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400)
+      toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
+    else
+      toast.error("Connection Error", {
+        position: toast.POSITION.TOP_LEFT,
+      });
+         
+   //   toast.error("خطا در ثبت اطلاعات", { position: toast.POSITION.TOP_LEFT });
+      setWaiting(false);
     }
   };
 
@@ -186,13 +200,13 @@ const ServiceForm = () => {
           placeholder="Please First Select A Brand ..."
         />
         <Input
-          name="productYear"
+          name="productyear"
           type="number"
           labelcolor="text-info"
           onChange={setInput}
           label="Date Of Production"
-          value={form.productYear}
-          error={errors.productYear}
+          value={form.productyear}
+          error={errors.productyear}
           maxLength="4"
           placeholder={new Date().getFullYear()}
         />

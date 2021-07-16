@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Input = ({
   type = "text",
@@ -10,7 +10,7 @@ const Input = ({
   coreClass = "col-lg-6",
   ...rest
 }) => {
-  const [touched, setTouched] = useState(false);
+  // const [touched, setTouched] = useState(false);
   const handlekeydown = (e) => {
     if (
       e.target.type === "number" &&
@@ -46,7 +46,7 @@ const Input = ({
         onKeyDown={handlekeydown}
         autoFocus={isautofocus}
         className={`col-12 ${coreClass}`}
-        onBlur={() => setTouched(true)}
+        // onBlur={() => setTouched(true)}
       />
       {error && (
         <span className="text-danger mx-2">

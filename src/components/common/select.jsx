@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Select = ({
   name,
@@ -12,7 +12,7 @@ const Select = ({
   error,
   ...rest
 }) => {
-  const [touched, setTouched] = useState(false);
+  // const [touched, setTouched] = useState(false);
   return (
     <div className="form-group mb-3">
       <label
@@ -26,7 +26,7 @@ const Select = ({
         id={name}
         {...rest}
         className={`col-12 ${coreClass}`}
-        onBlur={() => setTouched(true)}
+        // onBlur={() => setTouched(true)}
       >
         {rest.placeholder && !options && (
           <option disabled>{rest.placeholder}</option>

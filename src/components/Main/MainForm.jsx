@@ -14,7 +14,7 @@ import { getMenus } from "../../services/menuService";
 import Burger from "./burger";
 import Menu from "./menu";
 import { sortItems } from "../../utils/paginate";
-import {useContext, UserContext} from '../context/Context'
+import {UserContext} from '../context/Context'
 import "./mainStyle.css";
 
 const MainForm = () => {
@@ -50,7 +50,7 @@ const MainForm = () => {
                 data
                   .filter((item) => item["component"] !== "")
                   .map((plugin) => {
-                    import(`../${plugin["path"]}`).then((module) => {
+                   return import(`../${plugin["path"]}`).then((module) => {
                       setmenus((oldArray) => [
                         ...oldArray,
                         { ...plugin, component: module.default },

@@ -31,12 +31,14 @@ function MusicForm() {
               cookies. For more information, refer to DevExpress’{" "}
               <a
                 href="https://www.devexpress.com/AboutUs/privacy-policy.xml"
+                rel="noopener noreferrer"
                 target="_blank"
               >
                 privacy policy
               </a>{" "}
               and{" "}
               <a
+              rel="noopener noreferrer"
                 href="https://www.devexpress.com/AboutUs/cookie-policy.xml"
                 target="_blank"
               >
@@ -46,7 +48,7 @@ function MusicForm() {
             </div>
           </div>
           <div className="Button">
-            <a href="javascript:;" onClick={hidediv}>I Understand</a>
+            <a  onClick={e => {e.preventDefault(); }}>I Understand</a>
           </div>
         </div>
       </div>}
