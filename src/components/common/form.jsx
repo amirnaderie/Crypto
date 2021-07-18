@@ -3,7 +3,7 @@ import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
 import { Spinner } from "react-bootstrap";
-import DateMask from "./datemask";
+//import DateMask from "./datemask";
 // import DatePicker from "react-datepicker2";
 // import momentJalaali from "moment-jalaali";
 import MdatePicker, { getCustomFormat } from "./mdatepicker";

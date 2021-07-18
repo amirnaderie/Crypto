@@ -80,8 +80,8 @@ const ServiceForm = () => {
       const { data: branddata } = await getBrands();
       const { data: timedate } = await getTimes();
 
-      setBrands(branddata);
       setTimes(timedate);
+      setBrands(branddata);
     }
     fetchAPI();
   }, []);
@@ -99,13 +99,13 @@ const ServiceForm = () => {
       //setSelect({name:"model",value:1});
       const newValue = { [inputName]: inputNameValue[0].value };
       setForm((form) => ({ ...form, ...newValue }));
-      setSelect({currentTarget: { name: "model", value: 1 }});
+      setSelect({ currentTarget: { name: "model", value: 1 } });
     }
   };
 
   const setSelect = ({ currentTarget: input }) => {
     validateProperty(input);
-    const newValue = { [input.name]: parseInt(input.value,10) };
+    const newValue = { [input.name]: parseInt(input.value, 10) };
     return setForm((form) => ({ ...form, ...newValue }));
   };
   const handleDateChange = (value) => {
@@ -141,7 +141,7 @@ const ServiceForm = () => {
     const errorList = {};
     for (let item of error.details)
       errorList[item.path[0]] = { message: item.message, type: item.type };
-    
+
     return errorList;
   };
 
@@ -149,12 +149,11 @@ const ServiceForm = () => {
     try {
       e.preventDefault();
 
-      const formerrors=await validate();
+      const formerrors = await validate();
       setErrors(formerrors);
-     
-      if (Object.keys(formerrors).length>0) 
-        return;
-      
+
+      if (Object.keys(formerrors).length > 0) return;
+
       setWaiting(true);
       await saveRequest(form);
       await toast.success("Your request has been successfully submitted", {
@@ -163,110 +162,132 @@ const ServiceForm = () => {
       setWaiting(false);
     } catch (ex) {
       if (ex.response && ex.response.status === 400)
-      toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
-    else
-      toast.error("Connection Error", {
-        position: toast.POSITION.TOP_LEFT,
-      });
-         
-   //   toast.error("خطا در ثبت اطلاعات", { position: toast.POSITION.TOP_LEFT });
+        toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
+      else
+        toast.error("Connection Error", {
+          position: toast.POSITION.TOP_LEFT,
+        });
+
+      //   toast.error("خطا در ثبت اطلاعات", { position: toast.POSITION.TOP_LEFT });
       setWaiting(false);
     }
   };
 
   return (
-    <div className="col-lg-9 container justify-content-center">
+    <div className="col-lg-10 container justify-content-center align-items-center ">
       <h1 className="text-dark">Service</h1>
-      <form className="direction" onSubmit={doSubmit}>
-        <SelectSearch
-          options={brands}
-          name="brand"
-          labelcolor="text-info"
-          label="Brand"
-          changehandle={setSelectSearch}
-          value={form.brand}
-        ></SelectSearch>
-        <Select
-          name="model"
-          id="model"
-          labelcolor="text-info"
-          value={form.model}
-          label="Model"
-          options={models}
-          onChange={setSelect}
-          error={errors.model}
-          optionlabel="label"
-          optionvalue="value"
-          placeholder="Please First Select A Brand ..."
-        />
-        <Input
-          name="productyear"
-          type="number"
-          labelcolor="text-info"
-          onChange={setInput}
-          label="Date Of Production"
-          value={form.productyear}
-          error={errors.productyear}
-          maxLength="4"
-          placeholder={new Date().getFullYear()}
-        />
+      <form className="direction sub-main-w3" onSubmit={doSubmit}>
+        <div className="row  justify-content-center">
+          <div className=" col-lg-5">
+            <SelectSearch
+              options={brands}
+              name="brand"
+              labelcolor="text-info"
+              label="Brand"
+              changehandle={setSelectSearch}
+              value={form.brand}
+            ></SelectSearch>
+          </div>
+          <div className=" col-lg-5">
+            <Select
+              name="model"
+              id="model"
+              labelcolor="text-info"
+              value={form.model}
+              label="Model"
+              options={models}
+              onChange={setSelect}
+              error={errors.model}
+              optionlabel="label"
+              optionvalue="value"
+              placeholder="Please First Select A Brand ..."
+            />
+          </div>
+        </div>
+        <div className="row  justify-content-center">
+          <div className=" col-lg-5">
+            <Input
+              name="productyear"
+              type="number"
+              labelcolor="text-info"
+              onChange={setInput}
+              label="Date Of Production"
+              value={form.productyear}
+              error={errors.productyear}
+              maxLength="4"
+              placeholder={new Date().getFullYear()}
+            />
+          </div>
+          <div className=" col-lg-5">
+            <Input
+              name="servicetype"
+              labelcolor="text-info"
+              onChange={setInput}
+              label="ServiceType"
+              value={form.servicetype}
+              error={errors.servicetype}
+            />
+          </div>
+        </div>
+        <div className="row  justify-content-center">
+          <div className="col-lg-5">
+            <DatePicker1
+              name="servicedate"
+              label="ServiceDate"
+              labelcolor="text-info"
+              value={moment(form.servicedate, "YYYY/MM/DD")}
+              min={moment(new Date().toLocaleDateString("en-ZA"), "YYYY/MM/DD")}
+              isGregorian={true}
+              onChange={handleDateChange}
+              timePicker={false}
+              error={errors.servicedate}
+            />
+          </div>
+          <div className="col-lg-5">
+            <Select
+              name="servicetime"
+              id="servicetime"
+              labelcolor="text-info"
+              value={form.servicetime}
+              label="ServiceTime"
+              options={times}
+              onChange={setSelect}
+              error={errors.servicetime}
+              optionlabel="label"
+              optionvalue="value"
+              placeholder="Select ..."
+            />
+          </div>
+        </div>
+        <div className="row  justify-content-center">
+          <div className="col-lg-5">
+            <Input
+              name="address"
+              type="textare"
+              labelcolor="text-info"
+              onChange={setInput}
+              label="Address"
+              value={form.address}
+              error={errors.address}
+            />
+          </div>
+          <div className="col-lg-5">
+            <Input
+              name="tel"
+              type="number"
+              labelcolor="text-info"
+              onChange={setInput}
+              label="Tel"
+              value={form.tel}
+              error={errors.tel}
+              placeholder="09xxxxxxxxx"
+              maxLength="11"
+            />
+          </div>
+        </div>
 
-        <Input
-          name="servicetype"
-          labelcolor="text-info"
-          onChange={setInput}
-          label="ServiceType"
-          value={form.servicetype}
-          error={errors.servicetype}
-        />
-
-        <DatePicker1
-          name="servicedate"
-          label="ServiceDate"
-          labelcolor="text-info"
-          value={moment(form.servicedate, "YYYY/MM/DD")}
-          min={moment(new Date().toLocaleDateString("en-ZA"), "YYYY/MM/DD")}
-          isGregorian={true}
-          onChange={handleDateChange}
-          timePicker={false}
-          error={errors.servicedate}
-        />
-        <Select
-          name="servicetime"
-          id="servicetime"
-          labelcolor="text-info"
-          value={form.servicetime}
-          label="ServiceTime"
-          options={times}
-          onChange={setSelect}
-          error={errors.servicetime}
-          optionlabel="label"
-          optionvalue="value"
-          placeholder="Select ..."
-        />
-        <Input
-          name="address"
-          type="textare"
-          labelcolor="text-info"
-          onChange={setInput}
-          label="Address"
-          value={form.address}
-          error={errors.address}
-        />
-        <Input
-          name="tel"
-          type="number"
-          labelcolor="text-info"
-          onChange={setInput}
-          label="Tel"
-          value={form.tel}
-          error={errors.tel}
-          placeholder="09xxxxxxxxx"
-          maxLength="11"
-        />
-
-        <div className="form-group">
-          <button className="btn btn-primary m-2">Request</button>
+        <div className="form-group mt-3">
+          <button className="btn btn-primary ">Request</button>
           {iswaiting && (
             <Spinner
               as="span"

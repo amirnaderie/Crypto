@@ -14,6 +14,8 @@ class LoginForm extends Form {
     errors: {},
     captchaState: false,
     iswaiting:false,
+    heightdimension:window.innerHeight,
+    mainheight:(window.innerHeight-90)  
   };
 
   schema = {
@@ -49,9 +51,9 @@ class LoginForm extends Form {
     //if (auth.getCurrentUser()) return <Redirect to="/movies" />;
 
     return (
-      <div>
-        <div className="sub-main-w3">
-          <form onSubmit={this.handleSubmit} className="login">
+      <div className="d-flex justify-content-center align-items-center"  style={{height: this.state.mainheight}}>
+        
+          <form onSubmit={this.handleSubmit} className="sub-main-w3">
           <h1>Login</h1>
             <div className="mb-3 input">
           
@@ -76,7 +78,7 @@ class LoginForm extends Form {
             {this.renderButton("Login", this.state.captchaState,undefined)}
             </div>
           </form>
-        </div>
+        
         <div className="footer">
           <h2>
          <span className="h1">&copy;</span >  2021 My Login Form. All rights reserved | Design by

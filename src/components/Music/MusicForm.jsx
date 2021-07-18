@@ -30,7 +30,7 @@ function MusicForm() {
               work properly. By accessing this site, you consent to the use of
               cookies. For more information, refer to DevExpress’{" "}
               <a
-                href="https://www.devexpress.com/AboutUs/privacy-policy.xml"
+                href=""
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -39,7 +39,7 @@ function MusicForm() {
               and{" "}
               <a
               rel="noopener noreferrer"
-                href="https://www.devexpress.com/AboutUs/cookie-policy.xml"
+                href=""
                 target="_blank"
               >
                 cookie policy

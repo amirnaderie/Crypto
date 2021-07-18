@@ -25,12 +25,15 @@ const MainForm = () => {
   const [dimensions, setDimensions] = React.useState({
     height: window.innerHeight,
     width: window.innerWidth,
+    // mainheight:(window.innerHeight-90)
   });
   useEffect(() => {
     function handleResize() {
       setDimensions({
         height: window.innerHeight,
         width: window.innerWidth,
+        // mainheight:(window.innerHeight-90)
+
       });
     }
     window.addEventListener("resize", handleResize);
@@ -117,7 +120,7 @@ const MainForm = () => {
               </div>
               </div>
             )}
-         <div >
+         <div className="d-flex justify-content-center align-items-center">
          <UserContext.Provider value={{ user }}>
             <Switch>
               {menus !== undefined &&

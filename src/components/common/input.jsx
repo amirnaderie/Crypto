@@ -7,7 +7,7 @@ const Input = ({
   error,
   isautofocus = false,
   direction = "rtl",
-  coreClass = "col-lg-6",
+  coreClass = "",
   ...rest
 }) => {
   // const [touched, setTouched] = useState(false);
@@ -31,10 +31,10 @@ const Input = ({
         e.preventDefault();
   };
   return (
-    <div className="form-group mb-3 ">
+    <div className="form-group mb-5 position-relative">
       <label
         htmlFor={rest.name}
-        className={`${direction}==="rtl"?pull-right:"" ${labelcolor} w-100`}
+        className={`${direction}==="rtl"?pull-right:"" ${labelcolor}  col-12 `}
       >
         {label}
       </label>
@@ -45,13 +45,13 @@ const Input = ({
         id={rest.name}
         onKeyDown={handlekeydown}
         autoFocus={isautofocus}
-        className={`col-12 ${coreClass}`}
+        className={`col-12  ${coreClass}`}
         // onBlur={() => setTouched(true)}
       />
       {error && (
-        <span className="text-danger mx-2">
+        <div className="text-danger position-absolute ">
           <small>{error.message}</small>
-        </span>
+        </div>
       )}
     </div>
   );
