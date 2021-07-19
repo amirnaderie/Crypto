@@ -18,7 +18,8 @@ const Input = ({
         e.keyCode === 8 ||
         e.keyCode === 46 ||
         e.keyCode === 37 ||
-        e.keyCode === 39
+        e.keyCode === 39 ||
+        e.keyCode === 9
       )
     )
       if (

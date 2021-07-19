@@ -27,8 +27,9 @@ const SelectSearch = ({
             <Select
               options={options}
               name={name}
+              {...rest}
               placeholder="ُSelect ..."
-              className={`col-12 ${coreClass}`}
+              className={` bg-light text-dark  col-12 ${coreClass}`}
               onChange={(values) => changehandle(name, values)}
               values={
                 value !== 0

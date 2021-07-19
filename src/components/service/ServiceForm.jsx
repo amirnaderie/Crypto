@@ -178,18 +178,21 @@ const ServiceForm = () => {
       <h1 className="text-dark">Service</h1>
       <form className="direction sub-main-w3" onSubmit={doSubmit}>
         <div className="row  justify-content-center">
-          <div className=" col-lg-5">
+          <div className=" col-lg-6">
             <SelectSearch
+              tabIndex="0"
               options={brands}
               name="brand"
               labelcolor="text-info"
               label="Brand"
               changehandle={setSelectSearch}
               value={form.brand}
+              autoFocus="true"
             ></SelectSearch>
           </div>
-          <div className=" col-lg-5">
+          <div className=" col-lg-6">
             <Select
+            tabIndex="1"
               name="model"
               id="model"
               labelcolor="text-info"
@@ -205,8 +208,9 @@ const ServiceForm = () => {
           </div>
         </div>
         <div className="row  justify-content-center">
-          <div className=" col-lg-5">
+          <div className=" col-lg-6">
             <Input
+            tabIndex="2"
               name="productyear"
               type="number"
               labelcolor="text-info"
@@ -218,8 +222,9 @@ const ServiceForm = () => {
               placeholder={new Date().getFullYear()}
             />
           </div>
-          <div className=" col-lg-5">
+          <div className=" col-lg-6">
             <Input
+              tabIndex="3"
               name="servicetype"
               labelcolor="text-info"
               onChange={setInput}
@@ -230,8 +235,9 @@ const ServiceForm = () => {
           </div>
         </div>
         <div className="row  justify-content-center">
-          <div className="col-lg-5">
+          <div className="col-lg-6">
             <DatePicker1
+            TabIndex="4"
               name="servicedate"
               label="ServiceDate"
               labelcolor="text-info"
@@ -243,8 +249,9 @@ const ServiceForm = () => {
               error={errors.servicedate}
             />
           </div>
-          <div className="col-lg-5">
+          <div className="col-lg-6">
             <Select
+            tabIndex="5"
               name="servicetime"
               id="servicetime"
               labelcolor="text-info"
@@ -260,8 +267,9 @@ const ServiceForm = () => {
           </div>
         </div>
         <div className="row  justify-content-center">
-          <div className="col-lg-5">
+          <div className="col-lg-6">
             <Input
+            tabIndex="6"
               name="address"
               type="textare"
               labelcolor="text-info"
@@ -271,8 +279,9 @@ const ServiceForm = () => {
               error={errors.address}
             />
           </div>
-          <div className="col-lg-5">
+          <div className="col-lg-6">
             <Input
+            tabIndex="7"
               name="tel"
               type="number"
               labelcolor="text-info"
@@ -285,18 +294,19 @@ const ServiceForm = () => {
             />
           </div>
         </div>
-
+        <div className="col-lg-6">
         <div className="form-group mt-3">
-          <button className="btn btn-primary ">Request</button>
+         
+          <button className="btn btn-primary " tabIndex="8">Request&nbsp;&nbsp;&nbsp;
           {iswaiting && (
-            <Spinner
-              as="span"
-              animation="grow"
-              size="md"
-              role="status"
-              aria-hidden="true"
-            />
+              <span className="spinner-grow spinner-grow-sm align-middle" role="status" aria-hidden="true"></span>
           )}
+          {!iswaiting && (
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )
+          }
+          </button>
+         
+        </div>
         </div>
       </form>
     </div>
