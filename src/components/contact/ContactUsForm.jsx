@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Joi from "joi-browser";
-import Input from "../common/input";
+import Input from "../common/input/input";
 import Validation from "../common/validation";
 
 const initialFormState = {

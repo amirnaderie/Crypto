@@ -29,7 +29,7 @@ const SelectSearch = ({
               name={name}
               {...rest}
               placeholder="ُSelect ..."
-              className={` bg-light text-dark  col-12 ${coreClass}`}
+              className={`rounded bg-light text-dark  col-12 ${coreClass}`}
               onChange={(values) => changehandle(name, values)}
               values={
                 value !== 0

@@ -9,7 +9,6 @@ import DatePicker from "react-datepicker2";
 import RegisterForm from "./RegisterForm";
 import momentJalaali from 'moment-jalaali';
 import Select from "react-dropdown-select";
-
 import { getGenres } from "../services/genreService";
 
 // const options = [
@@ -112,6 +111,7 @@ class Rentals extends Component {
         {(selectedCountry!==null && selectedCountry!=="undefined") && selectedCountry[0].label}
         <Select multi options={options} direction="rtl" placeholder="  انتخاب ..." onChange={(value) => this.setState({selectedCountry:value})} />
         </div>
+       
       </div>
     );
   }

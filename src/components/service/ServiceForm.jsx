@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useRef } from "react";
 import Joi from "joi-browser";
 import moment from "moment-jalaali";
 import { toast } from "react-toastify";
-import { Spinner } from "react-bootstrap";
+//import { Spinner } from "react-bootstrap";
 
-import Input from "../common/input";
+import Input from "../common/input/input";
 import { getBrands, getModels, getTimes } from "../../services/mabnaService";
 import SelectSearch from "../common/selectsearch";
 import Select from "../common/select";
@@ -72,18 +72,21 @@ const ServiceForm = () => {
   const [times, setTimes] = useState(null);
   const [iswaiting, setWaiting] = useState(false);
   const [errors, setErrors] = useState({});
-
+  
   //const { errors } = Validation(form, schema);
 
   useEffect(() => {
+    
     async function fetchAPI() {
       const { data: branddata } = await getBrands();
       const { data: timedate } = await getTimes();
 
       setTimes(timedate);
       setBrands(branddata);
+     
     }
     fetchAPI();
+    
   }, []);
 
   const setInput = (e) => {
@@ -174,11 +177,12 @@ const ServiceForm = () => {
   };
 
   return (
-    <div className="col-lg-10 container justify-content-center align-items-center ">
+    <div className="container ">
       <h1 className="text-dark">Service</h1>
       <form className="direction sub-main-w3" onSubmit={doSubmit}>
-        <div className="row  justify-content-center">
+        <div className="row ">
           <div className=" col-lg-6">
+        
             <SelectSearch
               tabIndex="0"
               options={brands}
@@ -187,7 +191,7 @@ const ServiceForm = () => {
               label="Brand"
               changehandle={setSelectSearch}
               value={form.brand}
-              autoFocus="true"
+              // autoFocus="true"
             ></SelectSearch>
           </div>
           <div className=" col-lg-6">
@@ -207,10 +211,10 @@ const ServiceForm = () => {
             />
           </div>
         </div>
-        <div className="row  justify-content-center">
+        <div className="row ">
           <div className=" col-lg-6">
             <Input
-            tabIndex="2"
+              tabIndex="2"
               name="productyear"
               type="number"
               labelcolor="text-info"
@@ -220,6 +224,7 @@ const ServiceForm = () => {
               error={errors.productyear}
               maxLength="4"
               placeholder={new Date().getFullYear()}
+              effect={true}
             />
           </div>
           <div className=" col-lg-6">
@@ -231,10 +236,11 @@ const ServiceForm = () => {
               label="ServiceType"
               value={form.servicetype}
               error={errors.servicetype}
+              effect={false}
             />
           </div>
         </div>
-        <div className="row  justify-content-center">
+        <div className="row">
           <div className="col-lg-6">
             <DatePicker1
             TabIndex="4"
@@ -266,7 +272,7 @@ const ServiceForm = () => {
             />
           </div>
         </div>
-        <div className="row  justify-content-center">
+        <div className="row">
           <div className="col-lg-6">
             <Input
             tabIndex="6"
@@ -277,6 +283,7 @@ const ServiceForm = () => {
               label="Address"
               value={form.address}
               error={errors.address}
+              effect={false}
             />
           </div>
           <div className="col-lg-6">
@@ -291,6 +298,7 @@ const ServiceForm = () => {
               error={errors.tel}
               placeholder="09xxxxxxxxx"
               maxLength="11"
+              effect={false}
             />
           </div>
         </div>

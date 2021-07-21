@@ -20,7 +20,7 @@ const DatePicker1 = ({
           {label}
         </label>
         <div className="selectAndDatepicker">
-          <DatePicker name={name} {...rest} className={`col-12 ${coreClass}`} />
+          <DatePicker name={name} {...rest} className={`rounded py-1 col-12 ${coreClass}`} />
         </div>
         {error && (
           <div className="text-danger position-absolute ">

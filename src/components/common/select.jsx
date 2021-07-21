@@ -25,7 +25,7 @@ const Select = ({
         name={name}
         id={name}
         {...rest}
-        className={`col-12  ${coreClass}`}
+        className={`rounded col-12  ${coreClass}`}
         // onBlur={() => setTouched(true)}
       >
         {rest.placeholder && !options && (

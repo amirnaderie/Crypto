@@ -396,6 +396,12 @@ i.fa-sort-asc.show {
 
 .selectAndDatepicker {
   width: stretch;
+  
 }
 
-
+/* div[class$="ReactDropdownSelect"] {
+  border-radius: 8px!important;
+}
+input,select{
+    border-radius: .5rem;
+} */

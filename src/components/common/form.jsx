@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
-import Input from "./input";
+import Input from "./input/input";
 import Select from "./select";
 import { Spinner } from "react-bootstrap";
 //import DateMask from "./datemask";

@@ -88,10 +88,10 @@ const MainForm = () => {
   }, []);
 
   return (
-    <div className="wrapper ">
-      <div className="content float-right ">
-        
-            {user !== "undefined" && user !== null && menus !== undefined && menus.length !== 0 && (
+    <div className="container">
+      <header className="py-3">
+      <div className="row flex-nowrap justify-content-between align-items-center">
+      {user !== "undefined" && user !== null && menus !== undefined && menus.length !== 0 && (
            <div><Burger open={open} setOpen={setOpen} />
           
               <div className="dropdown-content">
@@ -120,7 +120,9 @@ const MainForm = () => {
               </div>
               </div>
             )}
-         <div className="d-flex justify-content-center align-items-center">
+            </div>
+      </header>
+       <div className="d-flex justify-content-center align-items-center">
          <UserContext.Provider value={{ user }}>
             <Switch>
               {menus !== undefined &&
@@ -162,7 +164,7 @@ const MainForm = () => {
             </UserContext.Provider>
           </div>
          
-      </div>
+     
       <div>
         <Menu Height={dimensions.height} open={open} menus={urls} setOpen={setOpen} user={user} />
       </div>
