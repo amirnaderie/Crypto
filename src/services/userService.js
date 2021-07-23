@@ -1,12 +1,12 @@
 import http from "./httpService";
 
 
-const apiEndpoint = process.env.REACT_APP_URL + "/users";
+const apiEndpoint = process.env.REACT_APP_URL + "/userroles";
 
-export function register(user) {
+export function register(userrole) {
   return http.post(apiEndpoint, {
-    email: user.username,
-    password: user.password,
-    name: user.name
+    email: userrole.username,
+    password: userrole.password,
+    name: userrole.name
   });
 }

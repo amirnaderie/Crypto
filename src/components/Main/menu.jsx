@@ -28,7 +28,7 @@ const StyledMenu = styled.nav`
   ul:not(.collapse) {
     list-style-type: none;
     color: #fff;
-    margin-top: 15vh;
+    margin-top: 10vh;
   }
   .list-unstyled {
     padding: 1rem;
@@ -79,7 +79,7 @@ const Menu = ({ Height,open, menus, setOpen, user }) => {
   }, [menus]);
 
   return (
-    <StyledMenu open={open} Height={Height} Top={56}>
+    <StyledMenu open={open} Height={Height} Top={53}>
       <div className="dropdown m-3" style={{ position: "fixed", left: 0 }}>
         <button className="dropbtn">
           <span className="user">

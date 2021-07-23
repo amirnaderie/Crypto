@@ -89,9 +89,8 @@ const MainForm = () => {
 
   return (
     <div className="container">
-      <header className="py-3">
-      <div className="row flex-nowrap justify-content-between align-items-center">
-      {user !== "undefined" && user !== null && menus !== undefined && menus.length !== 0 && (
+      <header className="py-3 position-fixed bg-light" style={{top: '0',right: '0',left: '0','z-index': '1030',height: '53px'}}>
+       {user !== "undefined" && user !== null && menus !== undefined && menus.length !== 0 && (
            <div><Burger open={open} setOpen={setOpen} />
           
               <div className="dropdown-content">
@@ -120,9 +119,9 @@ const MainForm = () => {
               </div>
               </div>
             )}
-            </div>
+       
       </header>
-       <div className="d-flex justify-content-center align-items-center">
+       <div className="position-relative justify-content-center align-items-center" style={{top: '53px'}}>
          <UserContext.Provider value={{ user }}>
             <Switch>
               {menus !== undefined &&

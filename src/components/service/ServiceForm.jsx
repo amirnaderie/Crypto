@@ -177,7 +177,7 @@ const ServiceForm = () => {
   };
 
   return (
-    <div className="container ">
+    <div>
       <h1 className="text-dark">Service</h1>
       <form className="direction sub-main-w3" onSubmit={doSubmit}>
         <div className="row ">
@@ -224,7 +224,7 @@ const ServiceForm = () => {
               error={errors.productyear}
               maxLength="4"
               placeholder={new Date().getFullYear()}
-              effect={true}
+              effect={false}
             />
           </div>
           <div className=" col-lg-6">

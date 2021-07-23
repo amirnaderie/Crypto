@@ -116,12 +116,12 @@ class MoviesForm extends Component {
     const { totalCount, data: movies } = this.getPagedData();
 
     return (
-      <div className="row">
-        <div className="col-md-5 pt-5">
+      <div className="row justify-content-center ">
+        <div className="col-lg-4 pt-5">
           <ListGroup />
         </div>
-        <div className="col-md-7 pt-5 ">
-          <div className="col ">
+        <div className="col-lg-6 pt-5 ">
+          <div >
             <p>Showing {totalCount} movies in the database.</p>
             <MoviesContext.Provider value={{ searchQuery,handleSearch,movies }}>
               <SearchBox />
@@ -134,7 +134,7 @@ class MoviesForm extends Component {
             </MoviesContext.Provider>
           </div>
 
-          <div className="col-md-4 ">
+          <div className="pull-right">
             <Pagination
               itemsCount={totalCount}
               pageSize={pageSize}
@@ -142,12 +142,12 @@ class MoviesForm extends Component {
               onPageChange={this.handlePageChange}
             />
           </div>
-          <div className="col-md-3 ">
+          <div className="pull-left">
             {user && (
               <Link
                 to="/movie/new"
-                className="btn btn-primary pull-left"
-                style={{ marginBottom: 20 }}
+                className="btn btn-primary "
+                
               >
                 New Movie
               </Link>
