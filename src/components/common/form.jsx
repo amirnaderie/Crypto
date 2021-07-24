@@ -70,21 +70,16 @@ class Form extends Component {
     classname = "btn btn-primary m-2 pull-left ",
     ) {
     return (
-     <div>
-     <button  disabled={this.validate() || !enabled} className={classname}>
+     <div className="ltr">
+        <button className={classname} tabIndex="3" disabled={this.validate() || !enabled}>{label}&nbsp;&nbsp;&nbsp;
+          {this.state.iswaiting && (
+              <span className="spinner-grow spinner-grow-sm align-middle" role="status" aria-hidden="true"></span>
+          )}
+          {!this.state.iswaiting && (
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )
+          }
+          </button>
         
-        {label}
-      </button>
-      {this.state.iswaiting && (
-        <Spinner
-          as="span"
-          animation="grow"
-          size="md"
-          role="status"
-          aria-hidden="true"
-        />
-
-      )}
       </div>
     );
   }

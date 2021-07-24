@@ -10,6 +10,7 @@ const SelectSearch = ({
   direction = "rtl",
   coreClass = "",
   changehandle,
+  error,
   ...rest
 }) => {
   return (
@@ -39,6 +40,11 @@ const SelectSearch = ({
             />
           </div>
         )}
+        {error && (
+        <div className="text-danger position-absolute">
+          <small>{error.message}</small>
+        </div>
+      )}
       
     </div>
   );

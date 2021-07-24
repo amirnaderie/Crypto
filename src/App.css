@@ -399,9 +399,9 @@ i.fa-sort-asc.show {
   
 }
 
-/* div[class$="ReactDropdownSelect"] {
-  border-radius: 8px!important;
+.rnc-input{
+  text-align: center!important;
 }
-input,select{
-    border-radius: .5rem;
-} */
+.ltr{
+  direction: ltr;
+}

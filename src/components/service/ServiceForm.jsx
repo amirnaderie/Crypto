@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext,useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Joi from "joi-browser";
 import moment from "moment-jalaali";
 import { toast } from "react-toastify";
 //import { Spinner } from "react-bootstrap";
 
 import Input from "../common/input/input";
-import { getBrands, getModels, getTimes } from "../../services/mabnaService";
+import { getBrands, getModels, getTimes,getServiceTypes } from "../../services/mabnaService";
 import SelectSearch from "../common/selectsearch";
 import Select from "../common/select";
 import DatePicker1 from "../common/datepicker";
@@ -20,7 +20,7 @@ const initialFormState = {
   brand: 0,
   model: 0,
   productyear: "",
-  servicetype: "",
+  servicetype: 0,
   servicedate: new Date().toLocaleDateString("en-ZA"),
   servicetime: 1,
   address: "",
@@ -36,7 +36,7 @@ const schema = {
     .max(new Date().getFullYear())
     .required()
     .label("Date Of Production"),
-  servicetype: Joi.string().min(5).max(60).required().label("ServiceType"),
+  servicetype: Joi.number().min(1).required().label("ServiceType"),
   servicedate: Joi.date().raw().required().label("ServiceDate"),
   servicetime: Joi.number().min(1).required().label("ServiceTime"),
   address: Joi.string().min(5).max(255).required().label("Address"),
@@ -70,6 +70,7 @@ const ServiceForm = () => {
   const [brands, setBrands] = useState(null);
   const [models, setModels] = useState(null);
   const [times, setTimes] = useState(null);
+  const [servicetypes, setServiceTypes] = useState(null);
   const [iswaiting, setWaiting] = useState(false);
   const [errors, setErrors] = useState({});
   
@@ -80,10 +81,10 @@ const ServiceForm = () => {
     async function fetchAPI() {
       const { data: branddata } = await getBrands();
       const { data: timedate } = await getTimes();
-
+      const { data: servicetype } = await getServiceTypes();
       setTimes(timedate);
       setBrands(branddata);
-     
+      setServiceTypes(servicetype);
     }
     fetchAPI();
     
@@ -96,12 +97,12 @@ const ServiceForm = () => {
   };
 
   const setSelectSearch = async (inputName, inputNameValue) => {
-    if (inputNameValue.length !== 0) {
+    validateProperty({"name":inputName,"value":parseInt(inputNameValue[0].value, 10)});
+    const newValue = { [inputName]: inputNameValue[0].value };
+    setForm((form) => ({ ...form, ...newValue }));
+    if (inputName==="brand" && inputNameValue.length !== 0) {
       const { data } = await getModels(inputNameValue[0].value);
       setModels(data);
-      //setSelect({name:"model",value:1});
-      const newValue = { [inputName]: inputNameValue[0].value };
-      setForm((form) => ({ ...form, ...newValue }));
       setSelect({ currentTarget: { name: "model", value: 1 } });
     }
   };
@@ -228,16 +229,19 @@ const ServiceForm = () => {
             />
           </div>
           <div className=" col-lg-6">
-            <Input
+          <SelectSearch
               tabIndex="3"
+              options={servicetypes}
               name="servicetype"
               labelcolor="text-info"
-              onChange={setInput}
               label="ServiceType"
+              changehandle={setSelectSearch}
               value={form.servicetype}
               error={errors.servicetype}
-              effect={false}
-            />
+              
+            ></SelectSearch>
+                       
+            
           </div>
         </div>
         <div className="row">

@@ -33,3 +33,14 @@ export function  getTimes() {
      return  retval;
   }
 }
+
+export function  getServiceTypes() {
+  try {
+     return http.get(apiEndpoint + "/servicetype");
+  } catch (error) {
+     const retval=[];
+     return  retval;
+  }
+}
+
+
