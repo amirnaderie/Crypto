@@ -3,10 +3,13 @@ import http from "./httpService";
 
 const apiEndpoint = getEndpoint()+ "/mabnas";
   
-export function  getBrands() {
+export function  getMabnas(value) {
   try {
     
-    return http.get(apiEndpoint + "/brand" );
+    return http.get(apiEndpoint + "/", {
+      params: {
+        grouplabel:value 
+      }});
   } catch (error) {
      const retval=[];
      return  retval;
@@ -25,22 +28,22 @@ export function  getModels(value) {
   }
 }
 
-export function  getTimes() {
-  try {
-     return http.get(apiEndpoint + "/time");
-  } catch (error) {
-     const retval=[];
-     return  retval;
-  }
-}
+// export function  getTimes() {
+//   try {
+//      return http.get(apiEndpoint + "/time");
+//   } catch (error) {
+//      const retval=[];
+//      return  retval;
+//   }
+// }
 
-export function  getServiceTypes() {
-  try {
-     return http.get(apiEndpoint + "/servicetype");
-  } catch (error) {
-     const retval=[];
-     return  retval;
-  }
-}
+// export function  getServiceTypes() {
+//   try {
+//      return http.get(apiEndpoint + "/servicetype");
+//   } catch (error) {
+//      const retval=[];
+//      return  retval;
+//   }
+// }
 
 

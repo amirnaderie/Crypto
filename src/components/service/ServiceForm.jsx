@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 //import { Spinner } from "react-bootstrap";
 
 import Input from "../common/input/input";
-import { getBrands, getModels, getTimes,getServiceTypes } from "../../services/mabnaService";
+import { getMabnas, getModels } from "../../services/mabnaService";
 import SelectSearch from "../common/selectsearch";
 import Select from "../common/select";
 import DatePicker1 from "../common/datepicker";
@@ -79,12 +79,13 @@ const ServiceForm = () => {
   useEffect(() => {
     
     async function fetchAPI() {
-      const { data: branddata } = await getBrands();
-      const { data: timedate } = await getTimes();
-      const { data: servicetype } = await getServiceTypes();
-      setTimes(timedate);
+      const { data:mabnadata } = await getMabnas(['Brands','ServiceType','ServiceTime']);
+      const {mabnas:timesdata} =mabnadata.filter(m => m.label === "ServiceTime")[0];
+      setTimes(timesdata);
+      const {mabnas:branddata} =mabnadata.filter(m => m.label === "Brands")[0];
       setBrands(branddata);
-      setServiceTypes(servicetype);
+      const {mabnas:servicedata} =mabnadata.filter(m => m.label === "ServiceType")[0];
+      setServiceTypes(servicedata);
     }
     fetchAPI();
     
