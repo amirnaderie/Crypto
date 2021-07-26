@@ -22,8 +22,7 @@ const SelectSearch = ({
         >
           {label}
         </label>
-
-        {options && (
+        
           <div className="selectAndDatepicker">
             <Select
               options={options}
@@ -39,7 +38,7 @@ const SelectSearch = ({
               }
             />
           </div>
-        )}
+        
         {error && (
         <div className="text-danger position-absolute">
           <small>{error.message}</small>

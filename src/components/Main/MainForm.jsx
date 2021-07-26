@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 //import styled, { css } from 'styled-components';
 import { Route, Redirect, Switch, Link } from "react-router-dom";
 
-import NotFound from "../notFound";
+import HomeForm from "../HomeForm";
 //import NavBar from "../navBar";
 import LoginForm from "../loginForm";
 import Logout from "../logout";
@@ -110,7 +110,7 @@ const MainForm = () => {
             
               <div className="pb-1 mb-1 border-bottom text-center">
                
-                <Link to="/not-found">
+                <Link to="/home">
                   <img
                     src={process.env.PUBLIC_URL + "/images/flowers32.png"}
                     alt="Site Logo"
@@ -156,9 +156,9 @@ const MainForm = () => {
         render={props => <Movies {...props} user={user} />}
       /> */}
               <Route path="/login" component={LoginForm} />
-              <Route path="/not-found" component={NotFound} />
+              <Route path="/home" component={HomeForm} />
               <Redirect from="/" exact to="/login" />
-              <Redirect to="/not-found" />
+              <Redirect to="/home" />
             </Switch>
             </UserContext.Provider>
           </div>

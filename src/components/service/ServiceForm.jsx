@@ -11,8 +11,8 @@ import Select from "../common/select";
 import DatePicker1 from "../common/datepicker";
 
 import { saveRequest } from "../../services/requestService";
-
 import { UserContext } from "../context/Context";
+import { sortItems } from "../../utils/paginate";
 
 import "./ServiceForm.css";
 
@@ -79,12 +79,13 @@ const ServiceForm = () => {
   useEffect(() => {
     
     async function fetchAPI() {
-      const { data:mabnadata } = await getMabnas(['Brands','ServiceType','ServiceTime']);
-      const {mabnas:timesdata} =mabnadata.filter(m => m.label === "ServiceTime")[0];
+      
+      const { data } = await getMabnas(['Brands','ServiceType','ServiceTime']);
+      const timesdata =sortItems(data.filter(m => m.label === "ServiceTime")[0].mabnas, "value", "asc");
       setTimes(timesdata);
-      const {mabnas:branddata} =mabnadata.filter(m => m.label === "Brands")[0];
+      const branddata =sortItems(data.filter(m => m.label === "Brands")[0].mabnas, "label", "asc");
       setBrands(branddata);
-      const {mabnas:servicedata} =mabnadata.filter(m => m.label === "ServiceType")[0];
+      const servicedata =sortItems(data.filter(m => m.label === "ServiceType")[0].mabnas, "label", "asc");
       setServiceTypes(servicedata);
     }
     fetchAPI();

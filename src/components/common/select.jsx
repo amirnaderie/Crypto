@@ -9,7 +9,7 @@ const Select = ({
   optionvalue,
   direction = "rtl",
   coreClass = "",
-  error,
+   error,
   ...rest
 }) => {
   // const [touched, setTouched] = useState(false);
@@ -21,6 +21,8 @@ const Select = ({
       >
         {label}
       </label>
+      
+     
       <select
         name={name}
         id={name}
