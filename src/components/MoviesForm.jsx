@@ -116,7 +116,7 @@ class MoviesForm extends Component {
     const { totalCount, data: movies } = this.getPagedData();
 
     return (
-      <div className="row justify-content-center ">
+      <div className="row justify-content-center ltr">
         <div className="col-lg-4 pt-5">
           <ListGroup />
         </div>

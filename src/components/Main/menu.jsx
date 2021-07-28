@@ -15,11 +15,11 @@ const StyledMenu = styled.nav`
   background: #333;
   z-index: 3;
   transform: ${({ open }) => (open ? "translateX(0)" : "translateX(100%)")};
-  height: ${({ Height,Top }) =>(Height - (Top+2))}px;
+  height: ${({ Height, Top }) => Height - (Top + 2)}px;
   text-align: right;
   padding: 0.2rem;
-  position: absolute;
-  top: ${({ Top }) =>(Top)}px;
+  position: fixed;
+  top: ${({ Top }) => Top}px;
   right: 0;
   overflow: auto;
   transition: transform 1s ease;
@@ -34,8 +34,7 @@ const StyledMenu = styled.nav`
     padding: 1rem;
   }
   @media (orientation: landscape) {
-   
-    min-height: ${({ Height,Top }) =>(Height - (Top+2))}px;
+    min-height: ${({ Height, Top }) => Height - (Top + 2)}px;
   }
 
   @media (max-width: 576px) {
@@ -62,13 +61,12 @@ const StyledMenu = styled.nav`
   }
 `;
 
-const Menu = ({ Height,open, menus, setOpen, user }) => {
+const Menu = ({ Height, open, menus, setOpen, user }) => {
   const [menu, setMenu] = useState([]);
   //const [menus, setMenus] = useState([]);
   //const [opencol, setOpencol] = useState(false);
-  
+
   useEffect(() => {
-   
     try {
       setMenu(
         menus

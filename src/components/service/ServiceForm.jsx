@@ -73,23 +73,36 @@ const ServiceForm = () => {
   const [servicetypes, setServiceTypes] = useState(null);
   const [iswaiting, setWaiting] = useState(false);
   const [errors, setErrors] = useState({});
-  
+
   //const { errors } = Validation(form, schema);
 
   useEffect(() => {
-    
     async function fetchAPI() {
-      
-      const { data } = await getMabnas(['Brands','ServiceType','ServiceTime']);
-      const timesdata =sortItems(data.filter(m => m.label === "ServiceTime")[0].mabnas, "value", "asc");
+      const { data } = await getMabnas([
+        "Brands",
+        "ServiceType",
+        "ServiceTime",
+      ]);
+      const timesdata = sortItems(
+        data.filter((m) => m.label === "ServiceTime")[0].mabnas,
+        "value",
+        "asc"
+      );
       setTimes(timesdata);
-      const branddata =sortItems(data.filter(m => m.label === "Brands")[0].mabnas, "label", "asc");
+      const branddata = sortItems(
+        data.filter((m) => m.label === "Brands")[0].mabnas,
+        "label",
+        "asc"
+      );
       setBrands(branddata);
-      const servicedata =sortItems(data.filter(m => m.label === "ServiceType")[0].mabnas, "label", "asc");
+      const servicedata = sortItems(
+        data.filter((m) => m.label === "ServiceType")[0].mabnas,
+        "label",
+        "asc"
+      );
       setServiceTypes(servicedata);
     }
     fetchAPI();
-    
   }, []);
 
   const setInput = (e) => {
@@ -99,10 +112,13 @@ const ServiceForm = () => {
   };
 
   const setSelectSearch = async (inputName, inputNameValue) => {
-    validateProperty({"name":inputName,"value":parseInt(inputNameValue[0].value, 10)});
+    validateProperty({
+      name: inputName,
+      value: parseInt(inputNameValue[0].value, 10),
+    });
     const newValue = { [inputName]: inputNameValue[0].value };
     setForm((form) => ({ ...form, ...newValue }));
-    if (inputName==="brand" && inputNameValue.length !== 0) {
+    if (inputName === "brand" && inputNameValue.length !== 0) {
       const { data } = await getModels(inputNameValue[0].value);
       setModels(data);
       setSelect({ currentTarget: { name: "model", value: 1 } });
@@ -173,7 +189,6 @@ const ServiceForm = () => {
         toast.error("Connection Error", {
           position: toast.POSITION.TOP_LEFT,
         });
-
       //   toast.error("خطا در ثبت اطلاعات", { position: toast.POSITION.TOP_LEFT });
       setWaiting(false);
     }
@@ -185,7 +200,6 @@ const ServiceForm = () => {
       <form className="direction sub-main-w3" onSubmit={doSubmit}>
         <div className="row ">
           <div className=" col-lg-6">
-        
             <SelectSearch
               tabIndex="0"
               options={brands}
@@ -199,7 +213,7 @@ const ServiceForm = () => {
           </div>
           <div className=" col-lg-6">
             <Select
-            tabIndex="1"
+              tabIndex="1"
               name="model"
               id="model"
               labelcolor="text-info"
@@ -231,7 +245,7 @@ const ServiceForm = () => {
             />
           </div>
           <div className=" col-lg-6">
-          <SelectSearch
+            <SelectSearch
               tabIndex="3"
               options={servicetypes}
               name="servicetype"
@@ -240,16 +254,13 @@ const ServiceForm = () => {
               changehandle={setSelectSearch}
               value={form.servicetype}
               error={errors.servicetype}
-              
             ></SelectSearch>
-                       
-            
           </div>
         </div>
         <div className="row">
           <div className="col-lg-6">
             <DatePicker1
-            TabIndex="4"
+              TabIndex="4"
               name="servicedate"
               label="ServiceDate"
               labelcolor="text-info"
@@ -263,7 +274,7 @@ const ServiceForm = () => {
           </div>
           <div className="col-lg-6">
             <Select
-            tabIndex="5"
+              tabIndex="5"
               name="servicetime"
               id="servicetime"
               labelcolor="text-info"
@@ -281,7 +292,7 @@ const ServiceForm = () => {
         <div className="row">
           <div className="col-lg-6">
             <Input
-            tabIndex="6"
+              tabIndex="6"
               name="address"
               type="textare"
               labelcolor="text-info"
@@ -294,7 +305,7 @@ const ServiceForm = () => {
           </div>
           <div className="col-lg-6">
             <Input
-            tabIndex="7"
+              tabIndex="7"
               name="tel"
               type="number"
               labelcolor="text-info"
@@ -309,18 +320,19 @@ const ServiceForm = () => {
           </div>
         </div>
         <div className="col-lg-6">
-        <div className="form-group mt-3">
-         
-          <button className="btn btn-primary " tabIndex="8">Request&nbsp;&nbsp;&nbsp;
-          {iswaiting && (
-              <span className="spinner-grow spinner-grow-sm align-middle" role="status" aria-hidden="true"></span>
-          )}
-          {!iswaiting && (
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )
-          }
-          </button>
-         
-        </div>
+          <div className="form-group mt-3">
+            <button className="btn btn-primary " tabIndex="8">
+              Request&nbsp;&nbsp;&nbsp;
+              {iswaiting && (
+                <span
+                  className="spinner-grow spinner-grow-sm align-middle"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              {!iswaiting && <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+            </button>
+          </div>
         </div>
       </form>
     </div>

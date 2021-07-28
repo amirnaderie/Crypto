@@ -1,46 +1,48 @@
-import React, { Component } from "react";
-
+import React, { useContext,useState } from "react";
+import {UserContext} from "../context/Context"
 // columns: array
 // sortColumn: object
 // onSort: function
 
-class TableHeader extends Component {
-  raiseSort = path => {
-    const sortColumn = { ...this.props.sortColumn };
+const TableHeader =({columns,sortColumn,onSort})=> {
+  const {dimensions } = useContext(UserContext);
+   const raiseSort = path => {
+    const sortColumn = { ...sortColumn };
     if (sortColumn.path === path)
       sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
     else {
       sortColumn.path = path;
       sortColumn.order = "asc";
     }
-    this.props.onSort(sortColumn);
+    onSort(sortColumn);
   };
 
-  renderSortIcon = column => {
-    const { sortColumn } = this.props;
-
-    if (column.path !== sortColumn.path) return null;
+  const renderSortIcon = column => {
+       if (column.path !== sortColumn.path) return null;
     if (sortColumn.order === "asc") return <i className="fa fa-sort-asc" />;
     return <i className="fa fa-sort-desc" />;
   };
 
-  render() {
+ 
     return (
       <thead>
+      {dimensions.width>760 && (
         <tr>
-          {this.props.columns.map(column => (
+          {columns.map(column => (
             <th
-              className="clickable"
+              className="clickable text-center"
               key={column.path || column.key}
-              onClick={() => this.raiseSort(column.path)}
+              onClick={() => raiseSort(column.path)}
             >
-              {column.label} {this.renderSortIcon(column)}
+              {column.label} {renderSortIcon(column)}
             </th>
           ))}
         </tr>
-      </thead>
+      )
+          }
+          </thead>
+          
     );
   }
-}
 
 export default TableHeader;

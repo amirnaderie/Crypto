@@ -122,7 +122,7 @@ const MainForm = () => {
        
       </header>
        <div className="position-relative justify-content-center align-items-center" style={{top: '53px'}}>
-         <UserContext.Provider value={{ user }}>
+         <UserContext.Provider value={{ user,dimensions }}>
             <Switch>
               {menus !== undefined &&
                 menus.length !== 0 &&
