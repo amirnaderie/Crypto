@@ -28,11 +28,11 @@ const TableBody = ({ columns }) => {
             if (dimensions.width < 760)
               return (
                 <Fragment>
-                  <td className="col-sm-6 d-inline-block bg-secondary text-white text-center border-bottom ">
+                  <td className="col-6 d-inline-block bg-secondary text-white text-center border-bottom ">
                     {column.label||"_"}
                   </td>
                   <td
-                    className="col-sm-6 d-inline-block border-bottom text-center"
+                    className="col-6 d-inline-block border-bottom text-center"
                     key={createKey(item, column)}
                   >
                     {renderCell(item, column)}
