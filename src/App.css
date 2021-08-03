@@ -410,3 +410,8 @@ i.fa-sort-asc.show {
 .css-4rg3ly-InputComponent{
   font-size: 1rem !important;
 }
+
+/* put datepicker above menu header */
+.tether-element.tether-element-attached-bottom{
+ z-index: 6!important;
+}

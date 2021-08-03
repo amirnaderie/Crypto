@@ -27,7 +27,7 @@ const TableBody = ({ columns }) => {
           {columns.map((column, idx) => {
             if (dimensions.width < 760)
               return (
-                <Fragment>
+                <Fragment key={idx}>
                   <td className="col-6 d-inline-block bg-secondary text-white text-center border-bottom ">
                     {column.label||"_"}
                   </td>

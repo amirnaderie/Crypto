@@ -10,7 +10,7 @@ import SelectSearch from "../common/selectsearch";
 import Select from "../common/select";
 import DatePicker1 from "../common/datepicker";
 
-import { saveRequest } from "../../services/requestService";
+import { saveService } from "../../services/serviceService";
 import { UserContext } from "../context/Context";
 import { sortItems } from "../../utils/paginate";
 
@@ -177,19 +177,17 @@ const ServiceForm = () => {
       if (Object.keys(formerrors).length > 0) return;
 
       setWaiting(true);
-      await saveRequest({...form,...{userid:user._id}});
+      await saveService({...form,...{user:user._id}});
       await toast.success("Your request has been successfully submitted", {
         position: toast.POSITION.TOP_LEFT,
       });
       setWaiting(false);
     } catch (ex) {
-      if (ex.response && ex.response.status === 400)
-        toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
-      else
-        toast.error("Connection Error", {
-          position: toast.POSITION.TOP_LEFT,
-        });
-      //   toast.error("خطا در ثبت اطلاعات", { position: toast.POSITION.TOP_LEFT });
+      if (ex.response)
+      toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
+    else toast.error("Network Error", { position: toast.POSITION.TOP_LEFT });
+
+   
       setWaiting(false);
     }
   };

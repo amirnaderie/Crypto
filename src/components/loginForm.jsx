@@ -7,15 +7,14 @@ import { toast } from "react-toastify";
 import Form from "./common/form";
 import auth from "../services/authService";
 
-
 class LoginForm extends Form {
   state = {
     data: { username: "", password: "" },
     errors: {},
     captchaState: false,
-    iswaiting:false,
-    heightdimension:window.innerHeight,
-    mainheight:(window.innerHeight-90)  
+    iswaiting: false,
+    heightdimension: window.innerHeight,
+    mainheight: window.innerHeight - 90,
   };
 
   schema = {
@@ -37,13 +36,10 @@ class LoginForm extends Form {
       this.setState({ iswaiting: false });
       window.location = state ? state.from.pathname : "/not-found";
     } catch (ex) {
-      if (ex.response && ex.response.status === 400)
+      if (ex.response)
         toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
-      else
-        toast.error("خطا در برقراری ارتباط", {
-          position: toast.POSITION.TOP_LEFT,
-        });
-        this.setState({ iswaiting: false });
+      else toast.error("Network Error", { position: toast.POSITION.TOP_LEFT });
+      this.setState({ iswaiting: false });
     }
   };
 
@@ -51,37 +47,45 @@ class LoginForm extends Form {
     //if (auth.getCurrentUser()) return <Redirect to="/movies" />;
 
     return (
-      <div className="d-flex justify-content-center align-items-center"  style={{height: this.state.mainheight}}>
-        
-          <form onSubmit={this.handleSubmit} className="sub-main-w3">
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: this.state.mainheight }}
+      >
+        <form onSubmit={this.handleSubmit} className="sub-main-w3">
           <h1>Login</h1>
-            <div className="mb-3 input">
-          
-              {this.renderInput("username", "نام کاربری", "text", {
-                direction:"ltr"
-              },true)}
-            </div>
-            <div className="mb-3 input">
-              {this.renderInput("password", "رمز عبور", "password",{
-                direction:"ltr"
-              })}
-            </div>
-            <div className="mb-3 text-dark">
-              <Captcha
-                length={1}
-                onRefresh={this.onrefresh}
-                onChange={this.onCaptchaChange}
-                placeholder="متن بالا را وارد نمایید"
-              />
-            </div>
-            <div className="mb-3">
-            {this.renderButton("Login", this.state.captchaState,undefined)}
-            </div>
-          </form>
-        
+          <div className="mb-3 input">
+            {this.renderInput(
+              "username",
+              "نام کاربری",
+              "text",
+              {
+                direction: "ltr",
+              },
+              true
+            )}
+          </div>
+          <div className="mb-3 input">
+            {this.renderInput("password", "رمز عبور", "password", {
+              direction: "ltr",
+            })}
+          </div>
+          <div className="mb-3 text-dark">
+            <Captcha
+              length={1}
+              onRefresh={this.onrefresh}
+              onChange={this.onCaptchaChange}
+              placeholder="متن بالا را وارد نمایید"
+            />
+          </div>
+          <div className="mb-3">
+            {this.renderButton("Login", this.state.captchaState, undefined)}
+          </div>
+        </form>
+
         <div className="footer">
           <h2>
-         <span className="h1">&copy;</span >  2021 My Login Form. All rights reserved | Design by
+            <span className="h1">&copy;</span> 2021 My Login Form. All rights
+            reserved | Design by
             <a href="http://amir.com"> amir </a>
           </h2>
         </div>

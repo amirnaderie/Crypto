@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useContext } from "react";
 import {UserContext} from "../context/Context"
 // columns: array
 // sortColumn: object
@@ -7,14 +7,14 @@ import {UserContext} from "../context/Context"
 const TableHeader =({columns,sortColumn,onSort})=> {
   const {dimensions } = useContext(UserContext);
    const raiseSort = path => {
-    const sortColumn = { ...sortColumn };
-    if (sortColumn.path === path)
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    const sortcolumn = { ...sortColumn };
+    if (sortcolumn.path === path)
+      sortcolumn.order = sortColumn.order === "asc" ? "desc" : "asc";
     else {
-      sortColumn.path = path;
-      sortColumn.order = "asc";
+      sortcolumn.path = path;
+      sortcolumn.order = "asc";
     }
-    onSort(sortColumn);
+    onSort(sortcolumn);
   };
 
   const renderSortIcon = column => {
