@@ -1,10 +1,9 @@
-import React, { useContext,Fragment } from "react";
+import React, { useContext, Fragment as div } from "react";
 import _ from "lodash";
-import { MoviesContext, UserContext } from "../context/Context";
+import { UserContext } from "../context/Context";
+import { Fragment } from "react";
 
-
-const TableBody = ({ columns }) => {
-  const { movies } = useContext(MoviesContext);
+const TableBody = ({ columns, data }) => {
   const { dimensions } = useContext(UserContext);
   const renderCell = (item, column) => {
     if (column.content) return column.content(item);
@@ -16,38 +15,35 @@ const TableBody = ({ columns }) => {
     return item._id + (column.path || column.key);
   };
   return (
-    <tbody >
-      {movies.map((item, index) => (
-        <tr
-          key={item._id}
-          className={
-            dimensions.width < 760 ? "border-bottom border-danger" : ""
-          }
-        >
-          {columns.map((column, idx) => {
-            if (dimensions.width < 760)
-              return (
-                <Fragment key={idx}>
-                  <td className="col-6 d-inline-block bg-secondary text-white text-center border-bottom ">
-                    {column.label||"_"}
+    <tbody>
+      {data.map((item, index) => {
+        if (dimensions.width < 900) {
+          return (
+            <Fragment key={index}>
+              {columns.map((column, idx) => (
+                <tr key={idx} className={`border-top ${idx===0 && ' border-danger'} `}>
+                  <td className="col-6 col-sm-4 border-0 bg-secondary text-white  text-center  align-middle">
+                    {column.label || "_"}
                   </td>
-                  <td
-                    className="col-6 d-inline-block border-bottom text-center"
-                    key={createKey(item, column)}
-                  >
-                    {renderCell(item, column)}
+                  <td className="col-6 col-sm-8 border-0 bg-white text-dark text-center  align-middle">
+                    <small>{renderCell(item, column)}</small>
                   </td>
-                </Fragment>
-              );
-            else
-              return (
-                <td className="text-center" key={createKey(item, column)}>
+                </tr>
+              ))}
+            </Fragment>
+          );
+        } else {
+          return (
+            <tr key={index}>
+              {columns.map((column, idx) => (
+                <td className="text-center border-right" key={idx} >
                   {renderCell(item, column)}
                 </td>
-              );
-          })}
-        </tr>
-      ))}
+              ))}
+            </tr>
+          );
+        }
+      })}
     </tbody>
   );
 };

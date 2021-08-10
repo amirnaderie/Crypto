@@ -123,13 +123,14 @@ class MoviesForm extends Component {
         <div className="col-lg-6 pt-5 ">
           <div >
             <p>Showing {totalCount} movies in the database.</p>
-            <MoviesContext.Provider value={{ searchQuery,handleSearch,movies }}>
+            <MoviesContext.Provider value={{ searchQuery,handleSearch }}>
               <SearchBox />
              <MoviesTable
               sortColumn={sortColumn}
               onLike={handleLike}
               onDelete={handleDelete}
               onSort={handleSort}
+              movies={movies}
             />
             </MoviesContext.Provider>
           </div>

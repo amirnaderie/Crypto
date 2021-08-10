@@ -415,3 +415,6 @@ i.fa-sort-asc.show {
 .tether-element.tether-element-attached-bottom{
  z-index: 6!important;
 }
+.smallFont{
+  font-size: .8rem!important;
+}

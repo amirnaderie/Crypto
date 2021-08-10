@@ -2,10 +2,10 @@ import React from "react";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
 
-const Table = ({ columns, sortColumn, onSort, data }) => {
+const Table = ({ columns, onSort, data }) => {
   return (
     <table className="table bg-light">
-      <TableHeader columns={columns} sortColumn={sortColumn} onSort={onSort} />
+      <TableHeader columns={columns} onSort={onSort} />
       <TableBody columns={columns} data={data} />
     </table>
   );

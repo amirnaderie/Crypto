@@ -88,8 +88,8 @@ const MainForm = () => {
   }, []);
 
   return (
-    <div className="container">
-      <header className="py-3 position-fixed bg-light" style={{top: '0',right: '0',left: '0','z-index': '5',height: '53px'}}>
+    <div className="container-fluid">
+      <header className="py-3 position-fixed bg-light" style={{top: '0',right: '0',left: '0','zIndex': '5',height: '53px'}}>
        {user !== "undefined" && user !== null && menus !== undefined && menus.length !== 0 && (
            <div><Burger open={open} setOpen={setOpen} />
           

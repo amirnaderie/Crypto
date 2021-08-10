@@ -99,7 +99,7 @@ const Menu = ({ Height, open, menus, setOpen, user }) => {
 
       <ul className="mx-1">
         {menus !== undefined &&
-          menu.length !== 0 &&
+          // menu.length !== 0 &&
           menus.map((item) => {
             return item["url"] !== "" && item["parentId"] === 0 ? (
               <li key={item["_id"]}>

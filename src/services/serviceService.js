@@ -10,3 +10,11 @@ export function saveService(service) {
     throw error;
   }
 }
+
+export function getServices() {
+  try {
+    return http.get(apiEndpoint);
+  } catch (error) {
+    throw error;
+  }
+}
