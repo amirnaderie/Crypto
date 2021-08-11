@@ -1,7 +1,6 @@
 import React, { useContext,useState } from "react";
 import _ from "lodash";
 import { UserContext } from "../context/Context";
-import { Fragment } from "react";
 // columns: array
 // sortColumn: object
 // onSort: function
@@ -27,7 +26,7 @@ const TableHeader = ({ columns, onSort }) => {
   const renderSortIcon = (column) => {
     if (column.sortorder === undefined) return null;
     if (column.sortorder === "")
-      return <i class="fa fa-sort" aria-hidden="true"></i>;
+      return <i className="fa fa-sort" aria-hidden="true"></i>;
     return column.sortorder === "asc" ? (
       <i className="fa fa-sort-asc" />
     ) : (
@@ -44,9 +43,9 @@ const TableHeader = ({ columns, onSort }) => {
   const showorder = () => {
     
     return order === "asc" ? (
-      <i class="fa fa-sort-amount-asc" />
+      <i className="fa fa-sort-amount-asc" />
     ) : (
-      <i class="fa fa-sort-amount-desc" />
+      <i className="fa fa-sort-amount-desc" />
     );
   };
 

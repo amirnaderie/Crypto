@@ -1,7 +1,7 @@
-import React, { useContext, Fragment as div } from "react";
+import React, { useContext,Fragment } from "react";
 import _ from "lodash";
 import { UserContext } from "../context/Context";
-import { Fragment } from "react";
+
 
 const TableBody = ({ columns, data }) => {
   const { dimensions } = useContext(UserContext);
@@ -11,9 +11,9 @@ const TableBody = ({ columns, data }) => {
     return _.get(item, column.path);
   };
 
-  const createKey = (item, column) => {
-    return item._id + (column.path || column.key);
-  };
+  // const createKey = (item, column) => {
+  //   return item._id + (column.path || column.key);
+  // };
   return (
     <tbody>
       {data.map((item, index) => {

@@ -44,12 +44,11 @@ class Form extends Component {
 
   handledatechange = (input, name) => {
     let dateval = getCustomFormat(input, false);
-    const data1 = { ...this.state.data };
-    data1[name] = dateval;
+    const data = { ...this.state.data };
+    data[name] = dateval;
 
-    this.setState((prevState) => {
-      if (prevState.data[name] !== data1[name]) this.state.data = data1;
-    });
+    data[name]!==this.state.data[name]&&this.setState({data});
+   
   };
 
   handleChange = ({ currentTarget: input }) => {

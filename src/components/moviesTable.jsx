@@ -9,6 +9,7 @@ class MoviesTable extends Component {
     {
       path: "title",
       label: "Title",
+      sortorder:"",
       content: movie => <Link to={`/movie/${movie._id}`}>{movie.title}</Link>
     },
     { path: "genre.name", label: "Genre" },

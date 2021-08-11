@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import {getServices} from '../../services/serviceService'
 import Table from '../common/table';
 import {dateFormat,change_Array_Element_Value} from '../../utils/utilities'
-import { paginate, sortItems } from "../../utils/paginate";
+import { sortItems } from "../../utils/paginate";
 
 const AcceptServiceForm = () => {
     const [services, setServices] = useState(null);
@@ -31,7 +31,7 @@ const AcceptServiceForm = () => {
       const Columns = [ ...columns ];
       const index =Columns.findIndex((item) => item.path === sortColumn.path);
        Columns[index].sortorder =sortColumn.sortorder;
-      setColumns[Columns];
+      setColumns(Columns);
       const sorted = sortItems(services, [sortColumn.path], [sortColumn.sortorder]);
       setServices(sorted); 
       };

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import MoviesTable from "./moviesTable";
+//import MoviesTable from "./moviesTable";
+import Table from './common/table';
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import {  deleteMovie } from "../services/movieService";
 //import { getGenres } from "../services/genreService";
 import { paginate, sortItems } from "../utils/paginate";
+import Like from "./common/like";
 //import _ from "lodash";
 import SearchBox from "./searchBox";
 import { connect } from "react-redux";
@@ -22,8 +24,38 @@ class MoviesForm extends Component {
     pageSize: 4,
     searchQuery: "",
     selectedGenre: null,
-    sortColumn: { path: "title", order: "asc" },
-   
+    sortColumn: { path: "title", sortorder: "asc" },
+    columns : [
+      {
+        path: "title",
+        label: "Title",
+        sortorder:"",
+        content: movie => <Link to={`/movie/${movie._id}`}>{movie.title}</Link>
+      },
+      { path: "genre.name", label: "Genre" },
+      { path: "numberInStock", label: "Stock" },
+      { path: "dailyRentalRate", label: "Rate" },
+      {
+        key: "like",
+        content: movie => (
+          <Like liked={movie.liked} onClick={() => this.handleLike(movie)} />
+        )
+      }
+    ]
+  };
+
+ 
+
+  deleteColumn = {
+    key: "delete",
+    content: movie => (
+      <button
+        onClick={() => this.handleDelete(movie)}
+        className="btn btn-danger btn-sm"
+      >
+        Delete
+      </button>
+    )
   };
 
   async componentDidMount() {
@@ -64,17 +96,24 @@ class MoviesForm extends Component {
     this.setState({ currentPage: page });
   };
 
-  handleGenreSelect = genre => {
-    //this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
-    this.setState({ searchQuery: "", currentPage: 1 });
-  };
+  // handleGenreSelect = genre => {
+  //   //this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
+  //   this.setState({ searchQuery: "", currentPage: 1 });
+  // };
 
   handleSearch = query => {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
 
   handleSort = sortColumn => {
-    this.setState({ sortColumn });
+    const columns = [ ...this.state.columns ];
+    const index =columns.findIndex((item) => item.path === sortColumn.path);
+     columns[index].sortorder =sortColumn.sortorder;
+    // setColumns[columns];
+    // const sorted = sortItems(services, [sortColumn.path], [sortColumn.sortorder]);
+    // setServices(sorted); 
+      
+    this.setState({ columns,sortColumn });
   };
 
   getPagedData = () => {
@@ -98,7 +137,7 @@ class MoviesForm extends Component {
     filtered = filtered.filter(m =>
       m.title.toLowerCase().startsWith(searchQuery.toLowerCase()));
     
-    const sorted = sortItems(filtered, [sortColumn.path], [sortColumn.order]);
+    const sorted = sortItems(filtered, [sortColumn.path], [sortColumn.sortorder]);
 
     const movies = paginate(sorted, currentPage, pageSize);
 
@@ -107,9 +146,9 @@ class MoviesForm extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
+    const { pageSize, currentPage, searchQuery,columns } = this.state;
     const { user } = this.props;
-    const {handleSearch,handleLike,handleDelete,handleSort} =this;
+    const {handleSearch,handleSort} =this;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
@@ -125,12 +164,11 @@ class MoviesForm extends Component {
             <p>Showing {totalCount} movies in the database.</p>
             <MoviesContext.Provider value={{ searchQuery,handleSearch }}>
               <SearchBox />
-             <MoviesTable
-              sortColumn={sortColumn}
-              onLike={handleLike}
-              onDelete={handleDelete}
+             <Table
+             // sortColumn={sortColumn}
+              columns={columns}
               onSort={handleSort}
-              movies={movies}
+              data={movies}
             />
             </MoviesContext.Provider>
           </div>
