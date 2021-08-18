@@ -18,3 +18,12 @@ export function getServices() {
     throw error;
   }
 }
+
+export function updateService(service) {
+  if (service._id) {
+     const body = { ...service };
+     delete body._id;
+     return http.put(`${apiEndpoint}/${service._id}`, body);
+   }
+   
+ }
