@@ -403,7 +403,7 @@ i.fa-sort-asc.show {
   text-align: center!important;
 }
 .ltr{
-  direction: ltr;
+  direction: ltr!important;
 }
 
 /* select search font */
@@ -417,4 +417,8 @@ i.fa-sort-asc.show {
 }
 .smallFont{
   font-size: .8rem!important;
+}
+
+div[aria-label*="tabular representation"]{
+  left:0!important
 }

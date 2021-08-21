@@ -28,7 +28,7 @@ export function change_Array_Element_Value(
   foo
 ) {
   const changedarray = array.map((p) => {
-    if (conditioned_elemntname !== undefined)
+    if (conditioned_elemntname)
       return p[conditioned_elemntname] === condition_value
         ? { ...p, [elemntname]: foo(p[elemntname]) }
         : p;

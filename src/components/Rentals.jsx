@@ -10,6 +10,7 @@ import RegisterForm from "./RegisterForm";
 import momentJalaali from 'moment-jalaali';
 import Select from "react-dropdown-select";
 import { getGenres } from "../services/genreService";
+import Chart from "react-google-charts";
 
 // const options = [
 //   { value: 'UG', label: 'UG1' },
@@ -74,7 +75,26 @@ class Rentals extends Component {
 <div onClick={this.togglei}>
   <i className={this.state.isAsc?"fa fa-sort-asc fa-3x m-2":"fa fa-sort-asc m-2 fa-3x show"} />
 </div>
-
+<Chart
+  width={'500px'}
+  height={'300px'}
+  chartType="PieChart"
+  loader={<div>Loading Chart</div>}
+  data={[
+    ['Task', 'Hours per Day'],
+    ['Work', 11],
+    ['Eat', 2],
+    ['Commute', 2],
+    ['Watch TV', 2],
+    ['Sleep', 7],
+  ]}
+  options={{
+    title: 'My Daily Activities',
+    // Just add this option
+    is3D: true,
+  }}
+  rootProps={{ 'data-testid': '2' }}
+/>
 
 {this.getCustomFormat(this.state.value, this.state.isGregorian)}
 

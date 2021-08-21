@@ -107,7 +107,8 @@ const ServiceForm = () => {
 
   const setInput = (e) => {
     validateProperty(e.target);
-    const newValue = { [e.target.name]: e.target.value };
+   const {name,value}=e.target;
+    const newValue = { [name]: value };
     return setForm((form) => ({ ...form, ...newValue }));
   };
 
@@ -177,11 +178,11 @@ const ServiceForm = () => {
       if (Object.keys(formerrors).length > 0) return;
 
       setWaiting(true);
-      await saveService({...form,...{user:user._id}});
-      await toast.success("Your request has been successfully submitted", {
-        position: toast.POSITION.TOP_LEFT,
-      });
-      setWaiting(false);
+     await saveService({...form,...{user:user._id}});
+     await toast.success("Your request has been successfully submitted", {
+       position: toast.POSITION.TOP_LEFT,
+     });
+     setWaiting(false);
     } catch (ex) {
       if (ex.response)
       toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
@@ -319,16 +320,9 @@ const ServiceForm = () => {
         </div>
         <div className="col-lg-6">
           <div className="form-group mt-3">
-            <button className="btn btn-primary " tabIndex="8">
-              Request&nbsp;&nbsp;&nbsp;
-              {iswaiting && (
-                <span
-                  className="spinner-grow spinner-grow-sm align-middle"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-              )}
-              {!iswaiting && <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+            <button className="btn btn-primary" tabIndex="8">
+              Request
+              <i className={"fa fa-spinner fa-spin mx-1 " + (iswaiting?"visible":"invisible")} ></i>
             </button>
           </div>
         </div>

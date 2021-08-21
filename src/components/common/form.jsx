@@ -70,14 +70,9 @@ class Form extends Component {
     ) {
     return (
      <div className="ltr">
-        <button className={classname} tabIndex="3" disabled={this.validate() || !enabled}>{label}&nbsp;&nbsp;&nbsp;
-          {this.state.iswaiting && (
-              <span className="spinner-grow spinner-grow-sm align-middle" role="status" aria-hidden="true"></span>
-          )}
-          {!this.state.iswaiting && (
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )
-          }
-          </button>
+        <button className={classname} tabIndex="3" disabled={this.validate() || !enabled}>{label}
+           <i className={"fa fa-spinner fa-spin mx-1 " + (this.state.iswaiting?"visible":"invisible")} ></i>
+        </button>
         
       </div>
     );

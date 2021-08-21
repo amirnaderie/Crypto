@@ -19,6 +19,13 @@ export function getServices() {
   }
 }
 
+export function getStatistics() {
+  try {
+    return http.get(apiEndpoint+"/statistics");
+  } catch (error) {
+    throw error;
+  }
+}
 export function updateService(service) {
   if (service._id) {
      const body = { ...service };
