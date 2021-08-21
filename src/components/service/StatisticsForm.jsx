@@ -4,6 +4,9 @@ import { getStatistics } from "../../services/serviceService";
 
 const StatisticsForm = () => {
     const [statistics, setStatistics] = useState();
+    const [statisticsbrand, setStatisticsbrand] = useState();
+    const [custominterval, setCustomInterval] = useState(3000);
+
     useEffect(() => {
         async function fetchAPI() {
           const { data } = await getStatistics();
@@ -15,14 +18,25 @@ const StatisticsForm = () => {
         //     chartData.push([rateCurrencyNames[i], rateCurrencyValues[i]])
         //   }
         let values=[['Task', 'Hours per Day']];
-        for (const key in data) {
-            values.push([data[key].Label, data[key].count] );
+        const {statistic,statisticbrand}=data
+        for (const key in statistic) {
+            values.push([statistic[key].Label, statistic[key].count] );
         }  
-
+        
+        let valuesbrand=[['Brand', 'Recently']];
+        for (const key in statisticbrand) {
+          valuesbrand.push([statisticbrand[key].Label, statisticbrand[key].count] );
+        } 
 
           setStatistics (values);
+          setStatisticsbrand (valuesbrand);
+          
         }
-        fetchAPI();
+        setInterval(() => {
+          fetchAPI();
+         
+        }, 30000);
+        
       }, []);
     
     //   {[
@@ -35,7 +49,8 @@ const StatisticsForm = () => {
     //   ]}
 
     return (
-    <div >
+    <div className="col-md-6">
+    <div>
 {statistics && <Chart
         width={'450px'}
         height={'300px'}
@@ -49,6 +64,22 @@ const StatisticsForm = () => {
         }}
         rootProps={{ 'data-testid': '2' }}
       />}
+      </div>  
+      <div>
+       {statisticsbrand && <Chart
+        width={'450px'}
+        height={'300px'}
+        chartType="PieChart"
+        loader={<div>Loading Chart</div>}
+        data={statisticsbrand}
+        options={{
+          title: 'Type Of Brands Statistics',
+          // Just add this option
+          is3D: true,
+        }}
+        rootProps={{ 'data-testid': '2' }}
+      />}
+      </div>  
     </div>
       );
 }
