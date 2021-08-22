@@ -5,18 +5,11 @@ import { getStatistics } from "../../services/serviceService";
 const StatisticsForm = () => {
     const [statistics, setStatistics] = useState();
     const [statisticsbrand, setStatisticsbrand] = useState();
-    const [custominterval, setCustomInterval] = useState(3000);
-
+    
     useEffect(() => {
         async function fetchAPI() {
           const { data } = await getStatistics();
-          
-        //   const rateCurrencyNames = Object.keys(data)
-        //   const rateCurrencyValues = Object.values(data)
-        //   const chartData = [['Currency Name', 'Currency Rate']]
-        //   for (let i = 0; i < rateCurrencyNames.length; i += 1) {
-        //     chartData.push([rateCurrencyNames[i], rateCurrencyValues[i]])
-        //   }
+             
         let values=[['Task', 'Hours per Day']];
         const {statistic,statisticbrand}=data
         for (const key in statistic) {
@@ -32,10 +25,12 @@ const StatisticsForm = () => {
           setStatisticsbrand (valuesbrand);
           
         }
-        setInterval(() => {
+        let interval = setInterval(() => {
           fetchAPI();
-         
-        }, 30000);
+          clearInterval(interval);
+          interval = setInterval(fetchAPI, 60000);
+        }, 3000);
+       
         
       }, []);
     
@@ -49,10 +44,10 @@ const StatisticsForm = () => {
     //   ]}
 
     return (
-    <div className="col-md-6">
-    <div>
+    <div className="col-12">
+    <div className="col-md-6  d-md-inline-block">
 {statistics && <Chart
-        width={'450px'}
+        width={'100%'}
         height={'300px'}
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
@@ -65,9 +60,9 @@ const StatisticsForm = () => {
         rootProps={{ 'data-testid': '2' }}
       />}
       </div>  
-      <div>
+      <div className="col-md-6  d-md-inline-block">
        {statisticsbrand && <Chart
-        width={'450px'}
+        width={'100%'}
         height={'300px'}
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
