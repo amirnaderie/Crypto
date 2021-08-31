@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
-//import styled, { css } from 'styled-components';
-import { Route, Redirect, Switch, Link } from "react-router-dom";
 
-import HomeForm from "../HomeForm";
-//import NavBar from "../navBar";
-import LoginForm from "../loginForm";
-import Logout from "../logout";
-import ProtectedRoute from "../common/protectedRoute";
+//import HomeForm from "../HomeForm";
+//import LoginForm from "../loginForm";
+////import Logout from "../logout";
+//import ProtectedRoute from "../common/protectedRoute";
+
+import Menu from "./menu";
+import CustomHeader from "./customHeader";
+import CustomSwitch from "./customSwitch";
 
 import auth from "../../services/authService";
 import { getMenus } from "../../services/menuService";
-
-import Burger from "./burger";
-import Menu from "./menu";
 import { sortItems } from "../../utils/paginate";
-import {UserContext} from '../context/Context'
+import {UserContext} from '../context/Context';
 import "./mainStyle.css";
+
+import Navbar  from "./Alt/Navbar";
+import { Fragment } from "react";
+
+
+
 
 const MainForm = () => {
   const [open, setOpen] = useState(false);
+  const [mainstyle, setMainStyle] = useState(false);
   const [user, setUser] = useState(auth.getCurrentUser());
   const [menus, setmenus] = useState([]);
   const [urls, seturls] = useState([]);
@@ -37,6 +42,7 @@ const MainForm = () => {
       });
     }
     window.addEventListener("resize", handleResize);
+    useQuery();
     try {
       if (window.location.pathname === "/login") {
         setUser(null);
@@ -80,115 +86,34 @@ const MainForm = () => {
           window.location = "/login";
       }
     } catch (error) {
-      // if(error==='login')
-      //  window.location = "/login";
+     
       if (error.message.includes("Unexpected token"))
         console.log("khata", error);
     }
   }, []);
 
+  function useQuery() {
+    const MySyle=((new URLSearchParams(window.location.search).get("style"))=== 'true');
+    setMainStyle(MySyle);
+  }
   return (
     <div className="container-fluid">
-      <header className="py-3 position-fixed bg-light" style={{top: '0',right: '0',left: '0','zIndex': '5',height: '53px'}}>
-       {user !== "undefined" && user !== null && menus !== undefined && menus.length !== 0 && (
-           <div><Burger open={open} setOpen={setOpen} />
-          
-              <div className="dropdown-content">
-                <a>{user !== null && `نام کاربر: ${user.name}`}</a>
-                <li></li>
-                <a>
-                  {(window.screen.orientation || {}).type ||
-                    window.screen.mozOrientation ||
-                    window.screen.msOrientation}
-                </a>
-                <a>
-                  {window.screen.orientation.angle ? "landscape" : "portrait"}
-                </a>
-                <a>{!!navigator.maxTouchPoints ? "mobile" : "computer"}</a>
-              </div>
-           
-            
-              <div className="pb-1 mb-1 border-bottom text-center">
-               
-                <Link to="/home">
-                  <img
-                    src={process.env.PUBLIC_URL + "/images/flowers32.png"}
-                    alt="Site Logo"
-                  />
-                </Link>
-              </div>
-              </div>
-            )}
-       
-      </header>
-       <div className="position-relative justify-content-center align-items-center" style={{top: '53px'}}>
-         <UserContext.Provider value={{ user,dimensions }}>
-            <Switch>
-              {menus !== undefined &&
-                menus.length !== 0 &&
-                menus
-                  .filter((item) => item["component"] !== "")
-                  .map(({ id, url, needPassParams, component: Component }) =>
-                    needPassParams === true ? (
-                      <Route
-                        key={id}
-                        path={url}
-                        render={(props) => <Component {...props} user={user} />}
-                      />
-                    ) : (
-                      <ProtectedRoute
-                        key={id}
-                        path={url}
-                        component={Component}
-                      />
-                    )
-                  )}
-
-              {/* <ProtectedRoute path="/register" component={RegisterForm} />
-     <ProtectedRoute path="/movies/:id" component={MovieForm} />
-     <ProtectedRoute path="/customers" component={Customers} />
-      <ProtectedRoute path="/rentals" component={Rentals} />
-      <ProtectedRoute path="/music" component={MusicForm} /> */}
-
-              <Route path="/logout" component={Logout} />
-              {/* <Route
-        path="/movies"
-        render={props => <Movies {...props} user={user} />}
-      /> */}
-              <Route path="/login" component={LoginForm} />
-              <Route path="/home" component={HomeForm} />
-              <Redirect from="/" exact to="/login" />
-              <Redirect to="/home" />
-            </Switch>
-            </UserContext.Provider>
-          </div>
+      <UserContext.Provider value={{ user, dimensions }}>
+       {mainstyle && <Fragment>
+      <CustomHeader open={open} setOpen={setOpen}/>
+      <CustomSwitch menus={menus} />
+      <Menu  open={open} menus={urls} setOpen={setOpen} />
+      </Fragment>
+}
+{!mainstyle && <Fragment> 
+  <Navbar menus={urls} />
+       <CustomSwitch menus={menus} />  
+  </Fragment>}
+      </UserContext.Provider>
          
-     
-      <div>
-        <Menu Height={dimensions.height} open={open} menus={urls} setOpen={setOpen} user={user} />
-      </div>
     </div>
   );
 };
 
-// ReactDOM.render(<App />, document.getElementById('app'));
-
-// const useOnClickOutside = (ref, handler) => {
-//   React.useEffect(() => {
-//     const listener = event => {
-//       if (!ref.current || ref.current.contains(event.target)) {
-//         return;
-//       }
-//       handler(event);
-//     };
-//     document.addEventListener('mousedown', listener);
-
-//     return () => {
-//       document.removeEventListener('mousedown', listener);
-//     };
-//   },
-//   [ref, handler],
-//   );
-// };
 
 export default MainForm;

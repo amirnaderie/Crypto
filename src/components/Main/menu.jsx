@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
-
+import { UserContext } from "../context/Context";
+import Profile from "./profile";
 //import { fasortasc, fasortdesc } from '@fortawesome/react-fontawesome'
 //import { fasortasc,fasortdesc } from '@fortawesome/free-solid-svg-icons'
 
@@ -24,7 +25,7 @@ const StyledMenu = styled.nav`
   overflow: auto;
   transition: transform 1s ease;
   min-width: 17rem;
-
+  direction:${({ dir }) => dir};
   ul:not(.collapse) {
     list-style-type: none;
     color: #fff;
@@ -61,8 +62,10 @@ const StyledMenu = styled.nav`
   }
 `;
 
-const Menu = ({ Height, open, menus, setOpen, user }) => {
+const Menu = ({ open, menus, setOpen }) => {
+  const { user, dimensions } = useContext(UserContext);
   const [menu, setMenu] = useState([]);
+ 
   //const [menus, setMenus] = useState([]);
   //const [opencol, setOpencol] = useState(false);
 
@@ -77,25 +80,9 @@ const Menu = ({ Height, open, menus, setOpen, user }) => {
   }, [menus]);
 
   return (
-    <StyledMenu open={open} Height={Height} Top={53}>
-      <div className="dropdown m-3" style={{ position: "fixed", left: 0 }}>
-        <button className="dropbtn">
-          <span className="user">
-            <i className="fa fa-user"></i>
-          </span>{" "}
-        </button>
-        <div className="dropdown-content">
-          <a>{user !== null && `نام کاربر: ${user.name}`}</a>
-          <li></li>
-          <a>
-            {(window.screen.orientation || {}).type ||
-              window.screen.mozOrientation ||
-              window.screen.msOrientation}
-          </a>
-          <a>{window.screen.orientation.angle ? "landscape" : "portrait"}</a>
-          <a>{!!navigator.maxTouchPoints ? "mobile" : "computer"}</a>
-        </div>
-      </div>
+    <div>
+    <StyledMenu open={open} Height={dimensions.height} dir="rtl" Top={53}>
+      <Profile/>
 
       <ul className="mx-1">
         {menus !== undefined &&
@@ -191,6 +178,7 @@ const Menu = ({ Height, open, menus, setOpen, user }) => {
         </a> */}
       </ul>
     </StyledMenu>
+    </div>
   );
 };
 

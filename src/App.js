@@ -34,31 +34,15 @@ class App extends Component {
     return (
       <React.Fragment>
     
+       {/* <Navbar /> */}
+
         <MainForm/>
        {/* for persian 
         <ToastContainer rtl /> */}
       
       <ToastContainer />
       
-        {/* <NavBar user={user} />
-        <main className="container">
-          <Switch>
-            <Route path="/register" component={RegisterForm} />
-            <Route path="/login" component={LoginForm} />
-            <Route path="/logout" component={Logout} />
-            <ProtectedRoute path="/movies/:id" component={MovieForm} />
-            <Route
-              path="/movies"
-              render={props => <Movies {...props} user={this.state.user} />}
-            />
-            <Route path="/customers" component={Customers} />
-            <Route path="/rentals" component={Rentals} />
-            <ProtectedRoute path="/music" component={MusicForm} />
-            <Route path="/not-found" component={NotFound} />
-            <Redirect from="/" exact to="/login" />
-            <Redirect to="/not-found" />
-          </Switch>
-        </main>  */}
+        
       </React.Fragment>
     );
   }

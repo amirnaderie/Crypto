@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { toast } from "react-toastify";
 import { getServices, updateService } from "../../services/serviceService";
 import Table from "../common/table";
-import Like from "../common/like";
 import { dateFormat, change_Array_Element_Value,search_Allitems_in_Allobjects_Ofarray } from "../../utils/utilities";
 import { sortItems } from "../../utils/paginate";
 import { UserContext } from "../context/Context";
@@ -11,7 +10,7 @@ import { Fragment } from "react";
 const AcceptServiceForm = () => {
   const { user } = useContext(UserContext);
   const [services, setServices] = useState(null);
-  const [searchedservices, setSearchedservices] = useState(null);
+  //const [searchedservices, setSearchedservices] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   
   // const [sortColumn,SetsortColumn] = useState([{ path: "servicedate", order: "asc" },{ path: "servicetype", order: "desc" }]);
