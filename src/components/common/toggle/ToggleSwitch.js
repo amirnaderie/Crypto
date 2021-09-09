@@ -1,14 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
-import "./Toggle.css";
 import styled from "styled-components";
 
-/*
-Toggle Switch Component
-Note: id, checked and onChange are required for ToggleSwitch component to function. The props name, small, disabled
-and optionLabels are optional.
-Usage: <ToggleSwitch id="id" checked={value} onChange={checked => setValue(checked)}} />
-*/
 
 const CheckBoxWrapper = styled.div`
   position: relative;

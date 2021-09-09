@@ -1,14 +1,15 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "./Navbar.css";
 
 const NavBar = ({ menus }) => {
   const localclass=()=>{
-    return "text-decoration-none  text-dark pt-3 pt-lg-0 px-1 px-lg-3";
+    return "text-decoration-none text-dark pt-3 pt-lg-0 px-1 px-lg-3 ";
   }
   return (
     menus.length !== 0 && (
-      <div className="row">
+      <div className="row" >
         <Navbar
           collapseOnSelect
           // bg="light"
@@ -32,6 +33,7 @@ const NavBar = ({ menus }) => {
               {menus.map((item) => {
                 return item["url"] !== "" && item["parentId"] === 0 ? (
                   <Link
+                    key={item["id"]}
                     to={item["url"]}
                     className={localclass()}
                   >
@@ -40,18 +42,21 @@ const NavBar = ({ menus }) => {
                 ) : item["url"] === "" && item["parentId"] === 0 ? (
                   <NavDropdown
                     title={item["label"]}
+                    key={item["id"]}
                     id={"collasible-nav-dropdown" + item["id"]}
-                    className={localclass() }
+                    className={localclass()}
                     style={{backgroundColor:"burlywood"}}
+                    renderMenuOnMount={true}
                   >
                     {menus.map((item1) => {
                       return (
                         item1["parentId"] === item["id"] && (
                           <Link
                             to={item1["url"]}
-                            className="text-decoration-none "
+                            className="text-decoration-none  "
+                            key={item1["id"]}
                           >
-                            <Nav.Link href={item1["url"]} >
+                            <Nav.Link href={item1["url"]}  >
                               {item1["label"]}
                             </Nav.Link>
                           </Link>

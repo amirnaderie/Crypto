@@ -26,6 +26,7 @@ const StyledMenu = styled.nav`
   transition: transform 1s ease;
   min-width: 17rem;
   direction:${({ dir }) => dir};
+
   ul:not(.collapse) {
     list-style-type: none;
     color: #fff;

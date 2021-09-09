@@ -10,7 +10,7 @@ import ProtectedRoute from "../common/protectedRoute";
 const CustomSwitch = ({ menus }) => {
     const { user } = useContext(UserContext);
     return (
-    <div className="position-relative justify-content-center align-items-center" style={{top: '23px'}}>
+    <div className="position-relative justify-content-center align-items-center">
      <Switch>
         {menus &&
           menus

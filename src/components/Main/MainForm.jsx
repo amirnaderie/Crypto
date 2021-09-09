@@ -93,8 +93,15 @@ const MainForm = () => {
   }, []);
 
   function useQuery() {
-    const MySyle=((new URLSearchParams(window.location.search).get("style"))=== 'true');
-    setMainStyle(MySyle);
+   
+    if (window.location.search!=="")
+    {const MySyle=((new URLSearchParams(window.location.search).get("style"))=== 'true');
+     setMainStyle(MySyle);
+     localStorage.setItem("style", MySyle);
+  }
+  else
+    setMainStyle(localStorage.getItem("style")=== 'true');
+  
   }
   return (
     <div className="container-fluid">
