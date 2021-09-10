@@ -31,6 +31,7 @@ class Rentals extends Component {
       open:false,
       selectedCountry:null,
       options:{},
+      textForClipborad:"test clipboard"
   };
 
   async componentDidMount(){
@@ -75,26 +76,6 @@ class Rentals extends Component {
 <div onClick={this.togglei}>
   <i className={this.state.isAsc?"fa fa-sort-asc fa-3x m-2":"fa fa-sort-asc m-2 fa-3x show"} />
 </div>
-<Chart
-  width={'500px'}
-  height={'300px'}
-  chartType="PieChart"
-  loader={<div>Loading Chart</div>}
-  data={[
-    ['Task', 'Hours per Day'],
-    ['Work', 11],
-    ['Eat', 2],
-    ['Commute', 2],
-    ['Watch TV', 2],
-    ['Sleep', 7],
-  ]}
-  options={{
-    title: 'My Daily Activities',
-    // Just add this option
-    is3D: true,
-  }}
-  rootProps={{ 'data-testid': '2' }}
-/>
 
 {this.getCustomFormat(this.state.value, this.state.isGregorian)}
 
@@ -131,7 +112,16 @@ class Rentals extends Component {
         {(selectedCountry!==null && selectedCountry!=="undefined") && selectedCountry[0].label}
         <Select multi options={options} direction="rtl" placeholder="  انتخاب ..." onChange={(value) => this.setState({selectedCountry:value})} />
         </div>
-       
+               
+     
+        <div>
+          <Button style={{display:'block'}} onClick={() =>  navigator.clipboard.writeText(this.state.textForClipborad)}>By clicking This Button the text was written in below text area will be copied in clipboard</Button> 
+          
+        <textarea value={this.state.textForClipborad} onChange={(e)=>this.setState({textForClipborad:e.target.value})}/>
+      
+    </div>
+
+
       </div>
     );
   }
