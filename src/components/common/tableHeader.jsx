@@ -11,6 +11,8 @@ const TableHeader = ({ columns, onSort }) => {
   const [order,setOrder]=useState('asc');
 
   const raiseSort = (column) => {
+    if (column.sortorder === undefined) return null;
+
     if (column.sortorder === "") column.sortorder = "asc";
     else column.sortorder = column.sortorder === "asc" ? "desc" : "asc";
     onSort(column);

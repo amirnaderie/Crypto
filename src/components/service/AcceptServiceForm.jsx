@@ -33,7 +33,6 @@ const AcceptServiceForm = () => {
       label: "State",
       key: "like",
       content: (service) => (
-        // <i onClick={() => window.confirm({service.servicestate===1?"Are you sure To Accept This Service?":"Are you sure To Release This Service?"} ) && onLike(service)}
         <i
           onClick={() =>
             window.confirm(

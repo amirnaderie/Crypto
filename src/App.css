@@ -439,3 +439,15 @@ color:white!important;
   padding-bottom: 0%!important;
 }
 
+/* Remove label next to <input type="file"> */
+.file-upload {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 3px;
+}
+
+.file-upload input {
+  overflow: hidden;
+  width: 0;
+}
+/* ******* */
