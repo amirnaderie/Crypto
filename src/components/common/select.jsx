@@ -30,8 +30,8 @@ const Select = ({
         className={`rounded col-12  ${coreClass}`}
         // onBlur={() => setTouched(true)}
       >
-        {rest.placeholder && !options && (
-          <option disabled>{rest.placeholder}</option>
+        {rest.placeholder  && (
+          <option value='0' disabled>{rest.placeholder}</option>
         )}
         {options &&
           options.map((option) => (

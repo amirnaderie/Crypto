@@ -12,6 +12,8 @@ import {
   search_Allitems_in_Allobjects_Ofarray,
   addCommas,
   removeNonNumeric,
+  change_Array_Element_Value,
+  dateFormat,
 } from "../../utils/utilities";
 import { sortItems } from "../../utils/paginate";
 import Input from "../common/input/input";
@@ -74,8 +76,19 @@ const UploadFilesForm = () => {
           if (transfered) Trnsfered = [...transfered];
 
           const maskdata={...retval.data.data,size:addCommas(removeNonNumeric(Math.round(retval.data.data.size / 1024)))+' K'};
+             
           Trnsfered.push(maskdata);
-          setTrsnafered(Trnsfered);
+        
+          let changedData = change_Array_Element_Value(
+            Trnsfered,
+            undefined,
+            undefined,
+            "transferdate",
+            (x) => {
+              return dateFormat(x);
+            }
+          );
+          setTrsnafered(changedData);
           await toast.success("File is Uploaded", {
             position: toast.POSITION.TOP_LEFT,
           });

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import DatePicker from "react-datepicker2";
 
 const DatePicker1 = ({
@@ -8,9 +8,12 @@ const DatePicker1 = ({
   labelcolor = "text-dark",
   coreClass = "",
   direction = "rtl",
+  handleclick,
   ...rest
 }) => {
-  return (
+  const [init,setInit]=useState(null)
+
+    return (
     <div className="form-group mb-5 position-relative">
      
         <label
@@ -20,7 +23,8 @@ const DatePicker1 = ({
           {label}
         </label>
         <div className="selectAndDatepicker">
-          <DatePicker name={name} {...rest} className={`rounded py-1 col-12 ${coreClass}`} />
+          {!init && <input type="text" className={`rounded py-1 col-12 ${coreClass}`} onClick={()=>{setInit(true); handleclick(name,true);}} />}
+          {init && <DatePicker name={name} {...rest} className={`rounded py-1 col-12 ${coreClass}`} />}
         </div>
         {error && (
           <div className="text-danger position-absolute ">

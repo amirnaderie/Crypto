@@ -64,7 +64,7 @@ const StyledMenu = styled.nav`
 `;
 
 const Menu = ({ open, menus, setOpen }) => {
-  const { user, dimensions } = useContext(UserContext);
+  const { dimensions } = useContext(UserContext);
   const [menu, setMenu] = useState([]);
  
   //const [menus, setMenus] = useState([]);

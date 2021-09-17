@@ -269,6 +269,7 @@ const ServiceForm = () => {
               onChange={handleDateChange}
               timePicker={false}
               error={errors.servicedate}
+              handleclick={()=>{}}
             />
           </div>
           <div className="col-lg-6">
