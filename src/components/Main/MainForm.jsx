@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import io from "socket.io-client"
 
-//import HomeForm from "../HomeForm";
-//import LoginForm from "../loginForm";
-////import Logout from "../logout";
-//import ProtectedRoute from "../common/protectedRoute";
 
 import Menu from "./menu";
 import CustomHeader from "./customHeader";
@@ -32,7 +30,16 @@ const MainForm = () => {
     width: window.innerWidth,
     // mainheight:(window.innerHeight-90)
   });
+  const [socket, setSocket] = useState(null);
+  const [socketConnected, setSocketConnected] = useState(false);
+  
+
+
   useEffect(() => {
+   
+    setSocket(io('http://localhost:3901'));
+
+
     function handleResize() {
       setDimensions({
         height: window.innerHeight,
@@ -92,6 +99,28 @@ const MainForm = () => {
     }
   }, []);
 
+  // subscribe to the socket event
+  useEffect(() => {
+    if (!socket) return;
+   
+    socket.on('connect', () => {
+      setSocketConnected(socket.connected);
+      
+    });
+    socket.on('disconnect', () => {
+      setSocketConnected(socket.connected);
+    });
+  
+    socket.on("itemAdded", data => {
+      toast.success(data, {
+        position: toast.POSITION.TOP_LEFT,
+      });
+    });
+  
+  }, [socket]);
+    
+
+
   function useQuery() {
    
     if (window.location.search!=="")
@@ -105,7 +134,7 @@ const MainForm = () => {
   }
   return (
     <div className="container-fluid">
-      <UserContext.Provider value={{ user, dimensions }}>
+      <UserContext.Provider value={{ user, dimensions,socket }}>
        {mainstyle && <Fragment>
       <CustomHeader open={open} setOpen={setOpen}/>
       <CustomSwitch menus={menus} />

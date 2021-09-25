@@ -19,7 +19,7 @@ import { sortItems } from "../../utils/paginate";
 import Input from "../common/input/input";
 
 const UploadFilesForm = () => {
-  const { user } = useContext(UserContext);
+  const { user,socket } = useContext(UserContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [users, setUsers] = useState(null);
   const [recivereuser, setRecivereuser] = useState(0);
@@ -27,7 +27,7 @@ const UploadFilesForm = () => {
   const [transfered, setTrsnafered] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [iswaiting, setWaiting] = useState(false);
-
+  
   const [columns, setColumns] = useState([
     { path: "filename", label: "FileName" },
     { path: "recieverName", label: "RecieverName", sortorder: "" },
@@ -37,13 +37,17 @@ const UploadFilesForm = () => {
     { path: "desc", label: "Description" },
   ]);
 
+
+  
   useEffect(() => {
     async function fetchAPI() {
       const { data } = await getUser();
       setUsers(data);
+        
     }
     fetchAPI();
   }, []);
+
 
   // On file select (from the pop up)
   const onFileChange = (event) => {
@@ -51,6 +55,10 @@ const UploadFilesForm = () => {
     setSelectedFile(event.target.files[0]);
   };
 
+  const emitsocket =(e)=>{
+  e.preventDefault();  
+  socket.emit('addItem', "test Socket From Client");
+}
   // On file upload (click the upload button)
   const onFileUpload = async () => {
     try {
@@ -177,7 +185,7 @@ const UploadFilesForm = () => {
           ></SelectSearch>
         </div>
         <div className="col-lg-2 mb-5 mt-lg-4">
-          <label class="file-upload">
+          <label className="file-upload">
             <input type="file" onChange={onFileChange} />
             Choose Files
           </label>
@@ -197,6 +205,12 @@ const UploadFilesForm = () => {
         <div className=" col-lg-2 mb-5 mt-lg-4">
         <button className="btn btn-primary" tabIndex="8" disabled={!recivereuser || !selectedFile} onClick={onFileUpload}>
         Send File
+              <i className={"fa fa-spinner fa-spin mx-1 " + (iswaiting?"visible":"invisible")} ></i>
+            </button>
+        </div>
+        <div className=" col-lg-2 mb-5 mt-lg-4">
+        <button className="btn btn-primary" tabIndex="8" onClick={emitsocket}>
+        Send Socket Message
               <i className={"fa fa-spinner fa-spin mx-1 " + (iswaiting?"visible":"invisible")} ></i>
             </button>
         </div>

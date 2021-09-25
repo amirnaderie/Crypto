@@ -9,7 +9,7 @@ export function dateFormat(inputValue) {
 
     const hasmilisecond = ret.indexOf(".");
     ret = hasmilisecond !== -1 ? ret.slice(0, hasmilisecond) : ret;
-  } else
+  } else if (inputValue.length===8)
     ret =
       inputValue.substr(0, 4) +
       "/" +

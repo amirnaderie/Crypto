@@ -34,8 +34,8 @@ const Select = ({
           <option value='0' disabled>{rest.placeholder}</option>
         )}
         {options &&
-          options.map((option) => (
-            <option key={option._id} value={option[optionvalue]}>
+          options.map((option,idx) => (
+            <option key={idx} value={option[optionvalue]}>
               {option[optionlabel]}
             </option>
           ))}

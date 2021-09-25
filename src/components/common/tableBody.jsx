@@ -3,8 +3,10 @@ import _ from "lodash";
 import { UserContext } from "../context/Context";
 
 
-const TableBody = ({ columns, data }) => {
+const TableBody = ({ columns, data,func }) => {
   const { dimensions } = useContext(UserContext);
+ 
+  
   const renderCell = (item, column) => {
     if (column.content) return column.content(item);
 
@@ -34,9 +36,9 @@ const TableBody = ({ columns, data }) => {
           );
         } else {
           return (
-            <tr key={index}>
+            <tr key={index} className={func && func(item)}>
               {columns.map((column, idx) => (
-                <td className="text-center border-right" key={idx} >
+                <td className="text-center border-right " key={idx} >
                   {renderCell(item, column)}
                 </td>
               ))}

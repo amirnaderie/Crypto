@@ -139,7 +139,10 @@ class MoviesForm extends Component {
     
     const sorted = sortItems(filtered, [sortColumn.path], [sortColumn.sortorder]);
 
-    const movies = paginate(sorted, currentPage, pageSize);
+   if (this.state.selectedGenre!==selectedGenre1)
+      this.setState({ selectedGenre:selectedGenre1,currentPage:1 });
+    
+     const movies = paginate(sorted, currentPage, pageSize);
 
     return { totalCount: filtered.length, data: movies };
   };
