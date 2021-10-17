@@ -5,6 +5,7 @@ import React, {
   useContext,
   useRef,
 } from "react";
+import { connect } from "react-redux"
 import Table from "../common/table";
 import moment from "moment-jalaali";
 import { toast } from "react-toastify";
@@ -27,6 +28,7 @@ import { getUser } from "../../services/userService";
 import SelectSearch from "./../common/selectsearch";
 import Input from "../common/input/input";
 import { UserContext } from "../context/Context";
+import {updateInbox} from "../../redux/slices/mainsSlice"
 
 const initialFormState = {
   send1receive2: 0,
@@ -41,8 +43,8 @@ const initialDateClick = {
   dateto: false,
 };
 
-const FileTransferedForm = () => {
-  const { user } = useContext(UserContext);
+const FileTransferedForm = ({updateInbox}) => {
+  const { user, newFileRec, socket } = useContext(UserContext);
   const [iswaiting, setWaiting] = useState(false);
   const [transfered, setTransfered] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,11 +53,12 @@ const FileTransferedForm = () => {
   const [dateclick, setDateClick] = useState({ ...initialDateClick });
 
   const transferRef = useRef();
+  const formRef = useRef();
 
   transferRef.current = transfered;
+  formRef.current = form;
 
   const [columns, setColumns] = useState([
-   
     { path: "senderuserid.name", label: "SenderName", sortorder: "" },
     { path: "recieveruserid.name", label: "RecieverName", sortorder: "" },
     { path: "transferdate", label: "TransferDate", sortorder: "" },
@@ -94,9 +97,28 @@ const FileTransferedForm = () => {
       setForm((form) => ({ ...form, ...newValue }));
       const { data } = await getUser();
       setUsers(data);
+
+      socket.on("fileAdded", (data) => {
+        if ((formRef.current.send1receive2 == 2)&&(formRef.current.otherid===0 || formRef.current.otherid===data.senderuserid._id )) {
+          const trf = [...transferRef.current];
+          trf.unshift(maskdata(data));
+          setTransfered(trf);
+        }
+      });
     }
     fetchAPI();
   }, []);
+
+    // useEffect(() => {
+
+  //    if(newFileRec)
+  //     { const tr=[...transfered];
+  //       //const tr1=newFileRec;
+  //      // tr.push(tr1);
+  //    //   setTransfered(tr);
+  //     }
+
+  // }, [newFileRec]);
 
   const clickdownload = async (transferedrow) => {
     try {
@@ -107,6 +129,7 @@ const FileTransferedForm = () => {
         transferedrow.seendate = dateFormat(data.seendate);
         transferedrow.seentime = data.seentime;
         setTransfered(trf);
+        updateInbox('Dec');
       }
 
       getFile(transferedrow.filename);
@@ -116,7 +139,7 @@ const FileTransferedForm = () => {
   };
 
   const maskdata = (data) => {
-    let retval= change_Array_Element_Value(
+    let retval = change_Array_Element_Value(
       data,
       undefined,
       undefined,
@@ -125,7 +148,7 @@ const FileTransferedForm = () => {
         return dateFormat(x);
       }
     );
-     retval= change_Array_Element_Value(
+    retval = change_Array_Element_Value(
       retval,
       undefined,
       undefined,
@@ -134,17 +157,16 @@ const FileTransferedForm = () => {
         return dateFormat(x);
       }
     );
-    let retval1= change_Array_Element_Value(
+    let retval1 = change_Array_Element_Value(
       retval,
       undefined,
       undefined,
       "size",
       (x) => {
-        return addCommas(removeNonNumeric(Math.round(x / 1024)))+' K' ;
+        return addCommas(removeNonNumeric(Math.round(x / 1024))) + " K";
       }
     );
     return retval1;
-    
   };
   // On file upload (click the upload button)
   const gettransfered = async (e) => {
@@ -321,7 +343,7 @@ const FileTransferedForm = () => {
                   data={serachedTransfers(transfered)}
                   //sortColumn={sortColumn}
                   onSort={handleSort}
-                  func={(x)=>x['seendate']==='' && ' bg-primary '}
+                  func={(x) => x["seendate"] === "" && " bg-green text-white "}
                 />
               </Fragment>
             )}
@@ -332,4 +354,5 @@ const FileTransferedForm = () => {
   );
 };
 
-export default FileTransferedForm;
+export default connect(null,{updateInbox})(FileTransferedForm)
+//export default FileTransferedForm;

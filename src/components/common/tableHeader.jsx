@@ -35,7 +35,8 @@ const TableHeader = ({ columns, onSort }) => {
       <i className="fa fa-sort-desc" />
     );
   };
-  const changeorder = () => {
+  const changeorder = (e) => {
+    e.preventDefault();  
     let column = columns.find((column) => column.path === selectvalue);
    const Order=(order==='asc'?'desc':'asc');
     setOrder(Order);

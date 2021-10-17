@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import io from "socket.io-client"
-
 
 import Menu from "./menu";
 import CustomHeader from "./customHeader";
 import CustomSwitch from "./customSwitch";
 
-import auth from "../../services/authService";
+import auth, { makeSocketConnection } from "../../services/authService";
 import { getMenus } from "../../services/menuService";
 import { sortItems } from "../../utils/paginate";
-import {UserContext} from '../context/Context';
+import { UserContext } from "../context/Context";
 import "./mainStyle.css";
-
-import Navbar  from "./Alt/Navbar";
+import Navbar from "./Alt/Navbar";
 import { Fragment } from "react";
-
-
-
 
 const MainForm = () => {
   const [open, setOpen] = useState(false);
@@ -32,20 +26,16 @@ const MainForm = () => {
   });
   const [socket, setSocket] = useState(null);
   const [socketConnected, setSocketConnected] = useState(false);
-  
-
+  const [newFileRec, setNewFileRec] = useState(null);
 
   useEffect(() => {
-   
-    setSocket(io('http://localhost:3901'));
-
+    setSocket(makeSocketConnection());
 
     function handleResize() {
       setDimensions({
         height: window.innerHeight,
         width: window.innerWidth,
         // mainheight:(window.innerHeight-90)
-
       });
     }
     window.addEventListener("resize", handleResize);
@@ -66,7 +56,7 @@ const MainForm = () => {
                 data
                   .filter((item) => item["component"] !== "")
                   .map((plugin) => {
-                   return import(`../${plugin["path"]}`).then((module) => {
+                    return import(`../${plugin["path"]}`).then((module) => {
                       setmenus((oldArray) => [
                         ...oldArray,
                         { ...plugin, component: module.default },
@@ -93,7 +83,6 @@ const MainForm = () => {
           window.location = "/login";
       }
     } catch (error) {
-     
       if (error.message.includes("Unexpected token"))
         console.log("khata", error);
     }
@@ -102,54 +91,54 @@ const MainForm = () => {
   // subscribe to the socket event
   useEffect(() => {
     if (!socket) return;
-   
-    socket.on('connect', () => {
-      setSocketConnected(socket.connected);
-      
-    });
-    socket.on('disconnect', () => {
-      setSocketConnected(socket.connected);
-    });
-  
-    socket.on("itemAdded", data => {
-      toast.success(data, {
-        position: toast.POSITION.TOP_LEFT,
+
+    if (user) {
+      socket.on("connect", () => {
+        setSocketConnected(socket.connected);
+        //socket.emit("join", { name: user.name });
       });
-    });
-  
+
+      socket.on("connect_error", (err) => {
+        if (user)
+          toast.success("connection to socket is faild", {
+            position: toast.POSITION.TOP_LEFT,
+          });
+      });
+
+      socket.on("disconnect", () => {
+        setSocketConnected(socket.connected);
+      });
+    }
   }, [socket]);
-    
 
-
+ 
   function useQuery() {
-   
-    if (window.location.search!=="")
-    {const MySyle=((new URLSearchParams(window.location.search).get("style"))=== 'true');
-     setMainStyle(MySyle);
-     localStorage.setItem("style", MySyle);
-  }
-  else
-    setMainStyle(localStorage.getItem("style")=== 'true');
-  
+    if (window.location.search !== "") {
+      const MySyle =
+        new URLSearchParams(window.location.search).get("style") === "true";
+      setMainStyle(MySyle);
+      localStorage.setItem("style", MySyle);
+    } else setMainStyle(localStorage.getItem("style") === "true");
   }
   return (
     <div className="container-fluid">
-      <UserContext.Provider value={{ user, dimensions,socket }}>
-       {mainstyle && <Fragment>
-      <CustomHeader open={open} setOpen={setOpen}/>
-      <CustomSwitch menus={menus} />
-      <Menu  open={open} menus={urls} setOpen={setOpen} />
-      </Fragment>
-}
-{!mainstyle && <Fragment> 
-  <Navbar menus={urls} />
-       <CustomSwitch menus={menus} />  
-  </Fragment>}
+      <UserContext.Provider value={{ user, dimensions, socket, newFileRec }}>
+        {mainstyle && (
+          <Fragment>
+            <CustomHeader open={open} setOpen={setOpen} />
+            <CustomSwitch menus={menus} />
+            <Menu open={open} menus={urls} setOpen={setOpen} />
+          </Fragment>
+        )}
+        {!mainstyle && (
+          <Fragment>
+            <Navbar menus={urls} socket={socket} user={user} />
+            <CustomSwitch menus={menus} />
+          </Fragment>
+        )}
       </UserContext.Provider>
-         
     </div>
   );
 };
-
 
 export default MainForm;

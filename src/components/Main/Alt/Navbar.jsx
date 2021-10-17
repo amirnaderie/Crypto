@@ -1,15 +1,41 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import {getInboxCount,updateInbox} from "../../../redux/slices/mainsSlice"
+import { connect } from "react-redux"
+import MyBadge from './../../common/badge/badge';
 import "./Navbar.css";
 
-const NavBar = ({ menus }) => {
+const NavBar = ({ menus,inboxCount,socket,user,getInboxCount,updateInbox }) => {
+  
+
+  useEffect(() => {
+    async function fetchAPI() {
+      if (user) 
+      await getInboxCount(user._id);
+      
+    }
+    fetchAPI();
+  }, []);
+
+  useEffect(() => {
+    async function fetchAPI() {
+      if (socket)
+      {socket.on("fileAdded", (data) => {
+        updateInbox('Inc');
+      });  
+      }   
+    }
+    fetchAPI();
+  }, [socket]);
+
   const localclass=()=>{
     return "text-decoration-none text-dark pt-3 pt-lg-0 px-1 px-lg-3 ";
   }
   return (
     menus.length !== 0 && (
       <div className="row" >
+        
         <Navbar
           collapseOnSelect
           // bg="light"
@@ -20,8 +46,9 @@ const NavBar = ({ menus }) => {
           style={{backgroundColor:"burlywood"}}
         >
           <Navbar.Brand>
+            {inboxCount!==0 && <MyBadge value={inboxCount}/>}
             <Link to="/home" className="text-decoration-none ">
-              <Nav.Link href="/home"> <img
+              <Nav.Link href="/home" className="besideBadge"> <img
                     src={process.env.PUBLIC_URL + "/images/flowers32.png"}
                     alt="Site Logo"
                   /></Nav.Link>
@@ -89,4 +116,11 @@ const NavBar = ({ menus }) => {
   );
 };
 
-export default NavBar;
+const mapStateToProps = state => ({
+  inboxCount: state.mains.inboxCount
+ 
+})
+
+export default connect(mapStateToProps,{getInboxCount,updateInbox})(NavBar)
+
+//export default NavBar;

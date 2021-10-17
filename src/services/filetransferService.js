@@ -10,6 +10,14 @@ export function getTransfered(data) {
     params: data,
   });
 }
+
+export function getinboxcount(id) {
+  return http.get(apiEndpoint + "/getinboxcount", {
+    params: {id:id},
+  });
+}
+
+
 export async function getFile(filename) {
   const response = await http.get(
     apiEndpoint + "/getfile?filename=" + filename,

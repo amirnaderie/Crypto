@@ -9,7 +9,7 @@ export function dateFormat(inputValue) {
 
     const hasmilisecond = ret.indexOf(".");
     ret = hasmilisecond !== -1 ? ret.slice(0, hasmilisecond) : ret;
-  } else if (inputValue.length===8)
+  } else if (inputValue.length === 8)
     ret =
       inputValue.substr(0, 4) +
       "/" +
@@ -27,13 +27,24 @@ export function change_Array_Element_Value(
   elemntname,
   foo
 ) {
-  const changedarray = array.map((p) => {
+  let changedarray = null;
+  if (Array.isArray(array)) {
+    changedarray = array.map((p) => {
+      if (conditioned_elemntname)
+        return p[conditioned_elemntname] === condition_value
+          ? { ...p, [elemntname]: foo(p[elemntname]) }
+          : p;
+      else return { ...p, [elemntname]: foo(p[elemntname]) };
+    });
+    return changedarray;
+  } else {
     if (conditioned_elemntname)
-      return p[conditioned_elemntname] === condition_value
-        ? { ...p, [elemntname]: foo(p[elemntname]) }
-        : p;
-    else return { ...p, [elemntname]: foo(p[elemntname]) };
-  });
+      changedarray =
+      array[conditioned_elemntname] === condition_value
+          ? { ...array, [elemntname]: foo(array[elemntname]) }
+          : array;
+    else changedarray = { ...array, [elemntname]: foo(array[elemntname]) };
+  }
   return changedarray;
 }
 // export function change_Array_Element_Value(array,conditioned_elemntname,condition_value,elemntname,newvalue)  {
@@ -51,21 +62,21 @@ export function change_Array_Element_Value(
 export function search_Allitems_in_Allobjects_Ofarray(myArray, value) {
   let items = {};
   let retArray = [];
-  
-  if (value==='') return myArray;
+
+  if (value === "") return myArray;
 
   for (var i = 0; i < myArray.length; i++) {
     items = Object.getOwnPropertyNames(myArray[i]); // Object.keys(myArray[i]).length;
     for (var j = 0; j < items.length; j++) {
-      
       if (typeof myArray[i][items[j]] === "string") {
-        if (myArray[i][items[j]].toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+        if (
+          myArray[i][items[j]].toLowerCase().indexOf(value.toLowerCase()) !== -1
+        ) {
           retArray.push(myArray[i]);
           break;
         }
       } else if (typeof myArray[i][items[j]] === "number" && !isNaN(value)) {
-        
-        if (myArray[i][items[j]] ===Number(value) ) {
+        if (myArray[i][items[j]] === Number(value)) {
           retArray.push(myArray[i]);
           break;
         }
@@ -75,7 +86,7 @@ export function search_Allitems_in_Allobjects_Ofarray(myArray, value) {
   return retArray;
 }
 
-
 // for thousands separators
-export const addCommas = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-export const removeNonNumeric = num => num.toString().replace(/[^0-9]/g, "");
+export const addCommas = (num) =>
+  num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");

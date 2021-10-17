@@ -7,20 +7,26 @@ import { toast } from "react-toastify";
 import Form from "./common/form";
 import auth from "../services/authService";
 import ToggleSwitch from "./common/toggle/ToggleSwitch";
+import GoogleLoginComponent from "./google/loginbutton/googlebutton";
+import UseAuth from "./google/ontap/auth";
 
 class LoginForm extends Form {
   state = {
-    data: { username: "", password: "" },
+    data: { email: "", password: "", idtoken: "" },
     errors: {},
     captchaState: false,
     iswaiting: false,
     heightdimension: window.innerHeight,
     mainheight: window.innerHeight - 90,
-    siteStyle:false,
+    siteStyle: false,
+    auth: false,
   };
 
+  componentDidMount() {
+    auth.logout();
+  }
   schema = {
-    username: Joi.string().required().label("Username"),
+    email: Joi.string().required().label("Email"),
     password: Joi.string().required().label("Password"),
   };
 
@@ -29,14 +35,26 @@ class LoginForm extends Form {
   };
   onrefresh = (value) => {};
 
+  assignUser = (idToken, mail) => {
+      this.setState({ data: { idtoken: idToken, email: mail } });
+      this.doSubmit();
+    
+  };
+
+  showAuth = () => {
+    this.setState({ auth: true });
+  };
+
   doSubmit = async () => {
     try {
       const { data } = this.state;
       this.setState({ iswaiting: true });
-      await auth.login(data.username, data.password);
+      await auth.login(data);
       const { state } = this.props.location;
       this.setState({ iswaiting: false });
-      window.location = state ? state.from.pathname : `/home?style=${this.state.siteStyle}`;
+      window.location = state
+        ? state.from.pathname
+        : `/home?style=${this.state.siteStyle}`;
     } catch (ex) {
       if (ex.response)
         toast.error(ex.response.data, { position: toast.POSITION.TOP_LEFT });
@@ -57,7 +75,7 @@ class LoginForm extends Form {
           <h1>Login</h1>
           <div className="mb-3 input">
             {this.renderInput(
-              "username",
+              "email",
               "نام کاربری",
               "text",
               {
@@ -80,20 +98,38 @@ class LoginForm extends Form {
             />
           </div>
           <div className="d-flex flex-row align-items-center space-between">
-          <div className="mb-3 ">
-            {this.renderButton("Login", this.state.captchaState, undefined)}
+            <div className="mb-2 ">
+              {this.renderButton("Login", this.state.captchaState, undefined)}
+            </div>
+            <div className="mb-2 ms-auto">
+              <ToggleSwitch
+                optionLabels={["Style1", "Style2"]}
+                checked={this.state.siteStyle}
+                onChange={() =>
+                  this.setState((prevState) => ({
+                    siteStyle: !prevState.siteStyle,
+                  }))
+                }
+                width="100px"
+                labelwidth="55px"
+                Onbg="#19ba4f"
+                Offbg="white"
+              />
+            </div>
           </div>
-          <div className="mb-3 ms-auto">
-          <ToggleSwitch
-          optionLabels={["Style1","Style2"]}
-          checked={this.state.siteStyle}
-          onChange={()=>this.setState(prevState => ({ siteStyle: !prevState.siteStyle }))}
-          width="100px"
-          labelwidth="55px"
-          Onbg="#19ba4f"
-          Offbg="white"
-        />
-          </div>
+          <div className="d-flex flex-row align-items-center space-between">
+            <div className="mb-2 ">
+              <GoogleLoginComponent assignuser={this.assignUser} />
+            </div>
+            <div className="mb-2 ms-auto">
+              <img
+                onClick={this.showAuth}
+                src={process.env.PUBLIC_URL + "/images/google64.png"}
+                alt="One Tap Login"
+                style={{ cursor: "pointer" }}
+              ></img>
+              {this.state.auth && <UseAuth assignuser={this.assignUser}  />}
+            </div>
           </div>
         </form>
 
