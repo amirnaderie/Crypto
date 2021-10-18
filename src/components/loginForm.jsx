@@ -12,7 +12,7 @@ import UseAuth from "./google/ontap/auth";
 
 class LoginForm extends Form {
   state = {
-    data: { email: "", password: "", idtoken: "" },
+    data: { email: "", password: "", idtoken: null },
     errors: {},
     captchaState: false,
     iswaiting: false,
@@ -28,6 +28,7 @@ class LoginForm extends Form {
   schema = {
     email: Joi.string().required().label("Email"),
     password: Joi.string().required().label("Password"),
+    idtoken: Joi.string().allow(null),
   };
 
   onCaptchaChange = (value) => {
