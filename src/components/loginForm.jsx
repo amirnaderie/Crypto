@@ -19,7 +19,7 @@ class LoginForm extends Form {
     heightdimension: window.innerHeight,
     mainheight: window.innerHeight - 90,
     siteStyle: false,
-    auth: false,
+    isauth: false,
   };
 
   componentDidMount() {
@@ -43,7 +43,7 @@ class LoginForm extends Form {
   };
 
   showAuth = () => {
-    this.setState({ auth: true });
+    this.setState({ isauth: true });
   };
 
   doSubmit = async () => {
@@ -129,7 +129,7 @@ class LoginForm extends Form {
                 alt="One Tap Login"
                 style={{ cursor: "pointer" }}
               ></img>
-              {this.state.auth && <UseAuth assignuser={this.assignUser}  />}
+              {this.state.isauth && <UseAuth assignuser={this.assignUser}  />}
             </div>
           </div>
         </form>

@@ -17,9 +17,10 @@ import {
 } from "../../utils/utilities";
 import { sortItems } from "../../utils/paginate";
 import Input from "../common/input/input";
+import './fileTransfer.css';
 
 const UploadFilesForm = () => {
-  const { user,socket } = useContext(UserContext);
+  const { user, socket } = useContext(UserContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [users, setUsers] = useState(null);
   const [recivereuser, setRecivereuser] = useState(0);
@@ -27,7 +28,7 @@ const UploadFilesForm = () => {
   const [transfered, setTrsnafered] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [iswaiting, setWaiting] = useState(false);
-  
+
   const [columns, setColumns] = useState([
     { path: "filename", label: "FileName" },
     { path: "recieverName", label: "RecieverName", sortorder: "" },
@@ -37,17 +38,13 @@ const UploadFilesForm = () => {
     { path: "desc", label: "Description" },
   ]);
 
-
-  
   useEffect(() => {
     async function fetchAPI() {
       const { data } = await getUser();
       setUsers(data);
-        
     }
     fetchAPI();
   }, []);
-
 
   // On file select (from the pop up)
   const onFileChange = (event) => {
@@ -55,10 +52,10 @@ const UploadFilesForm = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const emitsocket =(e)=>{
-  e.preventDefault();  
-  socket.emit('addItem', "test Socket From Client");
-}
+  const emitsocket = (e) => {
+    e.preventDefault();
+    socket.emit("addItem", "test Socket From Client");
+  };
   // On file upload (click the upload button)
   const onFileUpload = async () => {
     try {
@@ -83,10 +80,16 @@ const UploadFilesForm = () => {
           let Trnsfered = [];
           if (transfered) Trnsfered = [...transfered];
 
-          const maskdata={...retval.data.data,size:addCommas(removeNonNumeric(Math.round(retval.data.data.size / 1024)))+' K'};
-             
+          const maskdata = {
+            ...retval.data.data,
+            size:
+              addCommas(
+                removeNonNumeric(Math.round(retval.data.data.size / 1024))
+              ) + " K",
+          };
+
           Trnsfered.push(maskdata);
-        
+
           let changedData = change_Array_Element_Value(
             Trnsfered,
             undefined,
@@ -203,18 +206,36 @@ const UploadFilesForm = () => {
           />
         </div>
         <div className=" col-lg-2 mb-5 mt-lg-4">
-        <button className="btn btn-primary" tabIndex="8" disabled={!recivereuser || !selectedFile} onClick={onFileUpload}>
-        Send File
-              <i className={"fa fa-spinner fa-spin mx-1 " + (iswaiting?"visible":"invisible")} ></i>
-            </button>
+          <button
+            className="btn btn-primary"
+            tabIndex="8"
+            disabled={!recivereuser || !selectedFile}
+            onClick={onFileUpload}
+          >
+            Send File
+            <i
+              className={
+                "fa fa-spinner fa-spin mx-1 " +
+                (iswaiting ? "visible" : "invisible")
+              }
+            ></i>
+          </button>
         </div>
         <div className=" col-lg-2 mb-5 mt-lg-4">
-        <button className="btn btn-primary" tabIndex="8" onClick={emitsocket}>
-        Send Socket Message
-              <i className={"fa fa-spinner fa-spin mx-1 " + (iswaiting?"visible":"invisible")} ></i>
-            </button>
+          <button className="btn btn-primary" tabIndex="8" onClick={emitsocket}>
+            Send Socket Message
+            <i
+              className={
+                "fa fa-spinner fa-spin mx-1 " +
+                (iswaiting ? "visible" : "invisible")
+              }
+            ></i>
+          </button>
         </div>
-        <div>{fileData()}</div>
+        <div className={"expander " +  (selectedFile ? "expanded":"")} id="expander">
+          <div className="expander-content">{fileData()}</div>
+        </div>
+
         <div className="col-lg-12 pt-4 ">
           {transfered && (
             <Fragment>

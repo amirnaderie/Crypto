@@ -120,11 +120,11 @@ const FileTransferedForm = ({updateInbox}) => {
 
   // }, [newFileRec]);
 
-  const clickdownload = async (transferedrow) => {
+  const clickdownload =  (transferedrow) => {
     try {
       if (transferedrow.seendate === "") {
         const trf = [...transferRef.current];
-        const { data } = await updateTransfered(transferedrow._id);
+        const { data } =  updateTransfered(transferedrow._id);
 
         transferedrow.seendate = dateFormat(data.seendate);
         transferedrow.seentime = data.seentime;

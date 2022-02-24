@@ -39,7 +39,7 @@ const Input = ({
      return (
     <div className="form-group mb-5 input-contain">
       
-       {(!effect&& <label htmlFor={rest.name} className={`${direction}==="rtl"?pull-right:"" ${labelcolor}  col-12 `}>
+       {(!effect&& <label htmlFor={rest.name} className={`${direction==="rtl"?"pull-right":""} ${labelcolor}  col-12 `}>
            {label}
          </label>)}
        

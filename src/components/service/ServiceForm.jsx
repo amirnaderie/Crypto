@@ -49,7 +49,7 @@ const schema = {
     .error((errors) => {
       switch (errors[0].type) {
         case "string.min":
-          errors[0].message = "Please Enter AtLeast 11 Numbers";
+          errors[0].message = "Please Enter At Least 11 Numbers";
           break;
         case "string.regex.base":
           errors[0].message = "Please Follow The Pattern 09xxxxxxxx";
