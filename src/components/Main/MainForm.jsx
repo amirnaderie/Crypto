@@ -5,9 +5,7 @@ import Menu from "./menu";
 import CustomHeader from "./customHeader";
 import CustomSwitch from "./customSwitch";
 
-import auth from "../../services/authService";
-// import auth, { makeSocketConnection } from "../../services/authService";
-
+import auth, { makeSocketConnection } from "../../services/authService";
 import { getMenus } from "../../services/menuService";
 import { sortItems } from "../../utils/paginate";
 import { UserContext } from "../context/Context";
@@ -27,11 +25,11 @@ const MainForm = () => {
     // mainheight:(window.innerHeight-90)
   });
   const [socket, setSocket] = useState(null);
- // const [socketConnected, setSocketConnected] = useState(false);
+  const [socketConnected, setSocketConnected] = useState(false);
   const [newFileRec, setNewFileRec] = useState(null);
 
   useEffect(() => {
-   // setSocket(makeSocketConnection());
+    setSocket(makeSocketConnection());
 
     function handleResize() {
       setDimensions({
@@ -91,27 +89,27 @@ const MainForm = () => {
   }, []);
 
   // subscribe to the socket event
-  // useEffect(() => {
-  //   if (!socket) return;
+  useEffect(() => {
+    if (!socket) return;
 
-  //   if (user) {
-  //     socket.on("connect", () => {
-  //       setSocketConnected(socket.connected);
-  //       //socket.emit("join", { name: user.name });
-  //     });
+    if (user) {
+      socket.on("connect", () => {
+        setSocketConnected(socket.connected);
+        //socket.emit("join", { name: user.name });
+      });
 
-  //     socket.on("connect_error", (err) => {
-  //       if (user)
-  //         toast.success("connection to socket is faild", {
-  //           position: toast.POSITION.TOP_LEFT,
-  //         });
-  //     });
+      socket.on("connect_error", (err) => {
+        if (user)
+          toast.success("connection to socket is faild", {
+            position: toast.POSITION.TOP_LEFT,
+          });
+      });
 
-  //     socket.on("disconnect", () => {
-  //       setSocketConnected(socket.connected);
-  //     });
-  //   }
-  // }, [socket]);
+      socket.on("disconnect", () => {
+        setSocketConnected(socket.connected);
+      });
+    }
+  }, [socket]);
 
  
   function useQuery() {
