@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
-import io from "socket.io-client"
+// import io from "socket.io-client"
 
 import {getEndpoint} from "./endPoint";
 
@@ -55,7 +55,8 @@ export function getJwt() {
 
 export function makeSocketConnection()
 {
-  return io('http://localhost:3901',{auth: {    token:localStorage.getItem(tokenKey) }})
+  //return io('http://localhost:3901',{auth: {    token:localStorage.getItem(tokenKey) }})
+  return null
 }
 
 export default {
