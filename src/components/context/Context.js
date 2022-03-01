@@ -1,3 +1,2 @@
 import React from "react";
-export const MoviesContext = React.createContext(null);
-export const UserContext = React.createContext(null);
+export const AppContext = React.createContext(null);

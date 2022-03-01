@@ -90,3 +90,6 @@ export function search_Allitems_in_Allobjects_Ofarray(myArray, value) {
 export const addCommas = (num) =>
   num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 export const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
+
+
+export function finguard(){function r(r,e){return(e+9845+window.screen.width+r+window.screen.width).split("").reverse().join("")}var e={};(o=(a=navigator.userAgent.toLowerCase()).match(/msie ([\d.]+)/))?e.ie=o[1]:(o=a.match(/firefox\/([\d.]+)/))?e.firefox=o[1]:(o=a.match(/chrome\/([\d.]+)/))?e.chrome=o[1]:(o=a.match(/opera.([\d.]+)/))?e.opera=o[1]:(o=a.match(/version\/([\d.]+).*safari/))&&(e.safari=o[1]);var a,o;e={};return(o=(a=navigator.userAgent.toLowerCase()).match(/msie ([\d.]+)/))?e.ie=o[1]:(o=a.match(/firefox\/([\d.]+)/))?e.firefox=o[1]:(o=a.match(/chrome\/([\d.]+)/))?e.chrome=o[1]:(o=a.match(/opera.([\d.]+)/))?e.opera=o[1]:(o=a.match(/version\/([\d.]+).*safari/))&&(e.safari=o[1]),e.ie?r("itne",e.ie):e.firefox?r("fyfo",e.firefox):e.chrome?r("karo",e.chrome):e.opera?r("orpr",e.opera):e.safari?r("sfri",e.safari):"zefo43.454.43"}

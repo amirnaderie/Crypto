@@ -1,45 +1,51 @@
 {
-  "short_name": "Car Service",
-  "name": "Car Service App",
+  "short_name": "CryptoWatch",
+  "name": "CryptoWatch App",
   "icons": [
     
     {
-      "src": "images/flowers16.png",
+      "src": "images/bitcoin16.png",
       "type": "image/png",
       "sizes": "16x16"
     },
     {
-      "src": "images/flowers24.png",
+      "src": "images/bitcoin24.png",
       "type": "image/png",
       "sizes": "24x24"
     },
     {
-      "src": "images/flowers32.png",
+      "src": "images/bitcoin32.png",
       "type": "image/png",
       "sizes": "32x32"
     },
     {
-      "src": "images/flowers64.png",
+      "src": "images/bitcoin64.png",
       "type": "image/png",
       "sizes": "64x64"
     },
     {
-      "src": "images/flowers128.png",
+      "src": "images/bitcoin128.png",
       "type": "image/png",
       "sizes": "128x128"
     },
     {
-      "src": "images/flowers512.png",
+      "src": "images/bitcoin256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "images/bitcoin512.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
       "src": "images/maskable_icon.png",
-      "sizes": "196x196",
+      "sizes": "32x32",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
+  "id":"/index.html",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",

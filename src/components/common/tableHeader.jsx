@@ -1,12 +1,9 @@
 import React, { useContext,useState } from "react";
-//import _ from "lodash";
-import { UserContext } from "../context/Context";
-// columns: array
-// sortColumn: object
-// onSort: function
+import { AppContext } from "../context/Context";
+
 
 const TableHeader = ({ columns, onSort }) => {
-  const { dimensions } = useContext(UserContext);
+  const { dimensions } = useContext(AppContext);
   const [selectvalue,setSelectvalue]=useState(0);
   const [order,setOrder]=useState('asc');
 
@@ -85,7 +82,7 @@ const TableHeader = ({ columns, onSort }) => {
             </select>
           </th>
           <th className="text-center">
-          <button className="border-0 bg-transparent" disabled={!selectvalue} onClick={changeorder}>
+          <button id="SortBtn" aria-label="SortBtn" className="border-0 bg-transparent" disabled={!selectvalue} onClick={changeorder}>
             {showorder()}
           </button>
           </th>

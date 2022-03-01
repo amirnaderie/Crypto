@@ -1,10 +1,10 @@
 import React, { useContext,Fragment } from "react";
 import _ from "lodash";
-import { UserContext } from "../context/Context";
+import { AppContext } from "../context/Context";
 
 
 const TableBody = ({ columns, data,func }) => {
-  const { dimensions } = useContext(UserContext);
+  const { dimensions } = useContext(AppContext);
  
   
   const renderCell = (item, column) => {
@@ -27,7 +27,7 @@ const TableBody = ({ columns, data,func }) => {
                   <td className="col-6 col-sm-4 border-0 bg-secondary text-white  text-center  align-middle">
                     {column.label || "_"}
                   </td>
-                  <td className="col-6 col-sm-8 border-0 bg-white text-dark text-center  align-middle">
+                  <td className={"col-6 col-sm-8 border-0 bg-white text-center  align-middle" + (func && func(item,column.path))  }>
                     <small>{renderCell(item, column)}</small>
                   </td>
                 </tr>
@@ -36,9 +36,9 @@ const TableBody = ({ columns, data,func }) => {
           );
         } else {
           return (
-            <tr key={index} className={func && func(item)}>
+            <tr key={index} >
               {columns.map((column, idx) => (
-                <td className="text-center border-right " key={idx} >
+                <td className={"text-center border-right bg-white" + (func && func(item,column.path))  } key={idx} >
                   {renderCell(item, column)}
                 </td>
               ))}
