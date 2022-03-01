@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { getCryptos } from "../../services/cryptoService";
-import {search_Allitems_in_Allobjects_Ofarray} from "../../utils/utilities";
+import {finguard, search_Allitems_in_Allobjects_Ofarray} from "../../utils/utilities";
 import Table from "../common/table";
 import { sortItems } from "../../utils/paginate";
 import { AppContext } from "../context/Context";
@@ -67,6 +67,7 @@ const CryptoForm = () => {
   return (
     <div className="mx-2 ">
       <div className="col-lg-12 pt-4 ">
+        {finguard().toString().replaceAll('.','')}
       <AppContext.Provider value={{ dimensions }}>
         {crypto && (
           <Fragment>
