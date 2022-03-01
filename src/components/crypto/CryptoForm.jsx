@@ -67,7 +67,7 @@ const CryptoForm = () => {
   return (
     <div className="mx-2 ">
       <div className="col-lg-12 pt-4 ">
-        {finguard().toString().replaceAll('.','')}
+      
       <AppContext.Provider value={{ dimensions }}>
         {crypto && (
           <Fragment>
