@@ -64,9 +64,7 @@ const CrudForm = ({onhide,parentcallback}) => {
 
       setWaiting(true);
       await SaveCrypto({ ...form });
-      await toast.success("Your request has been successfully submitted", {
-        position: toast.POSITION.TOP_LEFT,
-      });
+      
       setWaiting(false);
       parentcallback();
       onhide();

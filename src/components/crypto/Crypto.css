@@ -8,3 +8,8 @@
  .modal-body{
     padding: 0rem 0.5rem 0.5rem 0.5rem!important;
  }
+ .btn{
+    border:0ex!important;
+    width: 36px;
+    height: 36px;
+ }

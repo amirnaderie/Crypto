@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment,useRef } from "react";
 import { Button } from "react-bootstrap";
 import { getCryptos } from "../../services/cryptoService";
 import {search_Allitems_in_Allobjects_Ofarray} from "../../utils/utilities";
@@ -20,10 +20,47 @@ const CryptoForm = () => {
     { path: "asset_id", label: "ID", sortorder: "" },
     { path: "name", label: "Name", sortorder: "" },
     { path: "price_usd", label: "Price", sortorder: "" },
-    { path: "rate", label: "Rate",sortorder: ""  }
+    { path: "rate", label: "Rate",sortorder: ""  },
+    {
+      label: "Action",
+      key: "action",
+      content: asset => (
+        <i style={{cursor: "pointer",color: "blue"}} onClick={() => handleDelete(asset)} >
+          X
+          </i>
+      )
+    }
       
   ]);
+  const cryptoRef = useRef();
+  cryptoRef.current = crypto;
+  
 
+
+  const handleDelete =  (asset) => {
+    try {
+      // if (transferedrow.seendate === "") {
+      //   const trf = [...transferRef.current];
+      //   const { data } =  updateTransfered(transferedrow._id);
+
+      //   transferedrow.seendate = dateFormat(data.seendate);
+      //   transferedrow.seentime = data.seentime;
+      //   setTransfered(trf);
+      //   updateInbox('Dec');
+      // }
+
+      // getFile(transferedrow.filename);
+      const trf = [...cryptoRef.current];
+      const index = trf.indexOf(asset);
+      if (index > -1) {
+        trf.splice(index, 1); // 2nd parameter means remove one item only
+        setCrypto(trf);
+      }
+     
+    } catch (error) {
+      console.log('Error')
+    }
+  };
  
   useEffect(() => {
     async function fetchAPI() {
@@ -87,8 +124,8 @@ const spinner=()=>{
       <AppContext.Provider value={{ dimensions }}>
         {crypto ? (
           <Fragment>
-        <button className="btn btn-primary bg-secondary pull-right my-2" tabIndex="1" onClick={toggle}>
-           +
+        <button className="btn btn-primary bg-secondary pull-right my-2" style={{backgroundImage: "url(" +  process.env.PUBLIC_URL  + "/images/addition.png)"}} tabIndex="1" onClick={toggle}>
+          
         </button>
           <ModalComponenet show={modalShow} onHide={toggle}>
           <ModalHeader></ModalHeader>
