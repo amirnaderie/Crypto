@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useRef} from "react";
 import './input.css';
 const Input = ({
   type = "text",
@@ -12,7 +12,10 @@ const Input = ({
   ...rest
 }) => {
   const [isMyInputFocused, setIsMyInputFocused] = useState(false);
-
+  const InputRef = React.useRef(null);
+  React.useEffect(()=>{
+    isautofocus&&InputRef.current.focus();
+  }, []);
 
   const handlekeydown = (e) => {
     if (
@@ -22,7 +25,8 @@ const Input = ({
         e.keyCode === 46 ||
         e.keyCode === 37 ||
         e.keyCode === 39 ||
-        e.keyCode === 9
+        e.keyCode === 9 ||
+        e.keyCode === 110
       )
     )
       if (
@@ -43,7 +47,7 @@ const Input = ({
            {label}
          </label>)}
        
-        <input {...rest}  type={type} name={rest.name} id={rest.name} autoFocus={isautofocus} onKeyDown={handlekeydown}
+        <input ref={InputRef} {...rest}  type={type} name={rest.name} id={rest.name}  onKeyDown={handlekeydown}
         className={`rounded py-1 col-12  ${coreClass}`} onFocus={() => setIsMyInputFocused(true)} 
         placeholder={((isMyInputFocused===true&& rest.value===""&&effect)||!effect)?rest.placeholder:""}
         onBlur={() => setIsMyInputFocused(false)}

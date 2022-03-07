@@ -1,0 +1,10 @@
+.modal-header {
+    justify-content:end!important;
+    border-bottom:none!important;
+    padding: 0rem 0.7rem 0rem !important;
+    font-size: 2rem;
+    
+ }
+ .modal-body{
+    padding: 0rem 0.5rem 0.5rem 0.5rem!important;
+ }
