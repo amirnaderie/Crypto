@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment,useRef } from "react";
 import { Button } from "react-bootstrap";
-import { getCryptos } from "../../services/cryptoService";
+import { getCryptos,deleteCrypto } from "../../services/cryptoService";
 import {search_Allitems_in_Allobjects_Ofarray} from "../../utils/utilities";
 import Table from "../common/table";
 import { sortItems } from "../../utils/paginate";
@@ -25,9 +25,11 @@ const CryptoForm = () => {
       label: "Action",
       key: "action",
       content: asset => (
-        <i style={{cursor: "pointer",color: "blue"}} onClick={() => handleDelete(asset)} >
-          X
-          </i>
+        <i style={{cursor: "pointer"}} className="fa fa-trash fa-3" aria-hidden="true"  onClick={() => 
+          window.confirm(`Are you sure to Delete ${asset.asset_id} ?`)&& handleDelete(asset)
+         } >
+          
+        </i>
       )
     }
       
@@ -37,19 +39,9 @@ const CryptoForm = () => {
   
 
 
-  const handleDelete =  (asset) => {
+  const handleDelete = async (asset) => {
     try {
-      // if (transferedrow.seendate === "") {
-      //   const trf = [...transferRef.current];
-      //   const { data } =  updateTransfered(transferedrow._id);
-
-      //   transferedrow.seendate = dateFormat(data.seendate);
-      //   transferedrow.seentime = data.seentime;
-      //   setTransfered(trf);
-      //   updateInbox('Dec');
-      // }
-
-      // getFile(transferedrow.filename);
+      await deleteCrypto(asset._id);
       const trf = [...cryptoRef.current];
       const index = trf.indexOf(asset);
       if (index > -1) {
@@ -124,7 +116,7 @@ const spinner=()=>{
       <AppContext.Provider value={{ dimensions }}>
         {crypto ? (
           <Fragment>
-        <button className="btn btn-primary bg-secondary pull-right my-2" style={{backgroundImage: "url(" +  process.env.PUBLIC_URL  + "/images/addition.png)"}} tabIndex="1" onClick={toggle}>
+        <button className="btn btn-primary mybtn bg-secondary pull-right my-2" style={{backgroundImage: "url(" +  process.env.PUBLIC_URL  + "/images/addition.png)"}} tabIndex="1" onClick={toggle}>
           
         </button>
           <ModalComponenet show={modalShow} onHide={toggle}>

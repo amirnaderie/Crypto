@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
 import Input from "../common/input/input";
-import { SaveCrypto } from "../../services/cryptoService";
+import { saveCrypto } from "../../services/cryptoService";
 
 const initialFormState = {
   asset_id: "",
@@ -63,7 +63,7 @@ const CrudForm = ({onhide,parentcallback}) => {
      // if (Object.keys(formerrors).length > 0) return;
 
       setWaiting(true);
-      await SaveCrypto({ ...form });
+      await saveCrypto({ ...form });
       
       setWaiting(false);
       parentcallback();
