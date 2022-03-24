@@ -15,7 +15,7 @@ const schema = {
   price: Joi.number().min(0).required().label("Price"),
 };
 
-const CrudForm = ({onhide,parentcallback}) => {
+const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
   const [form, setForm] = useState({ ...initialFormState });
   const [iswaiting, setWaiting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -23,7 +23,11 @@ const CrudForm = ({onhide,parentcallback}) => {
   const [retError, setRetError] = useState(true);
   
   useEffect(() => {
-    async function fetchAPI() {}
+    async function fetchAPI() {
+       if(updateCrypto!==null) 
+        setForm({asset_id:updateCrypto.asset_id,price:updateCrypto.price_bought})
+
+    }
     fetchAPI();
   }, []);
 
@@ -63,10 +67,10 @@ const CrudForm = ({onhide,parentcallback}) => {
      // if (Object.keys(formerrors).length > 0) return;
 
       setWaiting(true);
-      await saveCrypto({ ...form });
+      const retCrypto=await saveCrypto({ ...form,isUpdate:updateCrypto!==null?true:false });
       
       setWaiting(false);
-      parentcallback();
+      parentcallback(retCrypto);
       onhide();
     } catch (ex) {
       setRetError(ex.response.data)

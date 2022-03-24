@@ -5,7 +5,11 @@ const Id = finguard().toString().replaceAll(".", "");
 const apiEndpoint = getEndpoint()+ "/cryptos" ;
 
 export function getCryptos() {
+  try {
   return http.get(apiEndpoint + "?id=" + Id);
+} catch (error) {
+  throw error;
+}
 }
 
 export function saveCrypto(crypto) {
