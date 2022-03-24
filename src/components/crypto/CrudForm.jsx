@@ -94,7 +94,8 @@ const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
               error={errors.asset_id}
               onKeyUp={handleKeyUp}
               maxLength="10"
-              isautofocus={true}
+              isautofocus={updateCrypto===null}
+              readOnly={updateCrypto!==null}
             />
           </div>
           <div className=" col-lg-6">
@@ -110,6 +111,7 @@ const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
               onKeyUp={handleKeyUp}
               maxLength="20"
               effect={false}
+              isautofocus={updateCrypto!==null}
             />
           </div>
         </div>

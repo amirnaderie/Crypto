@@ -29,7 +29,7 @@ const CryptoForm = () => {
         <span>
           <OverlayTrigger
             delay={{ hide: 450, show: 300 }}
-            overlay={(props) => <Tooltip {...props}>Edit</Tooltip>}
+            overlay={(props) => <Tooltip {...props}>Delete</Tooltip>}
             placement="bottom"
           >
             <i
@@ -44,7 +44,7 @@ const CryptoForm = () => {
           </OverlayTrigger>
           <OverlayTrigger
             delay={{ hide: 450, show: 300 }}
-            overlay={(props) => <Tooltip {...props}>Delete</Tooltip>}
+            overlay={(props) => <Tooltip {...props}>Edit</Tooltip>}
             placement="bottom"
           >
           <i
