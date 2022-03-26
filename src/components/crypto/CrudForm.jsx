@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Joi from "joi-browser";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import Input from "../common/input/input";
 import { saveCrypto } from "../../services/cryptoService";
 
@@ -18,7 +18,7 @@ const schema = {
 const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
   const [form, setForm] = useState({ ...initialFormState });
   const [iswaiting, setWaiting] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors] = useState({});
   const [disableBtn, setDisableBtn] = useState(true);
   const [retError, setRetError] = useState(true);
   

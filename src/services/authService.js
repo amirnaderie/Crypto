@@ -2,9 +2,8 @@ import jwtDecode from "jwt-decode";
 import http from "./httpService";
 // import io from "socket.io-client"
 
-import {getEndpoint} from "./endPoint";
 
-const apiEndpoint = getEndpoint() + "/auth";
+const apiEndpoint = process.env.REACT_APP_URL + "/auth";
 const tokenKey = "token";
 const refreshTokenKey = "refreshToken";
 

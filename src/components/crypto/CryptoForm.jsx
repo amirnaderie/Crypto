@@ -1,16 +1,18 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
-import { Button, Tooltip, OverlayTrigger } from "react-bootstrap";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { toast } from "react-toastify";
 import { getCryptos, deleteCrypto } from "../../services/cryptoService";
 import { search_Allitems_in_Allobjects_Ofarray } from "../../utils/utilities";
 import Table from "../common/table";
 import { sortItems } from "../../utils/paginate";
 import { AppContext } from "../context/Context";
-import ModalComponenet, { ModalHeader, ModalBody, ModalFooter } from "./modal";
+import ModalComponenet, { ModalHeader, ModalBody } from "./modal";
 import CrudForm from "./CrudForm";
 
 const CryptoForm = () => {
   const [cryptos, setCryptos] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSpinner, setShowSpinner] = useState(true);
   const [dimensions, setDimensions] = React.useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -86,10 +88,8 @@ const CryptoForm = () => {
 
   useEffect(() => {
     async function fetchAPI() {
-      try {
-        fetchData();
-      } catch (error) {}
-    }
+              fetchData();
+         }
     function handleResize() {
       setDimensions({
         height: window.innerHeight,
@@ -101,8 +101,15 @@ const CryptoForm = () => {
   }, []);
 
   const fetchData = async () => {
-    const { data } = await getCryptos();
-    setCryptos(data);
+    try {
+      const { data } = await getCryptos();
+      setCryptos(data);
+      setShowSpinner(false);
+    } catch (error) {
+      setShowSpinner(false);
+      toast.error("Connection Error", { position: toast.POSITION.TOP_LEFT,type:toast.TYPE.ERROR });
+    }
+    
   };
 
   const serachedTransfers = (Crypto) => {
@@ -147,8 +154,8 @@ const CryptoForm = () => {
 
   const spinner = () => {
     return (
-      <div class="animation">
-        <div class="btLoader"></div>
+      <div className="animation">
+        <div className="btLoader"></div>
         <p>Please Wait ... </p>
       </div>
     );
@@ -158,7 +165,7 @@ const CryptoForm = () => {
     <div className="mx-2 ">
       <div className="col-lg-12 ">
         <AppContext.Provider value={{ dimensions }}>
-          {cryptos ? (
+          {cryptos && (
             <Fragment>
               <button
                 className="btn btn-primary mybtn bg-secondary pull-right my-2"
@@ -206,7 +213,8 @@ const CryptoForm = () => {
                 }
               />
             </Fragment>
-          ) : (
+          )} 
+          {showSpinner&& (
             spinner()
           )}
         </AppContext.Provider>

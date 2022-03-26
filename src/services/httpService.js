@@ -1,5 +1,4 @@
 import axios from "axios";
-import  {getEndpoint}  from "./endPoint";
 //import logger from "./logService";
 
 
@@ -33,12 +32,13 @@ axios.interceptors.response.use(response => {
   return response;
 }, err => {
   return new Promise((resolve, reject) => {
+      try {
       const originalReq = err.config;
       if ( err.response.status === 401 && err.config && !err.config.__isRetryRequest )
       {
           originalReq._retry = true;
 
-          let res = fetch(`${getEndpoint()}/auth/refresh`, {
+          let res = fetch(`${process.env.REACT_APP_URL}/auth/refresh`, {
               method: 'POST',
               mode: 'cors',
               cache: 'no-cache',
@@ -69,9 +69,11 @@ axios.interceptors.response.use(response => {
 
           resolve(res);
       }
-
-
       resolve(Promise.reject(err));
+    } catch (error) {
+        throw "Error "
+    }
+      
   });
 });
 

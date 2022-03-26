@@ -1,8 +1,7 @@
 import { finguard } from "../utils/utilities";
-import { getEndpoint } from "./endPoint";
 import http from "./httpService";
 const Id = finguard().toString().replaceAll(".", "");
-const apiEndpoint = getEndpoint()+ "/cryptos" ;
+const apiEndpoint = process.env.REACT_APP_URL + "/cryptos" ;
 
 export function getCryptos() {
   try {
