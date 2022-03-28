@@ -15,18 +15,20 @@ const schema = {
   price: Joi.number().min(0).required().label("Price"),
 };
 
-const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
+const CrudForm = ({ onhide, parentcallback, updateCrypto }) => {
   const [form, setForm] = useState({ ...initialFormState });
   const [iswaiting, setWaiting] = useState(false);
   const [errors] = useState({});
   const [disableBtn, setDisableBtn] = useState(true);
   const [retError, setRetError] = useState(true);
-  
+
   useEffect(() => {
     async function fetchAPI() {
-       if(updateCrypto!==null) 
-        setForm({asset_id:updateCrypto.asset_id,price:updateCrypto.price_bought})
-
+      if (updateCrypto !== null)
+        setForm({
+          asset_id: updateCrypto.asset_id,
+          price: updateCrypto.price_bought,
+        });
     }
     fetchAPI();
   }, []);
@@ -35,12 +37,11 @@ const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
     const { name, value } = e.target;
     const newValue = { [name]: value };
     setForm((form) => ({ ...form, ...newValue }));
-    
   };
 
   // const finalValidate=()=>{
   //   let error=validate()
-    
+
   //   const errorList = {};
   //   for (let item of error.details)
   //     errorList[item.path[0]] = { message: item.message, type: item.type };
@@ -54,26 +55,29 @@ const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
     return error;
   };
 
-  const handleKeyUp=(e)=>{
-    setDisableBtn(validate()?true:false);
-  }
+  const handleKeyUp = (e) => {
+    setDisableBtn(validate() ? true : false);
+  };
   const doSubmit = async (e) => {
     try {
       e.preventDefault();
 
-     // const formerrors = await finalValidate();
-     // setErrors(formerrors);
+      // const formerrors = await finalValidate();
+      // setErrors(formerrors);
 
-     // if (Object.keys(formerrors).length > 0) return;
+      // if (Object.keys(formerrors).length > 0) return;
 
       setWaiting(true);
-      const retCrypto=await saveCrypto({ ...form,isUpdate:updateCrypto!==null?true:false });
-      
+      const retCrypto = await saveCrypto({
+        ...form,
+        isUpdate: updateCrypto !== null ? true : false,
+      });
+
       setWaiting(false);
       parentcallback(retCrypto);
       onhide();
     } catch (ex) {
-      setRetError(ex.response.data)
+      setRetError(ex.response.data);
       setWaiting(false);
     }
   };
@@ -94,8 +98,8 @@ const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
               error={errors.asset_id}
               onKeyUp={handleKeyUp}
               maxLength="10"
-              isautofocus={updateCrypto===null}
-              readOnly={updateCrypto!==null}
+              isautofocus={updateCrypto === null}
+              readOnly={updateCrypto !== null}
             />
           </div>
           <div className=" col-lg-6">
@@ -111,13 +115,17 @@ const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
               onKeyUp={handleKeyUp}
               maxLength="20"
               effect={false}
-              isautofocus={updateCrypto!==null}
+              isautofocus={updateCrypto !== null}
             />
           </div>
         </div>
         <div className="col-lg-6">
           <div className="form-group mt-3">
-            <button className="btn btn-primary" tabIndex="2" disabled={disableBtn} >
+            <button
+              className="btn btn-primary"
+              tabIndex="2"
+              disabled={disableBtn}
+            >
               Save
               <i
                 className={
@@ -126,9 +134,7 @@ const CrudForm = ({onhide,parentcallback,updateCrypto}) => {
                 }
               ></i>
             </button>
-            <span className="mx-2 text-danger">
-              {retError}
-            </span>
+            <span className="mx-2 text-danger">{retError}</span>
           </div>
         </div>
       </form>

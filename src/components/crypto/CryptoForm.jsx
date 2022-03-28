@@ -49,12 +49,12 @@ const CryptoForm = () => {
             overlay={(props) => <Tooltip {...props}>Edit</Tooltip>}
             placement="bottom"
           >
-          <i
-            style={{ cursor: "pointer" }}
-            className="fa fa-edit fa-2x mx-2 "
-            aria-hidden="true"
-            onClick={() => handleUpdate(asset)}
-          ></i>
+            <i
+              style={{ cursor: "pointer" }}
+              className="fa fa-edit fa-2x mx-2 "
+              aria-hidden="true"
+              onClick={() => handleUpdate(asset)}
+            ></i>
           </OverlayTrigger>
         </span>
       ),
@@ -88,8 +88,8 @@ const CryptoForm = () => {
 
   useEffect(() => {
     async function fetchAPI() {
-              fetchData();
-         }
+      fetchData();
+    }
     function handleResize() {
       setDimensions({
         height: window.innerHeight,
@@ -107,9 +107,11 @@ const CryptoForm = () => {
       setShowSpinner(false);
     } catch (error) {
       setShowSpinner(false);
-      toast.error("Connection Error", { position: toast.POSITION.TOP_LEFT,type:toast.TYPE.ERROR });
+      toast.error("Connection Error", {
+        position: toast.POSITION.TOP_LEFT,
+        type: toast.TYPE.ERROR,
+      });
     }
-    
   };
 
   const serachedTransfers = (Crypto) => {
@@ -213,10 +215,8 @@ const CryptoForm = () => {
                 }
               />
             </Fragment>
-          )} 
-          {showSpinner&& (
-            spinner()
           )}
+          {showSpinner && spinner()}
         </AppContext.Provider>
       </div>
     </div>
