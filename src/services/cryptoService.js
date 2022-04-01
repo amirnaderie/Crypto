@@ -7,7 +7,8 @@ export function getCryptos() {
   try {
     return http.get(apiEndpoint + "?id=" + Id);
   } catch (error) {
-    throw error;
+    console.log(error);
+    throw error.response.data;
   }
 }
 
@@ -15,13 +16,13 @@ export function saveCrypto(crypto) {
   try {
     return http.post(apiEndpoint, crypto);
   } catch (error) {
-    throw error;
+    throw error.response.data;
   }
 }
 export function deleteCrypto(id) {
   try {
     return http.delete(`${apiEndpoint}/${id}`);
   } catch (error) {
-    throw error;
+    throw error.response.data;
   }
 }

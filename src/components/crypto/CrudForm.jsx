@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Joi from "joi-browser";
-// import { toast } from "react-toastify";
 import Input from "../common/input/input";
 import { saveCrypto } from "../../services/cryptoService";
 
@@ -77,8 +76,9 @@ const CrudForm = ({ onhide, parentcallback, updateCrypto }) => {
       parentcallback(retCrypto);
       onhide();
     } catch (ex) {
-      setRetError(ex.response.data);
+      setRetError(ex);
       setWaiting(false);
+      
     }
   };
 

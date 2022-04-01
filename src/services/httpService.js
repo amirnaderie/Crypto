@@ -71,7 +71,7 @@ axios.interceptors.response.use(response => {
       }
       resolve(Promise.reject(err));
     } catch (error) {
-        throw "Error "
+      throw "Connection Error";
     }
       
   });

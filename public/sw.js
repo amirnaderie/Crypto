@@ -1,16 +1,17 @@
 const CACHE_NAME = "version-1";
-const urlsToCache = ["/static/js/bundle.js"
-, "/static/media/WorldMap.2586dc1b.svg"
-, "/static/media/fontawesome-webfont.af7ae505.woff2"
-, "/static/media/Yekan.05727d32.woff"
-,"/favicon.ico"
-,"/index.html"
-,"/login"
-,"/rental"
-,"/images/flowers32.png"
-,"/images/flowers64.png"
-,"/images/flowers512.png"
-];
+ const urlsToCache =[];
+  // ["/static/js/bundle.js"
+// , "/static/media/WorldMap.2586dc1b.svg"
+// , "/static/media/fontawesome-webfont.af7ae505.woff2"
+// , "/static/media/Yekan.05727d32.woff"
+// ,"/favicon.ico"
+// ,"/index.html"
+// ,"/login"
+// ,"/rental"
+// ,"/images/flowers32.png"
+// ,"/images/flowers64.png"
+// ,"/images/flowers512.png"
+// ];
 
 
 
@@ -20,13 +21,9 @@ const self = this;
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // console.warn("caching assets");
-      return cache.addAll(urlsToCache);
-        // urlsToCache.map(url => {
-        //     new Request(url, {credentials: 'same-origin'})}
-        //   )
-        // );
-      
+      // Static Cache
+      //return cache.addAll(urlsToCache);
+       return null;      
     })
   );
 });
@@ -46,14 +43,33 @@ self.addEventListener("install", (event) => {
 // });
 
 
-self.addEventListener('fetch', event=> {
-  event.respondWith(
-      fetch(event.request).catch(function() {
-          return caches.match(event.request)
-      })
-  )
-})
+// self.addEventListener('fetch', event=> {
+//   event.respondWith(
+//       fetch(event.request).catch(function() {
+//           return caches.match(event.request)
+//       })
+//   )
+// })
 
+self.addEventListener('fetch', (e) => {
+  if (!(e.request.url.indexOf('http') === 0) || (e.request.url.indexOf('sockjs-node') !== -1)) return;
+  e.waitUntil(
+  e.respondWith((async () => {
+    try {
+      // First Of All Get Assets And Data From Network And Cache Them
+      const response = await fetch(e.request);
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(e.request, response.clone());
+      return response;  
+    } catch (error) {
+      // If You Are Offline Then Get Assets And Data From Cache
+      const r = await caches.match(e.request);
+      if (r) { return r; }  
+    }
+    
+  })())
+  );
+});
 
 // Activate the SW
 self.addEventListener('activate', (event) => {
