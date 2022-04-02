@@ -63,7 +63,7 @@ self.addEventListener('fetch', (e) => {
       return response;  
     } catch (error) {
       // If You Are Offline Then Get Assets And Data From Cache
-      const r = await caches.match(e.request,{ignoreVary:true});
+      const r = await caches.match(e.request,{ignoreVary:true}); // {ignoreVary:true} is added just for accessing cached data of backend  
       if (r) { return r; }  
     }
     

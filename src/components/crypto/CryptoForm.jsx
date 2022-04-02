@@ -10,6 +10,7 @@ import ModalComponenet, { ModalHeader, ModalBody } from "./modal";
 import CrudForm from "./CrudForm";
 
 const CryptoForm = () => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [cryptos, setCryptos] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSpinner, setShowSpinner] = useState(true);
@@ -85,6 +86,13 @@ const CryptoForm = () => {
       console.log("Error");
     }
   };
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOnline(navigator.onLine);
+    }, 10000);
+    return () => clearTimeout(timer);
+  });
 
   useEffect(() => {
     async function fetchAPI() {
@@ -96,6 +104,7 @@ const CryptoForm = () => {
         width: window.innerWidth,
       });
     }
+
     window.addEventListener("resize", handleResize);
     fetchAPI();
   }, []);
@@ -169,15 +178,17 @@ const CryptoForm = () => {
         <AppContext.Provider value={{ dimensions }}>
           {cryptos && (
             <Fragment>
-              <button
-                className="btn btn-primary mybtn bg-secondary pull-right my-2"
-                style={{
-                  backgroundImage:
-                    "url(" + process.env.PUBLIC_URL + "/images/addition.png)",
-                }}
-                tabIndex="1"
-                onClick={toggle}
-              ></button>
+              {isOnline && (
+                <button
+                  className="btn btn-primary mybtn bg-secondary pull-right my-2"
+                  style={{
+                    backgroundImage:
+                      "url(" + process.env.PUBLIC_URL + "/images/addition.png)",
+                  }}
+                  tabIndex="1"
+                  onClick={toggle}
+                ></button>
+              )}
               <ModalComponenet show={modalShow} onHide={toggle}>
                 <ModalHeader></ModalHeader>
                 <ModalBody>
