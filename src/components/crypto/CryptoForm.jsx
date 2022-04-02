@@ -86,13 +86,7 @@ const CryptoForm = () => {
       console.log("Error");
     }
   };
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOnline(navigator.onLine);
-    }, 10000);
-    return () => clearTimeout(timer);
-  });
+ 
 
   useEffect(() => {
     async function fetchAPI() {
@@ -107,6 +101,14 @@ const CryptoForm = () => {
 
     window.addEventListener("resize", handleResize);
     fetchAPI();
+    
+    const id = setInterval(() => {
+      setIsOnline(navigator.onLine);
+    }, 10000)
+    
+    return () => {
+      clearInterval(id)
+    }
   }, []);
 
   const fetchData = async () => {
@@ -174,8 +176,8 @@ const CryptoForm = () => {
 
   return (
     <div className="mx-2 ">
-      <div className="col-lg-12 ">
-        <AppContext.Provider value={{ dimensions }}>
+     <div className="col-lg-12 ">
+       <AppContext.Provider value={{ dimensions }}>
           {cryptos && (
             <Fragment>
               {isOnline && (
