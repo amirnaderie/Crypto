@@ -10,6 +10,7 @@
     "axios": "^0.18.1",
     "bootstrap": "^5.1.1",
     "dotenv-cli": "^5.1.0",
+    "firebase": "^9.6.10",
     "font-awesome": "^4.7.0",
     "joi-browser": "^13.4.0",
     "jquery": "^3.6.0",
@@ -18,9 +19,8 @@
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
-    "react-bootstrap": "^1.6.4",
+    "react-bootstrap": "^2.2.3",
     "react-datepicker2": "^3.3.13",
-    "react-dom": "^16.14.0",
     "react-dropdown-select": "^4.7.4",
     "react-hook-form": "^7.17.0",
     "react-icons": "^4.3.1",
@@ -28,9 +28,8 @@
     "react-intl": "^5.20.12",
     "react-pro-sidebar": "^0.6.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^5.0.0",
     "react-switch": "^6.0.0",
-    "react-toastify": "^4.5.2",
     "styled-components": "^5.3.1"
   },
   "scripts": {
@@ -41,5 +40,17 @@
   },
   "devDependencies": {
     "redux-devtools": "^3.7.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

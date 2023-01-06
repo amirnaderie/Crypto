@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
-import { toast } from "react-toastify";
 import { getCryptos, deleteCrypto } from "../../services/cryptoService";
 import { search_Allitems_in_Allobjects_Ofarray } from "../../utils/utilities";
 import Table from "../common/table";
@@ -9,7 +8,14 @@ import { AppContext } from "../context/Context";
 import ModalComponenet, { ModalHeader, ModalBody } from "./modal";
 import CrudForm from "./CrudForm";
 
+import { fetchToken, onMessageListener } from "../../firebase";
+import { Toast, ToastContainer } from "react-bootstrap";
+
 const CryptoForm = () => {
+  const [show, setShow] = useState(false);
+  const [notification, setNotification] = useState({ title: "", body: "", });
+  const [isTokenFound, setTokenFound] = useState(false);
+
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [cryptos, setCryptos] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -64,6 +70,20 @@ const CryptoForm = () => {
   const cryptosRef = useRef();
   cryptosRef.current = cryptos;
 
+  fetchToken(setTokenFound);
+  
+  onMessageListener()
+    .then((payload) => {
+      setNotification({
+        title: payload.notification.title,
+        body: payload.notification.body,
+        type:"warning"
+      });
+      setShow(true);
+      // console.log(payload);
+    })
+    .catch((err) => console.log("failed: ", err));
+
   const handleDelete = async (asset) => {
     try {
       await deleteCrypto(asset._id);
@@ -86,7 +106,6 @@ const CryptoForm = () => {
       console.log("Error");
     }
   };
- 
 
   useEffect(() => {
     async function fetchAPI() {
@@ -101,14 +120,14 @@ const CryptoForm = () => {
 
     window.addEventListener("resize", handleResize);
     fetchAPI();
-    
+
     const id = setInterval(() => {
       setIsOnline(navigator.onLine);
-    }, 10000)
-    
+    }, 10000);
+
     return () => {
-      clearInterval(id)
-    }
+      clearInterval(id);
+    };
   }, []);
 
   const fetchData = async () => {
@@ -118,10 +137,13 @@ const CryptoForm = () => {
       setShowSpinner(false);
     } catch (error) {
       setShowSpinner(false);
-      toast.error("Connection Error", {
-        position: toast.POSITION.TOP_LEFT,
-        type: toast.TYPE.ERROR,
+      setNotification({
+        title: "Error",
+        body: "Connection Error",
+        type:"danger"
       });
+      setShow(true);
+         
     }
   };
 
@@ -138,6 +160,7 @@ const CryptoForm = () => {
     setModalShow(!modalShow);
   };
 
+  
   const updateOrInsertCrypto = ({ data: cryptorec }) => {
     const trf = [...cryptosRef.current];
     const index = trf.findIndex((item) => item._id === cryptorec._id);
@@ -176,8 +199,29 @@ const CryptoForm = () => {
 
   return (
     <div className="mx-2 ">
-     <div className="col-lg-12 ">
-       <AppContext.Provider value={{ dimensions }}>
+      <div className="col-lg-12 ">
+      <ToastContainer position="top-start" className="p-3">
+        <Toast
+          onClose={() => setShow(false)}
+          show={show}
+          delay={6000}
+          bg={notification.type}
+          autohide
+          animation
+        >
+          <Toast.Header>
+            {/* <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            /> */}
+            <strong className="me-auto">{notification.title}</strong>
+            <small className="text-muted">just now</small>
+          </Toast.Header>
+          <Toast.Body>{notification.body}</Toast.Body>
+        </Toast>
+      </ToastContainer>
+        <AppContext.Provider value={{ dimensions }}>
           {cryptos && (
             <Fragment>
               {isOnline && (
@@ -227,6 +271,7 @@ const CryptoForm = () => {
                     : null
                 }
               />
+             
             </Fragment>
           )}
           {showSpinner && spinner()}

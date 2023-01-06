@@ -1,19 +1,15 @@
-import React, { Component } from "react";
-import { ToastContainer } from "react-toastify";
+import React, { useState } from "react";
 import "./App.css";
 import CryptoForm from "./components/crypto/CryptoForm";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import "react-toastify/dist/ReactToastify.css";
-
-class App extends Component {
-  render() {
-    return (
+function App() {
+   return (
       <React.Fragment>
-        <CryptoForm />
-        <ToastContainer />
+         <CryptoForm />
       </React.Fragment>
     );
   }
-}
+
 
 export default App;

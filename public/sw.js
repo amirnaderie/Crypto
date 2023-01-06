@@ -52,7 +52,12 @@ self.addEventListener("install", (event) => {
 // })
 
 self.addEventListener('fetch', (e) => {
-  if (!(e.request.url.indexOf('http') === 0) || (e.request.url.indexOf('sockjs-node') !== -1)) return;
+  if (!(e.request.url.indexOf('http') === 0) 
+  || (e.request.url.indexOf('sockjs-node') !== -1)
+  || (e.request.url.indexOf('hot-update') !== -1)
+  || (e.request.method === "POST")
+  )
+   return;
   e.waitUntil(
   e.respondWith((async () => {
     try {
