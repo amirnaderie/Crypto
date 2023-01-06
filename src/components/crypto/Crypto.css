@@ -13,3 +13,7 @@
     width: 36px;
     height: 36px;
  }
+
+ .btn-close{
+   background-size: 1rem!important;
+ }
