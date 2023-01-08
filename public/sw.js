@@ -1,3 +1,4 @@
+const channel4Broadcast = new BroadcastChannel('channel4');
 const CACHE_NAME = "version-1";
  const urlsToCache =[];
   // ["/static/js/bundle.js"
@@ -65,10 +66,13 @@ self.addEventListener('fetch', (e) => {
       const response = await fetch(e.request);
       const cache = await caches.open(CACHE_NAME);
       cache.put(e.request, response.clone());
+      //localStorage.removeItem('onlineStatus');
       return response;  
     } catch (error) {
       // If You Are Offline Then Get Assets And Data From Cache
       const r = await caches.match(e.request,{ignoreVary:true}); // {ignoreVary:true} is added just for accessing cached data of backend  
+      //localStorage.setItem('onlineStatus', 'Offline');
+      channel4Broadcast.postMessage({offline: true});
       if (r) { return r; }  
     }
     

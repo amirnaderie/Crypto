@@ -6,6 +6,7 @@ import App from "./App";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "font-awesome/css/font-awesome.min.css";
 import swDev from './swDev'
+
 ReactDOM.render(
   <React.StrictMode>
   

@@ -7,8 +7,8 @@ import { sortItems } from "../../utils/paginate";
 import { AppContext } from "../context/Context";
 import ModalComponenet, { ModalHeader, ModalBody } from "./modal";
 import CrudForm from "./CrudForm";
+const channel4Broadcast = new BroadcastChannel('channel4');
 
-import { fetchToken, onMessageListener } from "../../firebase";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 const CryptoForm = () => {
@@ -70,21 +70,18 @@ const CryptoForm = () => {
   const cryptosRef = useRef();
   cryptosRef.current = cryptos;
 
-  fetchToken(setTokenFound);
-  
-  onMessageListener()
-    .then((payload) => {
+  channel4Broadcast.onmessage = (event) => {
+    if(event.data.offline===true)
+    {
       setNotification({
-        title: payload.notification.title,
-        body: payload.notification.body,
-        type:"warning"
+        title: "Error",
+        body: "You Are Offline",
+        type:"danger"
       });
       setShow(true);
-      // console.log(payload);
-    })
-    .catch((err) => console.log("failed: ", err));
-
-  const handleDelete = async (asset) => {
+    }
+}
+    const handleDelete = async (asset) => {
     try {
       await deleteCrypto(asset._id);
       const trf = [...cryptosRef.current];

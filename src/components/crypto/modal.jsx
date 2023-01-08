@@ -4,8 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import "./Crypto.css"
 export const ModalHeader = (props) => {
   return (
-    <Modal.Header closeButton style={{"background-size": "16px"}}>
-      {/* <Modal.Title id="contained-modal-title-vcenter"> */}
+    <Modal.Header closeButton >
+      {/* <Modal.Title id="conained-modal-title-vcenter"> */}
         {/* {props.children} */}
       {/* </Modal.Title> */}
     </Modal.Header>
